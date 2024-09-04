@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  clubmanager:
+    image: ${DOCKER_REGISTRY-}clubmanager
+    build:
+      context: .
+      dockerfile: ClubManager/Dockerfile
+  
+  # clubManagerDatabase:
+  #   image: mcr.microsoft.com/mssql/server:2019-latest
+  #   container_name: ClubManager.database
+  #   environment:
+  #     SA_PASSWORD: "YourStrong!Passw0rd"
+  #     ACCEPT_EULA: "Y"
+  #   ports:
+  #     - "1433:1433"
+  #   volumes:
+  #     - sqlserverdata:/var/opt/mssql
+
+volumes:
+    sqlserverdata:

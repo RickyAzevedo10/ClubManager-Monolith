@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "YCmtiI3SR8SmBN1L42pMtb7hJCioyPB54pejPrjJ84yVQG8e2MLNOa4Tt4TrzT9O7fPvo/53+lDK3vE3Uw49Og==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Domain\\ClubManager.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\fluentvalidation\\11.9.2\\fluentvalidation.11.9.2.nupkg.sha512",
+    "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

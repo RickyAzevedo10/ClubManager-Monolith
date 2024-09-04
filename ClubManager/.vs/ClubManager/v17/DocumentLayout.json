@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{249582BE-60D4-4E29-8CC6-30561C40E528}|ClubManager\\ClubManager.csproj|c:\\users\\ricardo azevedo\\desktop\\tese\\clubmanagermonolith\\clubmanager\\clubmanager\\controllers\\infrastructures\\infrastructurescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{249582BE-60D4-4E29-8CC6-30561C40E528}|ClubManager\\ClubManager.csproj|solutionrelative:clubmanager\\controllers\\infrastructures\\infrastructurescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "InfrastructuresController.cs",
+              "DocumentMoniker": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager\\Controllers\\Infrastructures\\InfrastructuresController.cs",
+              "RelativeDocumentMoniker": "ClubManager\\Controllers\\Infrastructures\\InfrastructuresController.cs",
+              "ToolTip": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager\\Controllers\\Infrastructures\\InfrastructuresController.cs",
+              "RelativeToolTip": "ClubManager\\Controllers\\Infrastructures\\InfrastructuresController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-04T11:23:19.79Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

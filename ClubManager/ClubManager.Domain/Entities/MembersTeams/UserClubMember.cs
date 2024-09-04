@@ -1,0 +1,12 @@
+﻿using ClubManager.Domain.Entities.Identity;
+
+namespace ClubManager.Domain.Entities.MembersTeams
+{
+    public class UserClubMember : BaseEntity
+    {
+        public int UserId { get; set; }       
+        public int ClubMemberId { get; set; }
+        public User User { get; set; }          
+        public ClubMember ClubMember { get; set; }
+    }
+}
