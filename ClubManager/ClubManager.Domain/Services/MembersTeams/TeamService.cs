@@ -5,7 +5,6 @@ using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Interfaces.Identity;
 using ClubManager.Domain.Interfaces.Repositories;
 using FluentValidation;
-using Microsoft.Extensions.Configuration;
 using static ClubManager.Domain.Constants.Constants;
 
 namespace ClubManager.Domain.Services.Identity
@@ -15,16 +14,14 @@ namespace ClubManager.Domain.Services.Identity
         private readonly INotificationContext _notificationContext;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEntityValidationService _entityValidationService;
-        private readonly IConfiguration _configuration;
         private readonly IValidator<CreateTeamDTO> _createTeamValidator;
         private readonly IValidator<UpdateTeamDTO> _updateTeamValidator;
 
-        public TeamService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IConfiguration configuration, 
+        public TeamService(INotificationContext notificationContext, IUnitOfWork unitOfWork,
             IEntityValidationService entityValidationService, IValidator<CreateTeamDTO> createTeamValidator, IValidator<UpdateTeamDTO> updateTeamValidator)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
-            _configuration = configuration;
             _entityValidationService = entityValidationService;
             _createTeamValidator = createTeamValidator;
             _updateTeamValidator = updateTeamValidator;

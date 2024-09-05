@@ -2,6 +2,7 @@
 using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.App.Services.Identity;
 using ClubManager.Domain.DTOs.Identity;
+using ClubManager.Domain.DTOs.Infrastructures;
 using ClubManager.Domain.DTOs.MembersTeams;
 using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Entities.Identity.Validators;
@@ -70,6 +71,11 @@ namespace ClubManager.Ioc
             services.AddScoped<IValidator<UpdateResponsiblePlayerDTO>, UpdateResponsiblePlayerValidator>();
             services.AddScoped<IValidator<CreateTeamDTO>, CreateTeamValidator>();
             services.AddScoped<IValidator<UpdateTeamDTO>, UpdateTeamValidator>();
+
+            services.AddScoped<IValidator<CreateFacilityDTO>, FacilityValidator>();
+            services.AddScoped<IValidator<CreateFacilityReservationDTO>, FacilityReservationValidator>();
+            services.AddScoped<IValidator<CreateMaintenanceRequestDTO>, FacilityMaintenanceRequestValidator>();
+
 
             // Add data access dependencies
             var sql_conn = configuration.GetConnectionString("DefaultConnection"); //DockerComposeConnection

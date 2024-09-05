@@ -1,4 +1,5 @@
 ﻿using ClubManager.Domain.Entities.Identity;
+using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Entities.MembersTeams;
 using ClubManager.Domain.Interfaces.Repositories;
 using ClubManager.Domain.Interfaces.Repositories.Identity;
@@ -37,6 +38,12 @@ namespace ClubManager.Infra.Persistence
         public IBaseRepository<TeamCoach> _teamCoachRepository { get; private set; }
         public IBaseRepository<UserClubMember> _userClubMemberRepository { get; private set; }
 
+        //Infrastructures
+        public IBaseRepository<FacilityCategory> _facilityCategoryRepository { get; private set; }
+        public IBaseRepository<Facility> _facilityRepository { get; private set; }
+        public IBaseRepository<FacilityReservation> _facilityReservationRepository { get; private set; }
+        public IBaseRepository<MaintenanceRequest> _maintenanceRequestRepository { get; private set; }
+        public IMaintenanceHistoryRepository _maintenanceHistoryRepository { get; private set; }
 
         public async Task<bool> CommitAsync()
         {
@@ -250,6 +257,68 @@ namespace ClubManager.Infra.Persistence
             }
         }
 
+        #endregion
+
+        #region Infrastructures
+        public IBaseRepository<FacilityCategory> FacilityCategoryRepository
+        {
+            get
+            {
+                if (_facilityCategoryRepository == null)
+                {
+                    _facilityCategoryRepository = new BaseRepository<FacilityCategory>(_context);
+                }
+                return _facilityCategoryRepository;
+            }
+        }
+
+        public IBaseRepository<Facility> FacilityRepository
+        {
+            get
+            {
+                if (_facilityRepository == null)
+                {
+                    _facilityRepository = new BaseRepository<Facility>(_context);
+                }
+                return _facilityRepository;
+            }
+        }
+
+        public IBaseRepository<FacilityReservation> FacilityReservationRepository
+        {
+            get
+            {
+                if (_facilityReservationRepository == null)
+                {
+                    _facilityReservationRepository = new BaseRepository<FacilityReservation>(_context);
+                }
+                return _facilityReservationRepository;
+            }
+        }
+
+        public IBaseRepository<MaintenanceRequest> MaintenanceRequestRepository
+        {
+            get
+            {
+                if (_maintenanceRequestRepository == null)
+                {
+                    _maintenanceRequestRepository = new BaseRepository<MaintenanceRequest>(_context);
+                }
+                return _maintenanceRequestRepository;
+            }
+        }
+
+        public IMaintenanceHistoryRepository MaintenanceHistoryRepository
+        {
+            get
+            {
+                if (_maintenanceHistoryRepository == null)
+                {
+                    _maintenanceHistoryRepository = new MaintenanceHistoryRepository(_context);
+                }
+                return _maintenanceHistoryRepository;
+            }
+        }
         #endregion
     }
 }

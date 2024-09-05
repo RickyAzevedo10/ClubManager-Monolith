@@ -1,4 +1,5 @@
 ﻿using ClubManager.Domain.Entities.Identity;
+using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Entities.MembersTeams;
 using ClubManager.Infra.Configuration.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -36,11 +37,11 @@ namespace ClubManager.Infra.Contexts
         public DbSet<TeamCoach> TeamCoach { get; set; }
         public DbSet<UserClubMember> UserClubMembers { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    base.OnConfiguring(optionsBuilder);
-        //    optionsBuilder.UseSqlServer("Server=172.21.224.1\\SQLEXPRESS;Database=ClubManager;Trusted_Connection=True;TrustServerCertificate=True;");
-        //}
+        public DbSet<FacilityCategory> FacilityCategories { get; set; }
+        public DbSet<Facility> Facilities { get; set; }
+        public DbSet<FacilityReservation> FacilityReservations { get; set; }
+        public DbSet<MaintenanceRequest> MaintenanceRequests { get; set; }
+        public DbSet<MaintenanceHistory> MaintenanceHistories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -53,6 +54,8 @@ namespace ClubManager.Infra.Contexts
             builder.ApplyConfiguration(new ClubMemberConfiguration());
             builder.ApplyConfiguration(new MinorClubMemberConfiguration());
             builder.ApplyConfiguration(new PlayerCategoryConfiguration());
+
+            builder.ApplyConfiguration(new FacilityCategoryConfiguration());
         }
     }
 }

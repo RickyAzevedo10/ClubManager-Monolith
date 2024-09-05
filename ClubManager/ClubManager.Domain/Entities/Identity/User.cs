@@ -1,4 +1,5 @@
 ﻿using ClubManager.Domain.DTOs.Identity;
+using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Entities.MembersTeams;
 using System.Collections;
 using System.Security.Cryptography;
@@ -27,6 +28,12 @@ namespace ClubManager.Domain.Entities.Identity
         public int UserPermissionId { get; set; }
         public UserPermissions UserPermission { get; set; }
         public UserClubMember UserClubMember { get; set; }
+
+        public ICollection<TeamCoach> TeamCoaches { get; set; }
+        public ICollection<MaintenanceRequest> MaintenanceRequests { get; set; }
+        public ICollection<MaintenanceHistory> MaintenanceHistory { get; set; }
+        public ICollection<FacilityReservation> FacilityReservation { get; set; }
+
 
         // Construtor necessário para EF
         private User(){}
