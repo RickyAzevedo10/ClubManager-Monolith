@@ -1,4 +1,6 @@
-﻿namespace ClubManager.Domain.Entities.MembersTeams
+﻿using ClubManager.Domain.Entities.TrainingCompetition;
+
+namespace ClubManager.Domain.Entities.MembersTeams
 {
     public class Player : BaseEntity
     {
@@ -17,6 +19,9 @@
         public ICollection<PlayerContract> PlayerContracts { get; set; }
         public ICollection<PlayerTransfer> PlayerTransfers { get; set; }
         public ICollection<TeamPlayer> TeamPlayers { get; set; }
+        public ICollection<MatchStatistic> MatchStatistic { get; set; }
+        public ICollection<TrainingAttendance> TrainingAttendance { get; set; }
+
 
         public Player()
         {

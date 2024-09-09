@@ -11,5 +11,6 @@ namespace ClubManager.Domain.Interfaces.Repositories
         public Task<T> GetById(object id);
         public Task<IEnumerable<T>> GetAllAsync();
         Task DeleteAllAsync();
+        Task<T> UpdateAsync(T entity);
     }
 }

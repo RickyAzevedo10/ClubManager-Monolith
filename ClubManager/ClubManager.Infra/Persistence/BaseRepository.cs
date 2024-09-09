@@ -43,6 +43,14 @@ namespace ClubManager.Infra.Persistence
             _context.Entry(entity).State = EntityState.Modified;
         }
 
+        public async Task<T> UpdateAsync(T entity)
+        {
+            entity.DateOfModification = DateTime.Now;
+            _dbSet.Update(entity);  
+            await _context.SaveChangesAsync();  
+            return entity;
+        }
+
         public void Delete(T entity)
         {
             _dbSet.Remove(entity);

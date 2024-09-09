@@ -1,6 +1,7 @@
 ﻿using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Entities.MembersTeams;
+using ClubManager.Domain.Entities.TrainingCompetition;
 using ClubManager.Domain.Interfaces.Repositories.Identity;
 
 namespace ClubManager.Domain.Interfaces.Repositories
@@ -36,6 +37,12 @@ namespace ClubManager.Domain.Interfaces.Repositories
         IBaseRepository<FacilityReservation> FacilityReservationRepository { get; }
         IBaseRepository<MaintenanceRequest> MaintenanceRequestRepository { get; }
         IMaintenanceHistoryRepository MaintenanceHistoryRepository { get; }
+
+        //TrainingCompetition
+        IMatchRepository MatchRepository { get; }
+        IMatchStatisticRepository MatchStatisticRepository { get; }
+        ITrainingAttendanceRepository TrainingAttendanceRepository { get; }
+        ITrainingSessionRepository TrainingSessionRepository { get; }
 
     }
 }

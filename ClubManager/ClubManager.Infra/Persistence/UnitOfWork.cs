@@ -1,6 +1,7 @@
 ﻿using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Entities.MembersTeams;
+using ClubManager.Domain.Entities.TrainingCompetition;
 using ClubManager.Domain.Interfaces.Repositories;
 using ClubManager.Domain.Interfaces.Repositories.Identity;
 using ClubManager.Infra.Contexts;
@@ -44,6 +45,13 @@ namespace ClubManager.Infra.Persistence
         public IBaseRepository<FacilityReservation> _facilityReservationRepository { get; private set; }
         public IBaseRepository<MaintenanceRequest> _maintenanceRequestRepository { get; private set; }
         public IMaintenanceHistoryRepository _maintenanceHistoryRepository { get; private set; }
+
+
+        //TrainingCompetition
+        public IMatchRepository _matchRepository { get; private set; }
+        public IMatchStatisticRepository _matchStatisticRepository { get; private set; }
+        public ITrainingAttendanceRepository _trainingAttendanceRepository { get; private set; }
+        public ITrainingSessionRepository _trainingSessionRepository { get; private set; }
 
         public async Task<bool> CommitAsync()
         {
@@ -319,6 +327,57 @@ namespace ClubManager.Infra.Persistence
                 return _maintenanceHistoryRepository;
             }
         }
+        #endregion
+
+        #region TrainingCompetition
+        public IMatchRepository MatchRepository
+        {
+            get
+            {
+                if (_matchRepository == null)
+                {
+                    _matchRepository = new MatchRepository(_context);
+                }
+                return _matchRepository;
+            }
+        }
+
+        public IMatchStatisticRepository MatchStatisticRepository
+        {
+            get
+            {
+                if (_matchStatisticRepository == null)
+                {
+                    _matchStatisticRepository = new MatchStatisticRepository(_context);
+                }
+                return _matchStatisticRepository;
+            }
+        }
+
+        public ITrainingAttendanceRepository TrainingAttendanceRepository
+        {
+            get
+            {
+                if (_trainingAttendanceRepository == null)
+                {
+                    _trainingAttendanceRepository = new TrainingAttendanceRepository(_context);
+                }
+                return _trainingAttendanceRepository;
+            }
+        }
+
+        public ITrainingSessionRepository TrainingSessionRepository
+        {
+            get
+            {
+                if (_trainingSessionRepository == null)
+                {
+                    _trainingSessionRepository = new TrainingSessionRepository(_context);
+                }
+                return _trainingSessionRepository;
+            }
+        }
+
         #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ClubManager.Domain.Entities.Identity;
+using ClubManager.Domain.Entities.TrainingCompetition;
 
 namespace ClubManager.Domain.Entities.MembersTeams
 {
@@ -14,6 +15,8 @@ namespace ClubManager.Domain.Entities.MembersTeams
         public TeamCategory TeamCategories { get; set; }
         public ICollection<TeamPlayer> TeamPlayers { get; set; }
         public ICollection<TeamCoach> TeamCoaches { get; set; }
+        public ICollection<TrainingSession> TrainingSessions { get; set; }
+        public ICollection<Match> Matches { get; set; }
 
         public void SetName(string name)
         {
