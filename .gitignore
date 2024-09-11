@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/ClubManager/.vs/ClubManager/FileContentIndex
+/ClubManager/ClubManager/obj/Debug/net8.0
+/ClubManager/ClubManager.App/obj/Debug/net8.0
+/ClubManager/ClubManager.Domain/obj/Debug/net8.0
+/ClubManager/ClubManager.Infra/obj/Debug/net8.0
