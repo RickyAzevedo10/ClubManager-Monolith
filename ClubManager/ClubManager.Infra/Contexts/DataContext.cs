@@ -1,6 +1,8 @@
-﻿using ClubManager.Domain.Entities.Identity;
+﻿using ClubManager.Domain.Entities.Financial;
+using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Entities.MembersTeams;
+using ClubManager.Domain.Entities.TrainingCompetition;
 using ClubManager.Infra.Configuration.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,25 +39,47 @@ namespace ClubManager.Infra.Contexts
         public DbSet<TeamCoach> TeamCoach { get; set; }
         public DbSet<UserClubMember> UserClubMembers { get; set; }
 
+        //Infrastructures
         public DbSet<FacilityCategory> FacilityCategories { get; set; }
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<FacilityReservation> FacilityReservations { get; set; }
         public DbSet<MaintenanceRequest> MaintenanceRequests { get; set; }
         public DbSet<MaintenanceHistory> MaintenanceHistories { get; set; }
 
+        //TrainingCompetition
+        public DbSet<Match> Matches { get; set; }
+        public DbSet<MatchStatistic> MatchStatistics { get; set; }
+        public DbSet<TrainingSession> TrainingSessions { get; set; }
+        public DbSet<TrainingAttendance> TrainingAttendances { get; set; }
+
+        //Financial
+        public DbSet<Revenue> Revenues { get; set; }
+        public DbSet<RevenueCategory> RevenueCategories { get; set; }
+        public DbSet<Expense> Expenses { get; set; }
+        public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
+        public DbSet<Entity> Entities { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
+            //Identity
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new UserRolesConfiguration());
 
+            //MembersTeams
             builder.ApplyConfiguration(new TeamCategoryConfiguration());
             builder.ApplyConfiguration(new ClubMemberConfiguration());
             builder.ApplyConfiguration(new MinorClubMemberConfiguration());
             builder.ApplyConfiguration(new PlayerCategoryConfiguration());
 
+            //Infrastructures
             builder.ApplyConfiguration(new FacilityCategoryConfiguration());
+
+            //Financial
+            builder.ApplyConfiguration(new RevenueCategoryConfiguration());
+            builder.ApplyConfiguration(new ExpenseCategoryConfiguration());
+
         }
     }
 }

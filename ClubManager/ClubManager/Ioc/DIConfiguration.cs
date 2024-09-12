@@ -1,6 +1,7 @@
 ﻿using ClubManager.App.Interfaces.Identity;
 using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.App.Services.Identity;
+using ClubManager.Domain.DTOs.Financial;
 using ClubManager.Domain.DTOs.Identity;
 using ClubManager.Domain.DTOs.Infrastructures;
 using ClubManager.Domain.DTOs.MembersTeams;
@@ -81,6 +82,10 @@ namespace ClubManager.Ioc
             services.AddScoped<IValidator<CreateMatchStatisticDTO>, MatchStatisticValidator>();
             services.AddScoped<IValidator<CreateTrainingSessionDTO>, TrainingSessionValidator>();
             services.AddScoped<IValidator<CreateTrainingAttendanceDTO>, TrainingAttendanceValidator>();
+
+            services.AddScoped<IValidator<ExpenseDTO>, ExpenseValidator>();
+            services.AddScoped<IValidator<RevenueDTO>, RevenueValidator>();
+            services.AddScoped<IValidator<CreateEntityDTO>, EntityValidator>();
 
             // Add data access dependencies
             var sql_conn = configuration.GetConnectionString("DefaultConnection");

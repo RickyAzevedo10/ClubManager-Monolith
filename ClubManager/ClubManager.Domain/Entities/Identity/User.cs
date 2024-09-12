@@ -1,4 +1,5 @@
 ﻿using ClubManager.Domain.DTOs.Identity;
+using ClubManager.Domain.Entities.Financial;
 using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Entities.MembersTeams;
 using System.Collections;
@@ -33,6 +34,7 @@ namespace ClubManager.Domain.Entities.Identity
         public ICollection<MaintenanceRequest> MaintenanceRequests { get; set; }
         public ICollection<MaintenanceHistory> MaintenanceHistory { get; set; }
         public ICollection<FacilityReservation> FacilityReservation { get; set; }
+        public Expense Expense { get; set; }
 
 
         // Construtor necessário para EF

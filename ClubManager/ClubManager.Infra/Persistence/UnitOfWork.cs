@@ -1,7 +1,7 @@
-﻿using ClubManager.Domain.Entities.Identity;
+﻿using ClubManager.Domain.Entities.Financial;
+using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Entities.MembersTeams;
-using ClubManager.Domain.Entities.TrainingCompetition;
 using ClubManager.Domain.Interfaces.Repositories;
 using ClubManager.Domain.Interfaces.Repositories.Identity;
 using ClubManager.Infra.Contexts;
@@ -52,6 +52,14 @@ namespace ClubManager.Infra.Persistence
         public IMatchStatisticRepository _matchStatisticRepository { get; private set; }
         public ITrainingAttendanceRepository _trainingAttendanceRepository { get; private set; }
         public ITrainingSessionRepository _trainingSessionRepository { get; private set; }
+
+        //Financial
+        public IBaseRepository<Revenue> _revenueRepository { get; private set; }
+        public IBaseRepository<RevenueCategory> _revenueCategoryRepository { get; private set; }
+        public IBaseRepository<Expense> _expenseRepository { get; private set; }
+        public IBaseRepository<ExpenseCategory> _expenseCategoryRepository { get; private set; }
+        public IEntityRepository _entityRepository { get; private set; }
+
 
         public async Task<bool> CommitAsync()
         {
@@ -377,6 +385,70 @@ namespace ClubManager.Infra.Persistence
                 return _trainingSessionRepository;
             }
         }
+
+        #endregion
+
+        #region Financial
+        public IBaseRepository<Revenue> RevenueRepository
+        {
+            get
+            {
+                if (_revenueRepository == null)
+                {
+                    _revenueRepository = new BaseRepository<Revenue>(_context);
+                }
+                return _revenueRepository;
+            }
+        }
+
+        public IBaseRepository<RevenueCategory> RevenueCategoryRepository
+        {
+            get
+            {
+                if (_revenueCategoryRepository == null)
+                {
+                    _revenueCategoryRepository = new BaseRepository<RevenueCategory>(_context);
+                }
+                return _revenueCategoryRepository;
+            }
+        }
+
+        public IBaseRepository<Expense> ExpenseRepository
+        {
+            get
+            {
+                if (_expenseRepository == null)
+                {
+                    _expenseRepository = new BaseRepository<Expense>(_context);
+                }
+                return _expenseRepository;
+            }
+        }
+
+        public IBaseRepository<ExpenseCategory> ExpenseCategoryRepository
+        {
+            get
+            {
+                if (_expenseCategoryRepository == null)
+                {
+                    _expenseCategoryRepository = new BaseRepository<ExpenseCategory>(_context);
+                }
+                return _expenseCategoryRepository;
+            }
+        }
+
+        public IEntityRepository EntityRepository
+        {
+            get
+            {
+                if (_entityRepository == null)
+                {
+                    _entityRepository = new EntityRepository(_context);
+                }
+                return _entityRepository;
+            }
+        }
+
 
         #endregion
     }
