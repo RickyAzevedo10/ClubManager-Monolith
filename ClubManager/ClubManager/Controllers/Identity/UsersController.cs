@@ -122,7 +122,7 @@ namespace ClubManager.Controllers.Identity
         [AllowAnonymous]
         public async Task<IActionResult> LoginUser(UserLoginDTO user)
         {
-            var result = await _userAppService.Login(user);
+            UserLoginResponseDTO result = await _userAppService.Login(user);
             return DomainResult<UserLoginResponseDTO?>.Ok(result, _notificationContext, _modelErrorsContext);
         }
 
@@ -135,7 +135,7 @@ namespace ClubManager.Controllers.Identity
         [Authorize]
         public async Task<IActionResult> RefreshUser(string refreshToken)
         {
-            var result = await _userAppService.Refresh(refreshToken);
+            UserLoginResponseDTO result = await _userAppService.Refresh(refreshToken);
             return DomainResult<UserLoginResponseDTO?>.Ok(result, _notificationContext, _modelErrorsContext);
         }
 
@@ -163,6 +163,32 @@ namespace ClubManager.Controllers.Identity
         {
             UserPermissions? response = await _userAppService.DeleteUserPermissions(id);
             return DomainResult<UserPermissions?>.Ok(response, _notificationContext, _modelErrorsContext);
+        }
+
+        /// <summary>
+        /// Recover password
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("Recover-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RecoverPassword(RecoverPasswordRequest request)
+        {
+            RecoverPasswordRequestResponse? result = await _userAppService.RecoverPassword(request);
+            return DomainResult<RecoverPasswordRequestResponse?>.Ok(result, _notificationContext, _modelErrorsContext);
+        }
+         
+        /// <summary>
+        /// ResetPassword
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("ResetPassword")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPassword request)
+        {
+            ResetPasswordResponse? result = await _userAppService.ResetPassword(request);
+            return DomainResult<ResetPasswordResponse?>.Ok(result, _notificationContext, _modelErrorsContext);
         }
     }
 }

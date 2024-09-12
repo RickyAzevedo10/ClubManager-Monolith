@@ -24,6 +24,8 @@ namespace ClubManager.Domain.Entities.Identity
         public DateTime? DateOfLastAccess { get; set; }
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpire { get; set; }
+        public string PasswordResetToken { get; set; }
+        public DateTime? PasswordResetTokenExpire { get; set; }
         public int UserRoleId { get; set; }
         public UserRoles UserRole { get; set; }  
         public int UserPermissionId { get; set; }
@@ -59,6 +61,16 @@ namespace ClubManager.Domain.Entities.Identity
             using var hmac = new HMACSHA256();
             PasswordSalt = hmac.Key;
             PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        }
+
+        public void SetPasswordResetToken(string passwordResetToken)
+        {
+            PasswordResetToken = passwordResetToken;
+        }
+
+        public void SetPasswordResetTokenExpire(int expiresHours)
+        {
+            PasswordResetTokenExpire = DateTime.UtcNow.AddHours(expiresHours);
         }
 
         public bool ValidatePassword(string password)

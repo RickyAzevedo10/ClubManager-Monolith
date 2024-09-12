@@ -103,6 +103,7 @@ namespace ClubManager.Ioc
             services.AddScoped<IValidator<CreateUserDTO>, CreateUserValidator>();
             services.AddScoped<IValidator<CreateUserPermissionsDTO>, CreateUserPermissionsValidator>();
             services.AddScoped<IValidator<UpdateUserPermissionsDTO>, UpdateUserPermissionsValidator>();
+            services.AddScoped<IValidator<ResetPassword>, PasswordValidator>();
 
             services.AddScoped<IValidator<CreateClubMemberDTO>, CreateClubMemberValidator>();
             services.AddScoped<IValidator<UpdateClubMemberDTO>, UpdateClubMemberValidator>();

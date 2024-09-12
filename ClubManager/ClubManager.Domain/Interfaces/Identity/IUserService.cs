@@ -14,5 +14,7 @@ namespace ClubManager.Domain.Interfaces.Identity
         Task<UserPermissions?> CreateUserPermissions(CreateUserPermissionsDTO createUserPermissions);
         Task<UserPermissions?> DeleteUserPermissions(long id);
         Task<UserPermissions?> UpdateUserPermissions(UpdateUserPermissionsDTO updateUserPermissions, UserPermissions userPermissions);
+        void UpdatePasswordResetToken(User user, string passwordResetToken);
+        Task<User?> UpdatePassword(User user, ResetPassword request);
     }
 }

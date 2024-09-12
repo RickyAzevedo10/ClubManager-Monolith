@@ -409,5 +409,60 @@ namespace ClubManager.App.Services.Identity
             return user;
         }
 
+        public async Task<RecoverPasswordRequestResponse?> RecoverPassword(RecoverPasswordRequest request)
+        {
+            User? user = await _unitOfWork.UserRepository.GetByEmailAsync(request.Email);
+            if (user == null)
+            {
+                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
+                return null;
+            }
+
+            var resetToken = _authenticationService.GenerateToken(user);
+            _userService.UpdatePasswordResetToken(user, resetToken);
+
+            if (!await _unitOfWork.CommitAsync())
+            {
+                _notificationContext.AddNotification(NotificationKeys.DATABASE_COMMIT_ERROR, string.Empty);
+                return null;
+            }
+
+            RecoverPasswordRequestResponse response = new()
+            {
+                Email = request.Email,
+                Token = resetToken
+            };
+
+            return response;
+        }
+
+        public async Task<ResetPasswordResponse?> ResetPassword(ResetPassword request)
+        {
+            User? user = await _unitOfWork.UserRepository.GetByPasswordResetTokenAsync(request.Token);
+            if (user == null)
+            {
+                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
+                return null;
+            }
+            
+            if(user.PasswordResetTokenExpire < DateTime.Now)
+            {
+                _notificationContext.AddNotification(NotificationKeys.UserNotifications.INVALID_REFRESH_TOKEN, string.Empty);
+                return null;
+            }
+
+            //update password
+            user = await _userService.UpdatePassword(user, request);
+
+            if (user == null || !await _unitOfWork.CommitAsync())
+            {
+                _notificationContext.AddNotification(NotificationKeys.DATABASE_COMMIT_ERROR, string.Empty);
+                return null;
+            } else
+            {
+                ResetPasswordResponse response = new() { NewPassword = request.NewPassword, Message = "Password has been changed" };
+                return response;
+            }
+        }
     }
 }

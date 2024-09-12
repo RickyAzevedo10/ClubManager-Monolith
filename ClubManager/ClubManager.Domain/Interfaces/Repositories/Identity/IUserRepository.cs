@@ -8,5 +8,6 @@ namespace ClubManager.Domain.Interfaces.Repositories.Identity
         Task<User?> GetByEmailAsync(string email);
         Task<List<User>?> GetAllUsersFromInstitution(long idInstitution);
         Task<User?> GetByRefreshTokenAsync(string refreshToken);
+        Task<User?> GetByPasswordResetTokenAsync(string passwordResetToken);
     }
 }

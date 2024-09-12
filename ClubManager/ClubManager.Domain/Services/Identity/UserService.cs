@@ -17,9 +17,10 @@ namespace ClubManager.Domain.Services.Identity
         private readonly IValidator<CreateUserDTO> _userValidator;
         private readonly IValidator<UpdateUserPermissionsDTO> _userUpdatePermissionsValidator;
         private readonly IValidator<CreateUserPermissionsDTO> _userPermissionsValidator;
+        private readonly IValidator<ResetPassword> _passwordValidator;
         private readonly IConfiguration _configuration;
 
-        public UserService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IConfiguration configuration, IEntityValidationService entityValidationService, IValidator<CreateUserDTO> userValidator, IValidator<CreateUserPermissionsDTO> userPermissionsValidator, IValidator<UpdateUserPermissionsDTO> userUpdatePermissionsValidator)
+        public UserService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IConfiguration configuration, IEntityValidationService entityValidationService, IValidator<CreateUserDTO> userValidator, IValidator<CreateUserPermissionsDTO> userPermissionsValidator, IValidator<UpdateUserPermissionsDTO> userUpdatePermissionsValidator, IValidator<ResetPassword> passwordValidator)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
@@ -28,6 +29,7 @@ namespace ClubManager.Domain.Services.Identity
             _userValidator = userValidator;
             _userPermissionsValidator = userPermissionsValidator;
             _userUpdatePermissionsValidator = userUpdatePermissionsValidator;
+            _passwordValidator = passwordValidator;
         }
 
         public async Task<User?> Get(long id)
@@ -153,6 +155,32 @@ namespace ClubManager.Domain.Services.Identity
 
             _unitOfWork.UserPermissionsRepository.Delete(userPermissions);
             return userPermissions;
+        }
+
+        public void UpdatePasswordResetToken(User user, string passwordResetToken)
+        {
+            int expiresHoursRefreshToken = int.Parse(_configuration.GetSection("RefreshToken:ExpiresHours").Value!);
+            user.SetPasswordResetToken(passwordResetToken);
+            user.SetPasswordResetTokenExpire(expiresHoursRefreshToken);
+
+            _unitOfWork.UserRepository.Update(user);
+        }
+
+        public async Task<User?> UpdatePassword(User user, ResetPassword request)
+        {
+            bool validationResult = _entityValidationService.Validate(_passwordValidator, request);
+            if (!validationResult)
+            {
+                _notificationContext.AddNotification(NotificationKeys.UserNotifications.INVALID_USER_CREDENTIALS, string.Empty);
+                return null;
+            }
+
+            user.SetPasswordResetToken("");
+            user.SetPasswordResetTokenExpire(0);
+            user.SetPassword(request.NewPassword);
+
+            _unitOfWork.UserRepository.Update(user);
+            return user;
         }
     }
 }

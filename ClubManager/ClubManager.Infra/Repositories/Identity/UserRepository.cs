@@ -33,5 +33,11 @@ namespace ClubManager.Infra.Repositories.Identity
                 .FirstOrDefaultAsync(user => user.RefreshToken == refreshToken && user.RefreshTokenExpire > DateTime.UtcNow);
         }
 
+        public async Task<User?> GetByPasswordResetTokenAsync(string passwordResetToken)
+        {
+            return await GetEntity()
+                .FirstOrDefaultAsync(user => user.PasswordResetToken == passwordResetToken);
+        }
+
     }
 }
