@@ -1,6 +1,7 @@
 ﻿using ClubManager.App.Interfaces.Identity;
 using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.App.Services.Identity;
+using ClubManager.App.Services.Infrastructures;
 using ClubManager.Domain.DTOs.Financial;
 using ClubManager.Domain.DTOs.Identity;
 using ClubManager.Domain.DTOs.Infrastructures;
@@ -10,9 +11,11 @@ using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Entities.Identity.Validators;
 using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Interfaces.Identity;
+using ClubManager.Domain.Interfaces.Infrastructures;
 using ClubManager.Domain.Interfaces.Repositories;
 using ClubManager.Domain.Services;
 using ClubManager.Domain.Services.Identity;
+using ClubManager.Domain.Services.Infrastructures;
 using ClubManager.Infra.Contexts;
 using ClubManager.Infra.Persistence;
 using ClubManager.Infra.Services;
@@ -29,27 +32,71 @@ namespace ClubManager.Ioc
         {
             services.AddHttpContextAccessor();
 
-            //Add notification context
-            services.AddScoped<INotificationContext, NotificationContext>();
-
-            // Add Model Errors
-            services.AddScoped<IModelErrorsContext, ModelErrorsContext>();
-
             // Add UnitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            // Add App Services dependencies
+            #region Add App Services dependencies 
+            //Identity
             services.AddScoped<IUserAppService, UserAppService>();
             services.AddScoped<IInstitutionAppService, InstitutionAppService>();
+
+            //Financial
+            services.AddScoped<IEntityAppService, EntityAppService>();
+            services.AddScoped<IExpenseAppService, ExpenseAppService>();
+            services.AddScoped<IRevenueAppService, RevenueAppService>();
+
+            //Infrastrucutres
+            services.AddScoped<IFacilityAppService, FacilityAppService>();
+            services.AddScoped<IMaintenanceAppService, MaintenanceAppService>();
+
+            //MembersTeams
+            services.AddScoped<IMembersAppService, MembersAppService>();
+            services.AddScoped<IPlayerAppService, PlayerAppService>();
+            services.AddScoped<ITeamAppService, TeamAppService>();
+
+            //TrainingCompetition
+            services.AddScoped<IMatchAppService, MatchAppService>();
+            services.AddScoped<ITrainingAppService, TrainingAppService>();
+
+            #endregion
 
             //Add Infra Services dependencies
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddScoped<IUserClaimsService, UserClaimsService>();
 
-            // Add Domain Services dependencies
+            #region Add Domain Services dependencies
+
             services.AddScoped<EntityValidationService>();
+            //Add notification context
+            services.AddScoped<INotificationContext, NotificationContext>();
+
+            // Add Model Errors
+            services.AddScoped<IModelErrorsContext, ModelErrorsContext>();
+
+            //Identity
             services.AddScoped<IInstitutionService, InstitutionService>();
+            services.AddScoped<IUserService, UserService>();
+
+            //TrainingCompetition
+            services.AddScoped<IMatchService, MatchService>();
+            services.AddScoped<ITrainingService, TrainingService>();
+
+            //MembersTeams
+            services.AddScoped<IMembersService, MemberService>();
+            services.AddScoped<IPlayerService, PlayerService>();
+            services.AddScoped<ITeamService, TeamService>();
+
+            //Infrastructures
+            services.AddScoped<IFacilityService, FacilityService>();
+            services.AddScoped<IMaintenanceService, MaintenanceService>();
+
+            //Financial
+            services.AddScoped<IEntityService, EntityService>();
+            services.AddScoped<IExpenseService, ExpenseService>();
+            services.AddScoped<IRevenueService, RevenueService>();
+
+            #endregion
 
             // Add Domain Validators
             services.AddScoped<IValidator<Institution>, InstitutionValidator>();
