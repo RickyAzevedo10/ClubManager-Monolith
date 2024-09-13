@@ -14,37 +14,22 @@ namespace ClubManager.App.Services.Identity
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
         private readonly IInstitutionService _institutionService;
-        private readonly IUserClaimsService _userClaimsService;
         private readonly IUserAppService _userAppService;
 
-        public InstitutionAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IInstitutionService institutionService, IUserClaimsService userClaimsService, IUserAppService userAppService)
+        public InstitutionAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IInstitutionService institutionService, IUserAppService userAppService)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _institutionService = institutionService;
-            _userClaimsService = userClaimsService;
             _userAppService = userAppService;
         }
 
         public async Task<Institution?> Get(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? user = null;
-
-            if (email != null)
-            {
-                user = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-            }
-
-            if(user == null)
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
-
             //validar se tem permissões para consultar
-            bool canConsult = _authorizationService.CanConsult(user.Id);
+            bool canConsult = await _authorizationService.CanConsult();
+
             if(!canConsult)
             {
                 _notificationContext.AddNotification(NotificationKeys.CANT_CONSULT, string.Empty);
@@ -57,21 +42,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<List<Institution>?> GetAll()
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? user = null;
-
-            if (email != null)
-            {
-                user = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-            }
-
-            if (user == null)
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
-
-            bool canConsult = _authorizationService.CanConsult(user.Id);
+            bool canConsult = await _authorizationService.CanConsult();
             if (!canConsult)
             {
                 _notificationContext.AddNotification(NotificationKeys.CANT_CONSULT, string.Empty);
@@ -108,33 +79,19 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<Institution?> Update(Institution institutionToUpdate)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? user = null;
-
-            if (email != null)
+            bool canEdit = await _authorizationService.CanEdit();
+            if (!canEdit)
             {
-                user = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-            }
-
-            if (user == null)
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
+                _notificationContext.AddNotification(NotificationKeys.CANT_EDIT, string.Empty);
                 return null;
             }
 
             //validar se ja existe a instituição
             Institution? institution = await _unitOfWork.InstitutionRepository.GetByNameAsync(institutionToUpdate.Name);
 
-            if (institution != null)
+            if (institution == null)
             {
-                _notificationContext.AddNotification(NotificationKeys.InstitutionNotifications.INSTITUTION_ALREADY_EXITS, string.Empty);
-                return null;
-            }
-
-            bool canEdit = _authorizationService.CanEdit(user.Id);
-            if (!canEdit)
-            {
-                _notificationContext.AddNotification(NotificationKeys.CANT_EDIT, string.Empty);
+                _notificationContext.AddNotification(NotificationKeys.InstitutionNotifications.INSTITUTION_NOT_FOUND, string.Empty);
                 return null;
             }
 
@@ -151,21 +108,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<Institution?> Delete(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? user = null;
-
-            if (email != null)
-            {
-                user = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-            }
-
-            if (user == null)
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
-
-            bool canDelete = _authorizationService.CanDelete(user.Id);
+            bool canDelete = await _authorizationService.CanDelete();
             if (!canDelete)
             {
                 _notificationContext.AddNotification(NotificationKeys.CANT_DELETE, string.Empty);

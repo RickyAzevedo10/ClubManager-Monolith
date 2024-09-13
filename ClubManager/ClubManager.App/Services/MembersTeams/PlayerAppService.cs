@@ -15,31 +15,20 @@ namespace ClubManager.App.Services.Identity
         private readonly INotificationContext _notificationContext;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
-        private readonly IUserClaimsService _userClaimsService;
         private readonly IPlayerService _playerService;
 
-        public PlayerAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IUserClaimsService userClaimsService, IPlayerService playerService)
+        public PlayerAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IPlayerService playerService)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
-            _userClaimsService = userClaimsService;
             _playerService = playerService;
         }
 
         #region Player
         public async Task<Player?> GetPlayer(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -54,20 +43,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<Player?> DeletePlayer(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canDelete;
-            if (userAuthenticated != null)
-                canDelete = _authorizationService.CanDelete(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canDelete = await _authorizationService.CanDelete();
 
             if (!canDelete)
             {
@@ -88,20 +64,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<Player?> CreatePlayer(CreatePlayerDTO playerBody)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canCreate;
-            if (userAuthenticated != null)
-                canCreate = _authorizationService.CanCreate(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canCreate = await _authorizationService.CanCreate();
 
             if (!canCreate)
             {
@@ -130,21 +93,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<Player?> UpdatePlayer(UpdatePlayerDTO playerToUpdate)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canEdit;
-
-            if (userAuthenticated != null)
-                canEdit = _authorizationService.CanEdit(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canEdit = await _authorizationService.CanEdit();
 
             if (!canEdit)
             {
@@ -184,16 +133,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<List<Player>?> SearchPlayersAsync(string? firstName, string? lastName, string? position)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -210,16 +150,7 @@ namespace ClubManager.App.Services.Identity
         #region PlayerTransfer
         public async Task<List<PlayerTransfer>?> GetPlayerTransfer(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -234,20 +165,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<PlayerTransfer?> DeletePlayerTransfer(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canDelete;
-            if (userAuthenticated != null)
-                canDelete = _authorizationService.CanDelete(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canDelete = await _authorizationService.CanDelete();
 
             if (!canDelete)
             {
@@ -268,20 +186,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<PlayerTransfer?> CreatePlayerTransfer(CreatePlayerTransferDTO playerTransferBody)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canCreate;
-            if (userAuthenticated != null)
-                canCreate = _authorizationService.CanCreate(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canCreate = await _authorizationService.CanCreate();
 
             if (!canCreate)
             {
@@ -302,21 +207,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<PlayerTransfer?> UpdatePlayerTransfer(UpdatePlayerTransferDTO playerTransferToUpdate)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canEdit;
-
-            if (userAuthenticated != null)
-                canEdit = _authorizationService.CanEdit(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canEdit = await _authorizationService.CanEdit();
 
             if (!canEdit)
             {
@@ -350,20 +241,7 @@ namespace ClubManager.App.Services.Identity
         #region PlayerContract
         public async Task<PlayerContract?> CreatePlayerContract(CreatePlayerContractDTO playerContractBody)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canCreate;
-            if (userAuthenticated != null)
-                canCreate = _authorizationService.CanCreate(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canCreate = await _authorizationService.CanCreate();
 
             if (!canCreate)
             {
@@ -392,16 +270,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<List<PlayerContract>?> GetPlayerContract(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -416,20 +285,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<PlayerContract?> DeletePlayerContract(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canDelete;
-            if (userAuthenticated != null)
-                canDelete = _authorizationService.CanDelete(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canDelete = await _authorizationService.CanDelete();
 
             if (!canDelete)
             {
@@ -450,21 +306,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<PlayerContract?> UpdatePlayerContract(UpdatePlayerContractDTO playerContractToUpdate)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canEdit;
-
-            if (userAuthenticated != null)
-                canEdit = _authorizationService.CanEdit(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canEdit = await _authorizationService.CanEdit();
 
             if (!canEdit)
             {
@@ -498,20 +340,7 @@ namespace ClubManager.App.Services.Identity
         #region PlayerPerformanceHistory
         public async Task<PlayerPerformanceHistory?> DeletePlayerPerformanceHistory(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canDelete;
-            if (userAuthenticated != null)
-                canDelete = _authorizationService.CanDelete(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canDelete = await _authorizationService.CanDelete();
 
             if (!canDelete)
             {
@@ -532,20 +361,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<PlayerPerformanceHistory?> CreatePlayerPerformanceHistory(CreatePlayerPerformanceHistoryDTO playerPerformanceHistoryBody)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canCreate;
-            if (userAuthenticated != null)
-                canCreate = _authorizationService.CanCreate(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canCreate = await _authorizationService.CanCreate();
 
             if (!canCreate)
             {
@@ -566,21 +382,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<PlayerPerformanceHistory?> UpdatePlayerPerformanceHistory(UpdatePlayerPerformanceHistoryDTO playerPerformanceHistoryToUpdate)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canEdit;
-
-            if (userAuthenticated != null)
-                canEdit = _authorizationService.CanEdit(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canEdit = await _authorizationService.CanEdit();
 
             if (!canEdit)
             {
@@ -612,16 +414,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<PlayerPerformanceHistoryResponseDTO?> GetPlayerPerformanceHistory(long playerId, string season)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {

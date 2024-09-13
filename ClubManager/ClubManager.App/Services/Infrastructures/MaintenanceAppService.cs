@@ -14,31 +14,20 @@ namespace ClubManager.App.Services.Infrastructures
         private readonly INotificationContext _notificationContext;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
-        private readonly IUserClaimsService _userClaimsService;
         private readonly IMaintenanceService _maintenanceService;
 
-        public MaintenanceAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IUserClaimsService userClaimsService, IMaintenanceService maintenanceService)
+        public MaintenanceAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IMaintenanceService maintenanceService)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
-            _userClaimsService = userClaimsService;
             _maintenanceService = maintenanceService;
         }
 
         #region MaintenanceRequest
         public async Task<MaintenanceRequest?> GetMaintenanceRequest(long maintenanceRequestId)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -53,20 +42,7 @@ namespace ClubManager.App.Services.Infrastructures
 
         public async Task<MaintenanceRequest?> DeleteMaintenanceRequest(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canDelete;
-            if (userAuthenticated != null)
-                canDelete = _authorizationService.CanDelete(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canDelete = await _authorizationService.CanDelete();
 
             if (!canDelete)
             {
@@ -87,20 +63,7 @@ namespace ClubManager.App.Services.Infrastructures
 
         public async Task<MaintenanceRequest?> CreateMaintenanceRequest(CreateMaintenanceRequestDTO maintenanceRequestBody)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canCreate;
-            if (userAuthenticated != null)
-                canCreate = _authorizationService.CanCreate(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canCreate = await _authorizationService.CanCreate();
 
             if (!canCreate)
             {
@@ -121,21 +84,7 @@ namespace ClubManager.App.Services.Infrastructures
 
         public async Task<MaintenanceRequest?> UpdateMaintenanceRequest(UpdateMaintenanceRequestDTO maintenanceRequestToUpdate)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canEdit;
-
-            if (userAuthenticated != null)
-                canEdit = _authorizationService.CanEdit(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canEdit = await _authorizationService.CanEdit();
 
             if (!canEdit)
             {
@@ -175,20 +124,7 @@ namespace ClubManager.App.Services.Infrastructures
         #region MaintenanceHistory
         public async Task<MaintenanceHistory?> CreateMaintenanceHistory(long maintenanceRequestId)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canCreate;
-            if (userAuthenticated != null)
-                canCreate = _authorizationService.CanCreate(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canCreate = await _authorizationService.CanCreate();
 
             if (!canCreate)
             {
@@ -209,16 +145,7 @@ namespace ClubManager.App.Services.Infrastructures
 
         public async Task<List<MaintenanceHistory>?> GetMaintenanceHistory(DateTime startDate, DateTime endDate)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {

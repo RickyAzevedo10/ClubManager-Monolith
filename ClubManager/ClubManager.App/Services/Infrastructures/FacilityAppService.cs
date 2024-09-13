@@ -14,31 +14,20 @@ namespace ClubManager.App.Services.Infrastructures
         private readonly INotificationContext _notificationContext;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
-        private readonly IUserClaimsService _userClaimsService;
         private readonly IFacilityService _facilityService;
 
-        public FacilityAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IUserClaimsService userClaimsService, IFacilityService facilityService)
+        public FacilityAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IFacilityService facilityService)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
-            _userClaimsService = userClaimsService;
             _facilityService = facilityService;
         }
 
         #region Facility
         public async Task<Facility?> GetFacility(long facilityId)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -53,16 +42,7 @@ namespace ClubManager.App.Services.Infrastructures
 
         public async Task<List<Facility>?> GetAllFacility()
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -77,20 +57,7 @@ namespace ClubManager.App.Services.Infrastructures
 
         public async Task<Facility?> DeleteFacility(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canDelete;
-            if (userAuthenticated != null)
-                canDelete = _authorizationService.CanDelete(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canDelete = await _authorizationService.CanDelete();
 
             if (!canDelete)
             {
@@ -111,20 +78,7 @@ namespace ClubManager.App.Services.Infrastructures
         
         public async Task<Facility?> CreateFacility(CreateFacilityDTO facilityBody)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canCreate;
-            if (userAuthenticated != null)
-                canCreate = _authorizationService.CanCreate(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canCreate = await _authorizationService.CanCreate();
 
             if (!canCreate)
             {
@@ -146,21 +100,7 @@ namespace ClubManager.App.Services.Infrastructures
 
         public async Task<Facility?> UpdateFacility(UpdateFacilityDTO facilityToUpdate)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canEdit;
-
-            if (userAuthenticated != null)
-                canEdit = _authorizationService.CanEdit(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canEdit = await _authorizationService.CanEdit();
 
             if (!canEdit)
             {
@@ -200,16 +140,7 @@ namespace ClubManager.App.Services.Infrastructures
         #region FacilityReservation
         public async Task<FacilityReservation?> GetFacilityReservation(long facilityReservationId)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -224,20 +155,7 @@ namespace ClubManager.App.Services.Infrastructures
 
         public async Task<FacilityReservation?> DeleteFacilityReservation(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canDelete;
-            if (userAuthenticated != null)
-                canDelete = _authorizationService.CanDelete(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canDelete = await _authorizationService.CanDelete();
 
             if (!canDelete)
             {
@@ -258,20 +176,7 @@ namespace ClubManager.App.Services.Infrastructures
 
         public async Task<FacilityReservation?> CreateFacilityReservation(CreateFacilityReservationDTO facilityReservationBody)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canCreate;
-            if (userAuthenticated != null)
-                canCreate = _authorizationService.CanCreate(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canCreate = await _authorizationService.CanCreate();
 
             if (!canCreate)
             {
@@ -292,21 +197,7 @@ namespace ClubManager.App.Services.Infrastructures
 
         public async Task<FacilityReservation?> UpdateFacilityReservation(UpdateFacilityReservationDTO facilityReservationToUpdate)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canEdit;
-
-            if (userAuthenticated != null)
-                canEdit = _authorizationService.CanEdit(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canEdit = await _authorizationService.CanEdit();
 
             if (!canEdit)
             {

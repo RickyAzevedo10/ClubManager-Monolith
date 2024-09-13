@@ -4,9 +4,9 @@ namespace ClubManager.App.Interfaces.Infrastructure
 {
     public interface IAuthorizationService
     {
-        bool CanEdit(long userId);
-        bool CanConsult(long userId);
-        bool CanDelete(long userId);
-        bool CanCreate(long userId);
+        Task<bool> CanEdit();
+        Task<bool> CanConsult();
+        Task<bool> CanDelete();
+        Task<bool> CanCreate();
     }
 }

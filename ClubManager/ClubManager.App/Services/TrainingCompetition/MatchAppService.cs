@@ -1,7 +1,6 @@
 ﻿using ClubManager.App.Interfaces.Identity;
 using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.TrainingCompetition;
-using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Entities.TrainingCompetition;
 using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Interfaces.Identity;
@@ -15,35 +14,20 @@ namespace ClubManager.App.Services.Identity
         private readonly INotificationContext _notificationContext;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
-        private readonly IUserClaimsService _userClaimsService;
         private readonly IMatchService _matchService;
 
-        public MatchAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IUserClaimsService userClaimsService, IMatchService matchAppService)
+        public MatchAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IMatchService matchAppService)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
-            _userClaimsService = userClaimsService;
             _matchService = matchAppService;
         }
 
         #region Match
         public async Task<Match?> CreateMatch(CreateMatchDTO matchBody)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canCreate;
-            if (userAuthenticated != null)
-                canCreate = _authorizationService.CanCreate(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canCreate = await _authorizationService.CanCreate();
 
             if (!canCreate)
             {
@@ -64,20 +48,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<Match?> DeleteMatch(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canDelete;
-            if (userAuthenticated != null)
-                canDelete = _authorizationService.CanDelete(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canDelete = await _authorizationService.CanDelete();
 
             if (!canDelete)
             {
@@ -98,16 +69,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<Match?> GetMatch(long matchId)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -122,16 +84,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<List<Match>?> GetTeamMatches(long teamId)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -146,21 +99,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<Match?> UpdateMatch(UpdateMatchDTO matchToUpdate)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canEdit;
-
-            if (userAuthenticated != null)
-                canEdit = _authorizationService.CanEdit(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canEdit = await _authorizationService.CanEdit();
 
             if (!canEdit)
             {
@@ -200,20 +139,7 @@ namespace ClubManager.App.Services.Identity
         #region MatchStatistics
         public async Task<MatchStatistic?> CreateMatchStatistic(CreateMatchStatisticDTO matchStatisticBody)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canCreate;
-            if (userAuthenticated != null)
-                canCreate = _authorizationService.CanCreate(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canCreate = await _authorizationService.CanCreate();
 
             if (!canCreate)
             {
@@ -234,21 +160,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<MatchStatistic?> UpdateMatchStatistic(UpdateMatchStatisticDTO matchStatisticToUpdate)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canEdit;
-
-            if (userAuthenticated != null)
-                canEdit = _authorizationService.CanEdit(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canEdit = await _authorizationService.CanEdit();
 
             if (!canEdit)
             {
@@ -286,20 +198,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<MatchStatistic?> DeleteMatchStatistic(long id)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canDelete;
-            if (userAuthenticated != null)
-                canDelete = _authorizationService.CanDelete(userAuthenticated.Id);
-            else
-            {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
-                return null;
-            }
+            bool canDelete = await _authorizationService.CanDelete();
 
             if (!canDelete)
             {
@@ -320,16 +219,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<List<MatchStatistic>?> GetMatchStatisticsFromMatchID(long matchId)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -344,16 +234,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<List<MatchStatistic>?> GetPlayerMatchStatistics(long playerId)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -368,16 +249,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<List<MatchStatistic>?> GetPlayerMatchStatisticsFromMatchId(long playerId, long matchId)
         {
-            string? email = _userClaimsService.GetUserEmail();
-            User? userAuthenticated = null;
-
-            if (email != null)
-                userAuthenticated = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-
-            bool canConsult = false;
-
-            if (userAuthenticated != null)
-                canConsult = _authorizationService.CanConsult(userAuthenticated.Id);
+            bool canConsult = await _authorizationService.CanConsult();
 
             if (!canConsult)
             {
@@ -389,8 +261,6 @@ namespace ClubManager.App.Services.Identity
 
             return matchStatisticsList;
         }
-
-
         #endregion
     }
 }
