@@ -3,7 +3,7 @@
     public class UpdateEntityRevenueDTO
     {
         public UpdateEntityDTO Entity { get; set; }
-        public List<RevenueDTO> Revenues { get; set; }
+        public List<UpdateRevenueDTO> Revenues { get; set; }
     }
 
     public class UpdateRevenueDTO

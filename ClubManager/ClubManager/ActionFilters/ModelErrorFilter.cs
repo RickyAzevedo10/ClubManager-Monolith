@@ -1,15 +1,15 @@
-﻿using ClubManager.Domain.Services;
+﻿using ClubManager.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 
-namespace MSAuth.API.ActionFilters
+namespace ClubManager.API.ActionFilters
 {
     public class ModelErrorFilter : IAsyncResultFilter
     {
-        private readonly ModelErrorsContext _modelErrorContext;
+        private readonly IModelErrorsContext _modelErrorContext;
 
-        public ModelErrorFilter(ModelErrorsContext modelErrorContext)
+        public ModelErrorFilter(IModelErrorsContext modelErrorContext)
         {
             _modelErrorContext = modelErrorContext;
         }

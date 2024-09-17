@@ -1,16 +1,18 @@
-﻿namespace ClubManager.Domain.Entities.Financial
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ClubManager.Domain.Entities.Financial
 {
     public class Revenue : BaseEntity
     {
         public DateTime RevenueDate { get; set; }  
         public decimal Amount { get; set; }  
         public string Source { get; set; }  
-        public int CategoryId { get; set; }  
+        public long CategoryId { get; set; }  
         public string Description { get; set; }  
         public string PaymentReference { get; set; }  
-        public int EntityId { get; set; }  
+        public long EntityId { get; set; }
 
-        
+        [ForeignKey("CategoryId")]
         public virtual RevenueCategory RevenueCategory { get; set; }  
         public virtual Entity Entity { get; set; }
 
@@ -29,7 +31,7 @@
             Source = source;
         }
 
-        public void SetCategoryId(int categoryId)
+        public void SetCategoryId(long categoryId)
         {
             CategoryId = categoryId;
         }
@@ -44,7 +46,7 @@
             PaymentReference = paymentReference;
         }
 
-        public void SetEntityId(int entityId)
+        public void SetEntityId(long entityId)
         {
             EntityId = entityId;
         }

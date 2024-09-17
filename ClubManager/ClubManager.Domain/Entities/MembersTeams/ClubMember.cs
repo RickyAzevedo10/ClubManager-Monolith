@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClubManager.Domain.Entities.MembersTeams
 {
@@ -18,6 +16,8 @@ namespace ClubManager.Domain.Entities.MembersTeams
 
         public ICollection<MinorClubMember> MinorClubMembers { get; set; }
         public ICollection<PlayerResponsible> PlayerResponsibles { get; set; }
+
+        [ForeignKey("ClubMemberId")]
         public UserClubMember UserClubMember { get; set; }
 
         public ClubMember()

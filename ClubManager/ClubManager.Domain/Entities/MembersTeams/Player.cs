@@ -12,7 +12,7 @@ namespace ClubManager.Domain.Entities.MembersTeams
         public int Height { get; set; }
         public int Weight { get; set; }
         public string PreferredFoot { get; set; }
-        public int PlayerCategoryId { get; set; }
+        public long PlayerCategoryId { get; set; }
         public PlayerCategory Category { get; set; }
         public ICollection<PlayerPerformanceHistory> PlayerPerformanceHistories { get; set; }
         public ICollection<PlayerResponsible> PlayerResponsibles { get; set; }
@@ -68,7 +68,7 @@ namespace ClubManager.Domain.Entities.MembersTeams
             PreferredFoot = preferredFoot;
         }
 
-        public void SetPlayerCategoryId(int playerCategoryId)
+        public void SetPlayerCategoryId(long playerCategoryId)
         {
             PlayerCategoryId = playerCategoryId;
         }

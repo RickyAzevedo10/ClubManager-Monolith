@@ -10,7 +10,7 @@
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public int GuardianId { get; set; }
+        public long GuardianId { get; set; }
         public ClubMember Guardian { get; set; }
 
         public MinorClubMember(){}
@@ -55,7 +55,7 @@
             Email = email;
         }
 
-        public void SetGuardianId(int guardianId)
+        public void SetGuardianId(long guardianId)
         {
             GuardianId = guardianId;
         }

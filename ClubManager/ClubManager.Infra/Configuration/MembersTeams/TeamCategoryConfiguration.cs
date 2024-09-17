@@ -17,15 +17,15 @@ namespace ClubManager.Infra.Configuration.Identity
             if (!entity.Metadata.GetSeedData().Any())
             {
                 entity.HasData(
-                    new TeamCategory { Id = 1, Name = "Pré-Petizes" },
-                    new TeamCategory { Id = 2, Name = "Petizes" },
-                    new TeamCategory { Id = 3, Name = "Traquinas" },
-                    new TeamCategory { Id = 4, Name = "Benjamins" },
-                    new TeamCategory { Id = 5, Name = "Infantis" },
-                    new TeamCategory { Id = 6, Name = "Iniciados" },
-                    new TeamCategory { Id = 7, Name = "Juvenis" },
-                    new TeamCategory { Id = 8, Name = "Juniores" },
-                    new TeamCategory { Id = 9, Name = "Seniores" }
+                    new TeamCategory { Id = 1, Name = "Pré-Petizes", Description = "Pré-Petizes" },
+                    new TeamCategory { Id = 2, Name = "Petizes", Description = "Petizes" },
+                    new TeamCategory { Id = 3, Name = "Traquinas", Description = "Traquinas" },
+                    new TeamCategory { Id = 4, Name = "Benjamins", Description = "Benjamins" },
+                    new TeamCategory { Id = 5, Name = "Infantis", Description = "Infantis" },
+                    new TeamCategory { Id = 6, Name = "Iniciados", Description = "Iniciados" },
+                    new TeamCategory { Id = 7, Name = "Juvenis", Description = "Juvenis" },
+                    new TeamCategory { Id = 8, Name = "Juniores", Description = "Juniores" },
+                    new TeamCategory { Id = 9, Name = "Seniores", Description = "Seniores" }
                 );
             }
         }

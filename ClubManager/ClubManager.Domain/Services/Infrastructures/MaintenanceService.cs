@@ -64,7 +64,7 @@ namespace ClubManager.Domain.Services.Infrastructures
         {
             CreateMaintenanceRequestDTO maintenanceRequestDTO = new()
             {
-                FacilityId = maintenanceRequest.FacilityId,
+                FacilityId = (int)maintenanceRequest.FacilityId,
                 MaintenanceType = maintenanceRequestToUpdate.MaintenanceType,
                 ProblemDescription = maintenanceRequestToUpdate.ProblemDescription,
                 Priority = maintenanceRequestToUpdate.Priority,

@@ -1,5 +1,4 @@
 ﻿using ClubManager.Domain.Entities.Financial;
-using ClubManager.Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

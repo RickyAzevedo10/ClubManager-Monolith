@@ -1,11 +1,9 @@
 ﻿using ClubManager.Domain.DTOs.Financial;
 using ClubManager.Domain.Entities.Financial;
-using ClubManager.Domain.Entities.Identity.Validators;
 using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Interfaces.Identity;
 using ClubManager.Domain.Interfaces.Repositories;
 using FluentValidation;
-using Microsoft.Extensions.Configuration;
 using static ClubManager.Domain.Constants.Constants;
 
 namespace ClubManager.Domain.Services.Identity
@@ -53,7 +51,7 @@ namespace ClubManager.Domain.Services.Identity
             return revenues;
         }
 
-        public async Task<List<Revenue>?> UpdateRevenue(List<RevenueDTO> revenueBody)
+        public async Task<List<Revenue>?> UpdateRevenue(List<UpdateRevenueDTO> revenueBody)
         {
             List<Revenue>? listRevenue = [];
             foreach (var item in revenueBody)

@@ -8,8 +8,8 @@ namespace ClubManager.Domain.Entities.MembersTeams
         public string Name { get; set; }
         public bool Female { get; set; }
         public bool Male { get; set; }
-        public int ClubId { get; set; }
-        public int TeamCategoryId { get; set; }
+        public long ClubId { get; set; }
+        public long TeamCategoryId { get; set; }
         public Institution Club { get; set; }
 
         public TeamCategory TeamCategories { get; set; }
@@ -33,12 +33,12 @@ namespace ClubManager.Domain.Entities.MembersTeams
             Male = male;
         }
 
-        public void SetClubId(int clubId)
+        public void SetClubId(long clubId)
         {
             ClubId = clubId;
         }
 
-        public void SetTeamCategoryId(int teamCategoryId)
+        public void SetTeamCategoryId(long teamCategoryId)
         {
             TeamCategoryId = teamCategoryId;
         }

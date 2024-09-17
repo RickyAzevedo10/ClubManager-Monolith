@@ -1,7 +1,5 @@
 ﻿using ClubManager.Domain.DTOs.Financial;
-using ClubManager.Domain.DTOs.Identity;
 using ClubManager.Domain.Entities.Financial;
-using ClubManager.Domain.Entities.Identity;
 
 namespace ClubManager.Domain.Interfaces.Identity
 {
@@ -9,6 +7,6 @@ namespace ClubManager.Domain.Interfaces.Identity
     {
         Task<List<Revenue>?> CreateRevenue(List<RevenueDTO> revenueBody);
         Task<Revenue?> DeleteRevenue(long id);
-        Task<List<Revenue>?> UpdateRevenue(List<RevenueDTO> revenueBody);
+        Task<List<Revenue>?> UpdateRevenue(List<UpdateRevenueDTO> revenueBody);
     }
 }

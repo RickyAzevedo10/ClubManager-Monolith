@@ -2,9 +2,9 @@
 {
     public class PlayerResponsible : BaseEntity
     {
-        public int PlayerId { get; set; }
+        public long PlayerId { get; set; }
         public Player Player { get; set; }
-        public int MemberId { get; set; }
+        public long MemberId { get; set; }
         public ClubMember Member { get; set; }
         public string Relationship { get; set; }
         public bool IsPrimaryContact { get; set; }
@@ -19,12 +19,12 @@
             IsPrimaryContact = isPrimaryContact;
         }
 
-        public void SetMemberId(int memberId)
+        public void SetMemberId(long memberId)
         {
             MemberId = memberId;
         }
 
-        public void SetPlayerId(int playerId)
+        public void SetPlayerId(long playerId)
         {
             PlayerId = playerId;
         }

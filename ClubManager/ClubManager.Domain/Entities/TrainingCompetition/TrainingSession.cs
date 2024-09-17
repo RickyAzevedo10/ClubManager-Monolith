@@ -4,7 +4,7 @@ namespace ClubManager.Domain.Entities.TrainingCompetition
 {
     public class TrainingSession : BaseEntity
     {
-        public int TeamId { get; set; } 
+        public long TeamId { get; set; } 
         public string Name { get; set; } 
         public DateTime Date { get; set; } 
         public int Duration { get; set; } 
@@ -16,7 +16,7 @@ namespace ClubManager.Domain.Entities.TrainingCompetition
         public ICollection<TrainingAttendance> TrainingAttendances { get; set; }
         public Team Team { get; set; }
 
-        public void SetTeamId(int teamId)
+        public void SetTeamId(long teamId)
         {
             TeamId = teamId;
         }

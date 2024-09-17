@@ -8,21 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClubManager.Infra.Contexts
 {
-    public class DataContext : DbContext
+    public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
     {
-        //public DataContext() { }
-
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {
-
-        }
-
         //Identity
         public DbSet<Institution> Institution { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserRoles> UserRoles { get; set; }
         public DbSet<UserPermissions> UserPermissions { get; set; }
-
 
         //MembersTeams
         public DbSet<Player> Player { get; set; }
@@ -69,6 +61,7 @@ namespace ClubManager.Infra.Contexts
 
             //MembersTeams
             builder.ApplyConfiguration(new TeamCategoryConfiguration());
+            builder.ApplyConfiguration(new TeamCoachConfiguration());
             builder.ApplyConfiguration(new ClubMemberConfiguration());
             builder.ApplyConfiguration(new MinorClubMemberConfiguration());
             builder.ApplyConfiguration(new PlayerCategoryConfiguration());

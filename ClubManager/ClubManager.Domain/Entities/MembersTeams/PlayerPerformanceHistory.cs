@@ -2,7 +2,7 @@
 {
     public class PlayerPerformanceHistory : BaseEntity
     {
-        public int PlayerId { get; set; }
+        public long PlayerId { get; set; }
         public Player Player { get; set; }
         public string Season { get; set; }
         public string ClubOpponent { get; set; }
@@ -12,7 +12,7 @@
         public int YellowCards { get; set; }
         public int RedCards { get; set; }
 
-        public void SetPlayerId(int playerId)
+        public void SetPlayerId(long playerId)
         {
             PlayerId = playerId;
         }

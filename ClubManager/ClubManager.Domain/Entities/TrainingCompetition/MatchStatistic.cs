@@ -4,8 +4,8 @@ namespace ClubManager.Domain.Entities.TrainingCompetition
 {
     public class MatchStatistic : BaseEntity
     {
-        public int MatchId { get; set; } 
-        public int PlayerId { get; set; } 
+        public long MatchId { get; set; } 
+        public long PlayerId { get; set; } 
         public int Goals { get; set; } 
         public int Assists { get; set; } 
         public int YellowCards { get; set; } 
@@ -16,12 +16,12 @@ namespace ClubManager.Domain.Entities.TrainingCompetition
         public Match Match { get; set; }
         public Player Player { get; set; }
 
-        public void SetMatchId(int matchId)
+        public void SetMatchId(long matchId)
         {
             MatchId = matchId;
         }
 
-        public void SetPlayerId(int playerId)
+        public void SetPlayerId(long playerId)
         {
             PlayerId = playerId;
         }

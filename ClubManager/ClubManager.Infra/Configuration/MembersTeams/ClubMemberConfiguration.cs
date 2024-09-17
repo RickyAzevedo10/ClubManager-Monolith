@@ -10,6 +10,11 @@ namespace ClubManager.Infra.Configuration.Identity
         {
             entity.HasKey(e => e.Id);
             entity.HasIndex(u => u.Email).IsUnique();
+
+            entity.HasOne(c => c.UserClubMember)
+                .WithOne(u => u.ClubMember)
+                .HasForeignKey<UserClubMember>(u => u.ClubMemberId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
     }

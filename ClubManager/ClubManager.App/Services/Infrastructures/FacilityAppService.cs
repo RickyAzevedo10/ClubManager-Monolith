@@ -1,6 +1,5 @@
 ﻿using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.Infrastructures;
-using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Interfaces.Infrastructures;

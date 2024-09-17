@@ -1,4 +1,5 @@
-﻿using ClubManager.App.Interfaces.Identity;
+﻿using ClubManager.API.ActionFilters;
+using ClubManager.App.Interfaces.Identity;
 using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.App.Services.Identity;
 using ClubManager.App.Services.Infrastructures;
@@ -21,8 +22,6 @@ using ClubManager.Infra.Persistence;
 using ClubManager.Infra.Services;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using MSAuth.API.ActionFilters;
-using MSAuth.Domain.Services;
 
 namespace ClubManager.Ioc
 {
@@ -34,6 +33,18 @@ namespace ClubManager.Ioc
 
             // Add UnitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            // Add Model Errors
+            services.AddScoped<IModelErrorsContext, ModelErrorsContext>();
+            services.AddScoped<IEntityValidationService, EntityValidationService>();
+            //Add notification context
+            services.AddScoped<INotificationContext, NotificationContext>();
+
+            //Add Infra Services dependencies
+            services.AddScoped<IUserClaimsService, UserClaimsService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IAuthorizationService, AuthorizationService>();
+            
 
             #region Add App Services dependencies 
             //Identity
@@ -60,44 +71,7 @@ namespace ClubManager.Ioc
 
             #endregion
 
-            //Add Infra Services dependencies
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<IAuthorizationService, AuthorizationService>();
-            services.AddScoped<IUserClaimsService, UserClaimsService>();
-
-            #region Add Domain Services dependencies
-
-            services.AddScoped<EntityValidationService>();
-            //Add notification context
-            services.AddScoped<INotificationContext, NotificationContext>();
-
-            // Add Model Errors
-            services.AddScoped<IModelErrorsContext, ModelErrorsContext>();
-
-            //Identity
-            services.AddScoped<IInstitutionService, InstitutionService>();
-            services.AddScoped<IUserService, UserService>();
-
-            //TrainingCompetition
-            services.AddScoped<IMatchService, MatchService>();
-            services.AddScoped<ITrainingService, TrainingService>();
-
-            //MembersTeams
-            services.AddScoped<IMembersService, MemberService>();
-            services.AddScoped<IPlayerService, PlayerService>();
-            services.AddScoped<ITeamService, TeamService>();
-
-            //Infrastructures
-            services.AddScoped<IFacilityService, FacilityService>();
-            services.AddScoped<IMaintenanceService, MaintenanceService>();
-
-            //Financial
-            services.AddScoped<IEntityService, EntityService>();
-            services.AddScoped<IExpenseService, ExpenseService>();
-            services.AddScoped<IRevenueService, RevenueService>();
-
-            #endregion
-
+            #region Validators
             // Add Domain Validators
             services.AddScoped<IValidator<Institution>, InstitutionValidator>();
             services.AddScoped<IValidator<CreateUserDTO>, CreateUserValidator>();
@@ -134,6 +108,35 @@ namespace ClubManager.Ioc
             services.AddScoped<IValidator<ExpenseDTO>, ExpenseValidator>();
             services.AddScoped<IValidator<RevenueDTO>, RevenueValidator>();
             services.AddScoped<IValidator<CreateEntityDTO>, EntityValidator>();
+            #endregion
+
+            #region Add Domain Services dependencies
+
+            //Identity
+            services.AddScoped<IInstitutionService, InstitutionService>();
+            services.AddScoped<IUserService, UserService>();
+
+            //TrainingCompetition
+            services.AddScoped<IMatchService, MatchService>();
+            services.AddScoped<ITrainingService, TrainingService>();
+
+            //MembersTeams
+            services.AddScoped<IMembersService, MemberService>();
+            services.AddScoped<IPlayerService, PlayerService>();
+            services.AddScoped<ITeamService, TeamService>();
+
+            //Infrastructures
+            services.AddScoped<IFacilityService, FacilityService>();
+            services.AddScoped<IMaintenanceService, MaintenanceService>();
+
+            //Financial
+            services.AddScoped<IEntityService, EntityService>();
+            services.AddScoped<IExpenseService, ExpenseService>();
+            services.AddScoped<IRevenueService, RevenueService>();
+
+            #endregion
+
+           
 
             // Add data access dependencies
             var sql_conn = configuration.GetConnectionString("DefaultConnection");

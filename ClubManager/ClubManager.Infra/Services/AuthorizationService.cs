@@ -7,14 +7,11 @@ namespace ClubManager.Infra.Services
     public class AuthorizationService : IAuthorizationService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAuthorizationService _authorizationService;
         private readonly IUserClaimsService _userClaimsService;
 
-
-        public AuthorizationService(IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IUserClaimsService userClaimsService)
+        public AuthorizationService(IUnitOfWork unitOfWork, IUserClaimsService userClaimsService)
         {
             _unitOfWork = unitOfWork;
-            _authorizationService = authorizationService;
             _userClaimsService = userClaimsService;
         }
 
@@ -61,7 +58,7 @@ namespace ClubManager.Infra.Services
             bool canCreate = false;
 
             if (userAuthenticated != null)
-                canCreate = _unitOfWork.UserPermissionsRepository.GetEntity().Where(x => x.Users.FirstOrDefault()!.Id == userId).FirstOrDefault()?.Create ?? false;
+                canCreate = _unitOfWork.UserPermissionsRepository.GetEntity().Where(x => x.Users.FirstOrDefault()!.Id == userAuthenticated.Id).FirstOrDefault()?.Create ?? false;
 
             return canCreate;
         }

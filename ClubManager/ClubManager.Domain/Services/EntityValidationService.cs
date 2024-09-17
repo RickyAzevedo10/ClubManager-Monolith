@@ -1,14 +1,13 @@
 ﻿using ClubManager.Domain.Interfaces;
-using ClubManager.Domain.Services;
 using FluentValidation;
 
-namespace MSAuth.Domain.Services
+namespace ClubManager.Domain.Services
 {
     public class EntityValidationService : IEntityValidationService
     {
-        private readonly ModelErrorsContext _modelErrorsContext;
+        private readonly IModelErrorsContext _modelErrorsContext;
 
-        public EntityValidationService(ModelErrorsContext modelErrorContext)
+        public EntityValidationService(IModelErrorsContext modelErrorContext)
         {
             _modelErrorsContext = modelErrorContext;
         }

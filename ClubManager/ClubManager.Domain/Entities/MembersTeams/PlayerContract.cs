@@ -2,7 +2,7 @@
 {
     public class PlayerContract : BaseEntity
     {
-        public int PlayerId { get; set; }
+        public long PlayerId { get; set; }
         public Player Player { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -13,7 +13,7 @@
         {
         }
 
-        public void SetPlayerId(int playerId)
+        public void SetPlayerId(long playerId)
         {
             PlayerId = playerId;
         }

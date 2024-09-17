@@ -1,6 +1,4 @@
-﻿using ClubManager.Domain.DTOs.MembersTeams;
-using ClubManager.Domain.DTOs.TrainingCompetition;
-using ClubManager.Domain.Entities.MembersTeams;
+﻿using ClubManager.Domain.DTOs.TrainingCompetition;
 using ClubManager.Domain.Entities.TrainingCompetition;
 
 namespace ClubManager.App.Interfaces.Identity

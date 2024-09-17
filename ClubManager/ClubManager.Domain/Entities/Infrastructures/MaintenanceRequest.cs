@@ -4,18 +4,18 @@ namespace ClubManager.Domain.Entities.Infrastructures
 {
     public class MaintenanceRequest : BaseEntity
     {
-        public int FacilityId { get; set; }  
+        public long FacilityId { get; set; }  
         public string MaintenanceType { get; set; }  
         public string ProblemDescription { get; set; }  
         public string Priority { get; set; }  
         public DateTime RequestDate { get; set; }  
-        public int RequestedUserId { get; set; }  
+        public long RequestedUserId { get; set; }  
         public string Status { get; set; } 
         // Relacionamentos com outras tabelas
         public Facility Facility { get; set; }  
         public User RequestedUser { get; set; }
 
-        public void SetFacilityId(int facilityId)
+        public void SetFacilityId(long facilityId)
         {
             FacilityId = facilityId;
         }
@@ -40,7 +40,7 @@ namespace ClubManager.Domain.Entities.Infrastructures
             RequestDate = requestDate;
         }
 
-        public void SetRequestedUserId(int requestedUserId)
+        public void SetRequestedUserId(long requestedUserId)
         {
             RequestedUserId = requestedUserId;
         }

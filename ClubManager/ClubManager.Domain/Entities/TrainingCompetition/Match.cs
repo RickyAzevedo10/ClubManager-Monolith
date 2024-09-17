@@ -8,7 +8,7 @@ namespace ClubManager.Domain.Entities.TrainingCompetition
         public string Opponent { get; set; } 
         public string Location { get; set; } 
         public string CompetitionType { get; set; } 
-        public int TeamId { get; set; }
+        public long TeamId { get; set; }
         public bool IsCanceled { get; set; }
 
         public Team Team { get; set; }
@@ -34,7 +34,7 @@ namespace ClubManager.Domain.Entities.TrainingCompetition
             CompetitionType = competitionType;
         }
 
-        public void SetTeamId(int teamId)
+        public void SetTeamId(long teamId)
         {
             TeamId = teamId;
         }

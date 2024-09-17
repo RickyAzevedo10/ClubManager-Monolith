@@ -4,20 +4,20 @@ namespace ClubManager.Domain.Entities.TrainingCompetition
 {
     public class TrainingAttendance : BaseEntity
     {
-        public int TrainingSessionId { get; set; } 
-        public int PlayerId { get; set; } 
+        public long TrainingSessionId { get; set; } 
+        public long PlayerId { get; set; } 
         public bool IsPresent { get; set; } 
         public string AbsenceReason { get; set; }
 
         public TrainingSession TrainingSessions { get; set; }
         public Player Player { get; set; }
 
-        public void SetTrainingSessionId(int trainingSessionId)
+        public void SetTrainingSessionId(long trainingSessionId)
         {
             TrainingSessionId = trainingSessionId;
         }
 
-        public void SetPlayerId(int playerId)
+        public void SetPlayerId(long playerId)
         {
             PlayerId = playerId;
         }

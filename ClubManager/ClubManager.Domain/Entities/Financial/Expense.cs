@@ -1,9 +1,5 @@
 ﻿using ClubManager.Domain.Entities.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClubManager.Domain.Entities.Financial
 {
@@ -12,16 +8,18 @@ namespace ClubManager.Domain.Entities.Financial
         public DateTime ExpenseDate { get; set; }
         public decimal Amount { get; set; }  
         public string Destination { get; set; }  
-        public int CategoryId { get; set; }  
+        public long CategoryId { get; set; }  
         public string Description { get; set; }  
         public string PaymentReference { get; set; }  
-        public int EntityId { get; set; }
-        public int ResponsibleUserId { get; set; }
+        public long EntityId { get; set; }
+        public long ResponsibleUserId { get; set; }
 
         // Propriedades de navegação
-        public virtual ExpenseCategory ExpenseCategory { get; set; }  // Referência para a categoria da despesa
+        [ForeignKey("CategoryId")]
+        public virtual ExpenseCategory ExpenseCategory { get; set; } 
         public virtual Entity Entity { get; set; }
         public virtual User User { get; set; }
+
 
         public void SetExpenseDate(DateTime expenseDate)
         {
@@ -38,7 +36,7 @@ namespace ClubManager.Domain.Entities.Financial
             Destination = destination;
         }
 
-        public void SetCategoryId(int categoryId)
+        public void SetCategoryId(long categoryId)
         {
             CategoryId = categoryId;
         }
@@ -53,12 +51,12 @@ namespace ClubManager.Domain.Entities.Financial
             PaymentReference = paymentReference;
         }
 
-        public void SetEntityId(int entityId)
+        public void SetEntityId(long entityId)
         {
             EntityId = entityId;
         }
 
-        public void SetResponsibleUserId(int responsibleUserId)
+        public void SetResponsibleUserId(long responsibleUserId)
         {
             ResponsibleUserId = responsibleUserId;
         }

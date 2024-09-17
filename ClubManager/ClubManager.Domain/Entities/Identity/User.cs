@@ -3,6 +3,7 @@ using ClubManager.Domain.Entities.Financial;
 using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Entities.MembersTeams;
 using System.Collections;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -10,7 +11,7 @@ namespace ClubManager.Domain.Entities.Identity
 {
     public class User : BaseEntity
     {
-        public int InstitutionId { get; set; }
+        public long InstitutionId { get; set; }
         public Institution Institution { get; set; }
         public string Email { get; set; }
         public string Username { get; set; }
@@ -26,19 +27,22 @@ namespace ClubManager.Domain.Entities.Identity
         public DateTime? RefreshTokenExpire { get; set; }
         public string PasswordResetToken { get; set; }
         public DateTime? PasswordResetTokenExpire { get; set; }
-        public int UserRoleId { get; set; }
+        public long UserRoleId { get; set; }
         public UserRoles UserRole { get; set; }  
-        public int UserPermissionId { get; set; }
+        public long UserPermissionId { get; set; }
         public UserPermissions UserPermission { get; set; }
+
+        [ForeignKey("UserId")]
         public UserClubMember UserClubMember { get; set; }
+
+        [ForeignKey("ResponsibleUserId")]
+        public Expense Expense { get; set; }
 
         public ICollection<TeamCoach> TeamCoaches { get; set; }
         public ICollection<MaintenanceRequest> MaintenanceRequests { get; set; }
         public ICollection<MaintenanceHistory> MaintenanceHistory { get; set; }
         public ICollection<FacilityReservation> FacilityReservation { get; set; }
-        public Expense Expense { get; set; }
-
-
+        
         // Construtor necessário para EF
         private User(){}
 
