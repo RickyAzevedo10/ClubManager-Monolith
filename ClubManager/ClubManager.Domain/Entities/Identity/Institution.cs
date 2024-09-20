@@ -19,22 +19,69 @@
 
         public Institution() { }
 
-        public Institution(Institution institution)
+        public void SetName(string name)
         {
-            Name = institution.Name;
-            Address = institution.Address;
-            Abbreviation = institution.Abbreviation;
-            Logo = institution.Logo;
-            FoundationDate = institution.FoundationDate;
-            Colors = institution.Colors;
-            StadiumName = institution.StadiumName;
-            StadiumCapacity = institution.StadiumCapacity;
-            StadiumInauguration = institution.StadiumInauguration;
-            HaveTrainingCenter = institution.HaveTrainingCenter;
-            TrainingCenterAddress = institution.TrainingCenterAddress;
-            OfficialWebsiteUrl = institution.OfficialWebsiteUrl;
-            SocialMediaLinks = institution.SocialMediaLinks;
-            User = new List<User>(institution.User);
+            Name = name;
+        }
+
+        public void SetAbbreviation(string? abbreviation)
+        {
+            Abbreviation = abbreviation;
+        }
+
+        public void SetLogo(string? logo)
+        {
+            Logo = logo;
+        }
+
+        public void SetFoundationDate(DateTime foundationDate)
+        {
+            FoundationDate = foundationDate;
+        }
+
+        public void SetAddress(string address)
+        {
+            Address = address;
+        }
+
+        public void SetColors(string? colors)
+        {
+            Colors = colors;
+        }
+
+        public void SetStadiumName(string? stadiumName)
+        {
+            StadiumName = stadiumName;
+        }
+
+        public void SetStadiumCapacity(int stadiumCapacity)
+        {
+            StadiumCapacity = stadiumCapacity;
+        }
+
+        public void SetStadiumInauguration(DateTime stadiumInauguration)
+        {
+            StadiumInauguration = stadiumInauguration;
+        }
+
+        public void SetHaveTrainingCenter(bool haveTrainingCenter)
+        {
+            HaveTrainingCenter = haveTrainingCenter;
+        }
+
+        public void SetTrainingCenterAddress(string? trainingCenterAddress)
+        {
+            TrainingCenterAddress = trainingCenterAddress;
+        }
+
+        public void SetOfficialWebsiteUrl(string? officialWebsiteUrl)
+        {
+            OfficialWebsiteUrl = officialWebsiteUrl;
+        }
+
+        public void SetSocialMediaLinks(string? socialMediaLinks)
+        {
+            SocialMediaLinks = socialMediaLinks;
         }
     }
 }

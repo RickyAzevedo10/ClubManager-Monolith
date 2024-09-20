@@ -9,8 +9,8 @@ namespace ClubManager.Domain.Entities.Financial
         public bool External { get; set; }  
         public string EntityType { get; set; }  
         public string EntityName { get; set; }
-        public int? ClubMemberId { get; set; }
-        public int? PlayerId { get; set; }
+        public long? ClubMemberId { get; set; }
+        public long? PlayerId { get; set; }
 
         public virtual ClubMember UserClubMember { get; set; }
         public virtual Player Player { get; set; }
@@ -38,12 +38,12 @@ namespace ClubManager.Domain.Entities.Financial
             EntityName = entityName;
         }
 
-        public void SetClubMemberId(int? clubMemberId)
+        public void SetClubMemberId(long? clubMemberId)
         {
             ClubMemberId = clubMemberId;
         }
 
-        public void SetPlayerId(int? playerId)
+        public void SetPlayerId(long? playerId)
         {
             PlayerId = playerId;
         }

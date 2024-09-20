@@ -1,6 +1,7 @@
 ﻿using ClubManager.Domain.Entities.Financial;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace ClubManager.Infra.Configuration.Identity
 {

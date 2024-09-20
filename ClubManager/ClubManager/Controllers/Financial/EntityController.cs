@@ -1,7 +1,7 @@
 using ClubManager.App.Services.Infrastructures;
 using ClubManager.Domain.DTOs.Financial;
 using ClubManager.Domain.Entities.Financial;
-using ClubManager.Domain.Services;
+using ClubManager.Domain.Interfaces;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +12,10 @@ namespace ClubManager.Controllers.MembersTeams
     [Route("[controller]")]
     public class EntityController : ControllerBase
     {
-        private readonly NotificationContext _notificationContext;
-        private readonly ModelErrorsContext _modelErrorsContext;
+        private readonly INotificationContext _notificationContext;
+        private readonly IModelErrorsContext _modelErrorsContext;
         private readonly IEntityAppService _entityAppService;
-        public EntityController(NotificationContext notificationContext, ModelErrorsContext modelErrorsContext, IEntityAppService entityAppService)
+        public EntityController(INotificationContext notificationContext, IModelErrorsContext modelErrorsContext, IEntityAppService entityAppService)
         {
             _notificationContext = notificationContext;
             _modelErrorsContext = modelErrorsContext;
@@ -66,7 +66,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns></returns>
-        [HttpGet("Entity")]
+        [HttpGet("EntityId")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
         public async Task<IActionResult> GetEntity(long entityId)
         {
@@ -78,7 +78,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// get all Entity
         /// </summary>
         /// <returns></returns>
-        [HttpGet("Entity")]
+        [HttpGet("AllEntity")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
         public async Task<IActionResult> GetAllEntity()
         {

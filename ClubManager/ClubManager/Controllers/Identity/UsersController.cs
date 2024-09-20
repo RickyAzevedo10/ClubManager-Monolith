@@ -1,7 +1,7 @@
 using ClubManager.App.Interfaces.Identity;
 using ClubManager.Domain.DTOs.Identity;
 using ClubManager.Domain.Entities.Identity;
-using ClubManager.Domain.Services;
+using ClubManager.Domain.Interfaces;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +13,10 @@ namespace ClubManager.Controllers.Identity
     public class UsersController : ControllerBase
     {
         private readonly IUserAppService _userAppService;
-        private readonly NotificationContext _notificationContext;
-        private readonly ModelErrorsContext _modelErrorsContext;
+        private readonly INotificationContext _notificationContext;
+        private readonly IModelErrorsContext _modelErrorsContext;
 
-        public UsersController(IUserAppService userAppService, NotificationContext notificationContext, ModelErrorsContext modelErrorsContext)
+        public UsersController(IUserAppService userAppService, INotificationContext notificationContext, IModelErrorsContext modelErrorsContext)
         {
             _modelErrorsContext = modelErrorsContext;
             _userAppService = userAppService;
@@ -24,7 +24,7 @@ namespace ClubManager.Controllers.Identity
         }
 
         /// <summary>
-        /// informação de um user
+        /// get user information
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -37,7 +37,7 @@ namespace ClubManager.Controllers.Identity
         }
 
         /// <summary>
-        /// informação de todos os users de uma determinada instituição
+        /// get all information about a institution id
         /// </summary>
         /// <param name="idInstitution"></param>
         /// <returns></returns>
@@ -50,7 +50,7 @@ namespace ClubManager.Controllers.Identity
         }
 
         /// <summary>
-        /// permissoes de um determinado user
+        /// get user permissions from a user id
         /// </summary>
         /// <param name="idUser"></param>
         /// <returns></returns>
@@ -101,7 +101,7 @@ namespace ClubManager.Controllers.Identity
         }
 
         /// <summary>
-        /// DELETE USER
+        /// delete user
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -114,7 +114,7 @@ namespace ClubManager.Controllers.Identity
         }
 
         /// <summary>
-        /// LOGIN USER
+        /// Login user
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
@@ -127,7 +127,7 @@ namespace ClubManager.Controllers.Identity
         }
 
         /// <summary>
-        /// REFRESH TOKEN
+        /// Refresh token
         /// </summary>
         /// <param name="refreshToken"></param>
         /// <returns></returns>
@@ -140,7 +140,7 @@ namespace ClubManager.Controllers.Identity
         }
 
         /// <summary>
-        /// atualizar permissoes de um utilizador
+        /// Update User Permissions
         /// </summary>
         /// <param name="userPermissionsBody"></param>
         /// <returns></returns>
@@ -153,7 +153,7 @@ namespace ClubManager.Controllers.Identity
         }
 
         /// <summary>
-        /// eliminar permissoes de um utilizador
+        /// Delete User Permissions
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

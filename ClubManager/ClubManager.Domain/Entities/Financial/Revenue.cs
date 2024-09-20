@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using ClubManager.Domain.Entities.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClubManager.Domain.Entities.Financial
 {
@@ -11,10 +12,13 @@ namespace ClubManager.Domain.Entities.Financial
         public string Description { get; set; }  
         public string PaymentReference { get; set; }  
         public long EntityId { get; set; }
+        public long ResponsibleUserId { get; set; }
 
         [ForeignKey("CategoryId")]
         public virtual RevenueCategory RevenueCategory { get; set; }  
         public virtual Entity Entity { get; set; }
+        [ForeignKey("ResponsibleUserId")]
+        public virtual User User { get; set; }
 
         public void SetRevenueDate(DateTime revenueDate)
         {

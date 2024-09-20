@@ -73,7 +73,7 @@ namespace ClubManager.Ioc
 
             #region Validators
             // Add Domain Validators
-            services.AddScoped<IValidator<Institution>, InstitutionValidator>();
+            services.AddScoped<IValidator<CreateInstitutionDTO>, InstitutionValidator>();
             services.AddScoped<IValidator<CreateUserDTO>, CreateUserValidator>();
             services.AddScoped<IValidator<CreateUserPermissionsDTO>, CreateUserPermissionsValidator>();
             services.AddScoped<IValidator<UpdateUserPermissionsDTO>, UpdateUserPermissionsValidator>();
@@ -135,8 +135,6 @@ namespace ClubManager.Ioc
             services.AddScoped<IRevenueService, RevenueService>();
 
             #endregion
-
-           
 
             // Add data access dependencies
             var sql_conn = configuration.GetConnectionString("DefaultConnection");

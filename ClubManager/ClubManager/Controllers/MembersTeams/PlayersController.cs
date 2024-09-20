@@ -1,6 +1,7 @@
 using ClubManager.App.Interfaces.Identity;
 using ClubManager.Domain.DTOs.MembersTeams;
 using ClubManager.Domain.Entities.MembersTeams;
+using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Services;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -12,11 +13,11 @@ namespace ClubManager.Controllers.MembersTeams
     [Route("[controller]")]
     public class PlayersController : ControllerBase
     {
-        private readonly NotificationContext _notificationContext;
-        private readonly ModelErrorsContext _modelErrorsContext;
+        private readonly INotificationContext _notificationContext;
+        private readonly IModelErrorsContext _modelErrorsContext;
         private readonly IPlayerAppService _playerAppService;
 
-        public PlayersController(NotificationContext notificationContext, ModelErrorsContext modelErrorsContext, IPlayerAppService playerAppService)
+        public PlayersController(INotificationContext notificationContext, IModelErrorsContext modelErrorsContext, IPlayerAppService playerAppService)
         {
             _notificationContext = notificationContext;
             _modelErrorsContext = modelErrorsContext;

@@ -17,8 +17,7 @@ namespace ClubManager.Domain.Entities.MembersTeams
         public ICollection<MinorClubMember> MinorClubMembers { get; set; }
         public ICollection<PlayerResponsible> PlayerResponsibles { get; set; }
 
-        [ForeignKey("ClubMemberId")]
-        public UserClubMember UserClubMember { get; set; }
+        public virtual UserClubMember UserClubMember { get; set; }
 
         public ClubMember()
         {

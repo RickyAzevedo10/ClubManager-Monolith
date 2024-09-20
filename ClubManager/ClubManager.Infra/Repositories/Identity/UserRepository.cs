@@ -19,7 +19,7 @@ namespace ClubManager.Infra.Repositories.Identity
 
         public async Task<User?> GetByEmailAsync(string email)
         {
-            return await GetEntity().FirstOrDefaultAsync(u => u.Email == email);
+            return await GetEntity().Include(x => x.UserRole).FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<List<User>?> GetAllUsersFromInstitution(long idInstitution)

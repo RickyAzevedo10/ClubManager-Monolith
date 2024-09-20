@@ -1,4 +1,5 @@
-﻿using ClubManager.Domain.Entities.Identity;
+﻿using ClubManager.Domain.DTOs.Identity;
+using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Interfaces.Identity;
 using ClubManager.Domain.Interfaces.Repositories;
@@ -12,10 +13,9 @@ namespace ClubManager.Domain.Services.Identity
         private readonly INotificationContext _notificationContext;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEntityValidationService _entityValidationService;
-        private readonly IValidator<Institution> _institutionValidator;
+        private readonly IValidator<CreateInstitutionDTO> _institutionValidator;
 
-
-        public InstitutionService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IEntityValidationService entityValidationService, IValidator<Institution> institutionValidator)
+        public InstitutionService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IEntityValidationService entityValidationService, IValidator<CreateInstitutionDTO> institutionValidator)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
@@ -47,7 +47,7 @@ namespace ClubManager.Domain.Services.Identity
             return institutions;
         }
 
-        public async Task<Institution?> Create(Institution institutionBody)
+        public async Task<Institution?> Create(CreateInstitutionDTO institutionBody)
         {
             bool validationResult = _entityValidationService.Validate(_institutionValidator, institutionBody);
             if (!validationResult)
@@ -56,22 +56,65 @@ namespace ClubManager.Domain.Services.Identity
                 return null;
             }
 
-            Institution institution = new(institutionBody);
+            Institution institution = new();
+            institution.SetAbbreviation(institutionBody.Abbreviation);
+            institution.SetName(institutionBody.Name);
+            institution.SetLogo(institutionBody.Logo);
+            institution.SetFoundationDate(institutionBody.FoundationDate);
+            institution.SetAddress(institutionBody.Address);
+            institution.SetColors(institutionBody.Colors);
+            institution.SetStadiumName(institutionBody.StadiumName);
+            institution.SetStadiumCapacity(institutionBody.StadiumCapacity);
+            institution.SetStadiumInauguration(institutionBody.StadiumInauguration);
+            institution.SetHaveTrainingCenter(institutionBody.HaveTrainingCenter);
+            institution.SetTrainingCenterAddress(institutionBody.TrainingCenterAddress);
+            institution.SetOfficialWebsiteUrl(institutionBody.OfficialWebsiteUrl);
+            institution.SetSocialMediaLinks(institutionBody.SocialMediaLinks);
 
             return await _unitOfWork.InstitutionRepository.AddAsync(institution);
         }
 
-        public async Task<Institution?> Update(Institution institutionToUpdate)
+        public async Task<Institution?> Update(UpdateInstitutionDTO institutionToUpdate, Institution institution)
         {
-            bool validationResult = _entityValidationService.Validate(_institutionValidator, institutionToUpdate);
+            CreateInstitutionDTO institutionBody = new() 
+            { 
+                Name = institutionToUpdate.Name,
+                Abbreviation = institutionToUpdate.Abbreviation,
+                Logo = institutionToUpdate.Logo,
+                FoundationDate = institutionToUpdate.FoundationDate,
+                Address = institutionToUpdate.Address,
+                Colors = institutionToUpdate.Colors,
+                StadiumName = institutionToUpdate.StadiumName,
+                StadiumCapacity = institutionToUpdate.StadiumCapacity,
+                SocialMediaLinks = institutionToUpdate.SocialMediaLinks,
+                StadiumInauguration = institutionToUpdate.StadiumInauguration,
+                HaveTrainingCenter = institutionToUpdate.HaveTrainingCenter,
+                TrainingCenterAddress = institutionToUpdate.TrainingCenterAddress,
+                OfficialWebsiteUrl = institutionToUpdate.OfficialWebsiteUrl
+            };
+            bool validationResult = _entityValidationService.Validate(_institutionValidator, institutionBody);
             if (!validationResult)
             {
                 _notificationContext.AddNotification(NotificationKeys.InstitutionNotifications.ERROR_INSTITUTION_CREATED, string.Empty);
                 return null;
             }
- 
-            _unitOfWork.InstitutionRepository.Update(institutionToUpdate);
-            return institutionToUpdate;
+
+            institution.SetAbbreviation(institutionBody.Abbreviation);
+            institution.SetName(institutionBody.Name);
+            institution.SetLogo(institutionBody.Logo);
+            institution.SetFoundationDate(institutionBody.FoundationDate);
+            institution.SetAddress(institutionBody.Address);
+            institution.SetColors(institutionBody.Colors);
+            institution.SetStadiumName(institutionBody.StadiumName);
+            institution.SetStadiumCapacity(institutionBody.StadiumCapacity);
+            institution.SetStadiumInauguration(institutionBody.StadiumInauguration);
+            institution.SetHaveTrainingCenter(institutionBody.HaveTrainingCenter);
+            institution.SetTrainingCenterAddress(institutionBody.TrainingCenterAddress);
+            institution.SetOfficialWebsiteUrl(institutionBody.OfficialWebsiteUrl);
+            institution.SetSocialMediaLinks(institutionBody.SocialMediaLinks);
+
+            _unitOfWork.InstitutionRepository.Update(institution);
+            return institution;
         }
 
         public async Task<Institution?> Delete(long id)

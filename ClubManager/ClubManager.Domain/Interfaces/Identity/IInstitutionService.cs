@@ -1,4 +1,5 @@
-﻿using ClubManager.Domain.Entities.Identity;
+﻿using ClubManager.Domain.DTOs.Identity;
+using ClubManager.Domain.Entities.Identity;
 
 namespace ClubManager.Domain.Interfaces.Identity
 {
@@ -6,8 +7,8 @@ namespace ClubManager.Domain.Interfaces.Identity
     {
         Task<Institution?> Get(long id);
         Task<List<Institution>?> GetAll();
-        Task<Institution?> Create(Institution institutionBody);
-        Task<Institution?> Update(Institution institutionToUpdate);
+        Task<Institution?> Create(CreateInstitutionDTO institutionBody);
+        Task<Institution?> Update(UpdateInstitutionDTO institutionToUpdate, Institution institution);
         Task<Institution?> Delete(long id);
     }
 }

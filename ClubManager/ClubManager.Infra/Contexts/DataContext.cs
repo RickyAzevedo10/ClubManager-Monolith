@@ -5,6 +5,7 @@ using ClubManager.Domain.Entities.MembersTeams;
 using ClubManager.Domain.Entities.TrainingCompetition;
 using ClubManager.Infra.Configuration.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace ClubManager.Infra.Contexts
 {
@@ -65,6 +66,13 @@ namespace ClubManager.Infra.Contexts
             builder.ApplyConfiguration(new ClubMemberConfiguration());
             builder.ApplyConfiguration(new MinorClubMemberConfiguration());
             builder.ApplyConfiguration(new PlayerCategoryConfiguration());
+            builder.Entity<PlayerContract>()
+                .Property(p => p.Salary)
+                .HasPrecision(18, 2);
+
+            builder.Entity<PlayerTransfer>()
+                .Property(p => p.TransferFee)
+                .HasPrecision(18, 2);
 
             //Infrastructures
             builder.ApplyConfiguration(new FacilityCategoryConfiguration());
@@ -72,6 +80,8 @@ namespace ClubManager.Infra.Contexts
             //Financial
             builder.ApplyConfiguration(new RevenueCategoryConfiguration());
             builder.ApplyConfiguration(new ExpenseCategoryConfiguration());
+            builder.ApplyConfiguration(new ExpenseConfiguration());
+            builder.ApplyConfiguration(new RevenueConfiguration());
 
         }
     }

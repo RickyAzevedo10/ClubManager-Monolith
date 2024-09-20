@@ -1,6 +1,7 @@
 using ClubManager.App.Interfaces.Identity;
 using ClubManager.Domain.DTOs.TrainingCompetition;
 using ClubManager.Domain.Entities.TrainingCompetition;
+using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Services;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -12,11 +13,11 @@ namespace ClubManager.Controllers.MembersTeams
     [Route("[controller]")]
     public class MatchController : ControllerBase
     {
-        private readonly NotificationContext _notificationContext;
-        private readonly ModelErrorsContext _modelErrorsContext;
+        private readonly INotificationContext _notificationContext;
+        private readonly IModelErrorsContext _modelErrorsContext;
         private readonly IMatchAppService _matchAppService;
 
-        public MatchController(NotificationContext notificationContext, ModelErrorsContext modelErrorsContext, IMatchAppService matchAppService)
+        public MatchController(INotificationContext notificationContext, IModelErrorsContext modelErrorsContext, IMatchAppService matchAppService)
         {
             _notificationContext = notificationContext;
             _modelErrorsContext = modelErrorsContext;
@@ -69,7 +70,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// </summary>
         /// <param name="matchId"></param>
         /// <returns></returns>
-        [HttpGet("Match")]
+        [HttpGet("MatchId")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
         public async Task<IActionResult> GetMatch(long matchId)
         {
@@ -138,7 +139,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// </summary>
         /// <param name="matchId"></param>
         /// <returns></returns>
-        [HttpGet("MatchStatistics")]
+        [HttpGet("MatchStatistics/MatchId")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
         public async Task<IActionResult> GetMatchStatisticsFromMatchID(long matchId)
         {
@@ -151,7 +152,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// </summary>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        [HttpGet("MatchStatistics")]
+        [HttpGet("MatchStatistics/PlayerId")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
         public async Task<IActionResult> GetPlayerMatchStatistics(long playerId)
         {

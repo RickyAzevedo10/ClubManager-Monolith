@@ -16,7 +16,7 @@ namespace ClubManager.App.Interfaces.Identity
         Task<UserLoginResponseDTO?> Refresh(string refreshToken);
         Task<UserPermissions?> PutUserPermissions(UpdateUserPermissionsDTO userPermissionsCreate);
         Task<UserPermissions?> DeleteUserPermissions(long id);
-        Task<User?> CreateUserAdmin();
+        Task<User?> CreateUserAdmin(string abbreviation);
         Task<RecoverPasswordRequestResponse?> RecoverPassword(RecoverPasswordRequest request);
         Task<ResetPasswordResponse?> ResetPassword(ResetPassword request);
     }

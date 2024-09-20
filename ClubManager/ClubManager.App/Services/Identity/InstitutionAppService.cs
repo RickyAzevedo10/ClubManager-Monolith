@@ -1,5 +1,6 @@
 ﻿using ClubManager.App.Interfaces.Identity;
 using ClubManager.App.Interfaces.Infrastructure;
+using ClubManager.Domain.DTOs.Identity;
 using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Interfaces.Identity;
@@ -53,7 +54,7 @@ namespace ClubManager.App.Services.Identity
             return institution;
         }
 
-        public async Task<Institution?> Create(Institution institutionBody)
+        public async Task<Institution?> Create(CreateInstitutionDTO institutionBody)
         {
             //validar se ja existe a instituição
             Institution? institution = await _unitOfWork.InstitutionRepository.GetByNameAsync(institutionBody.Name);
@@ -66,18 +67,23 @@ namespace ClubManager.App.Services.Identity
 
             institution = await _institutionService.Create(institutionBody);
 
+            User? userAdmin = await _userAppService.CreateUserAdmin(institutionBody.Abbreviation);
+
+            if (userAdmin != null && institution != null)
+            {
+                institution.User.Add(userAdmin);
+            }
+
             if (!await _unitOfWork.CommitAsync())
             {
                 _notificationContext.AddNotification(NotificationKeys.DATABASE_COMMIT_ERROR, string.Empty);
                 return null;
             }
 
-            await _userAppService.CreateUserAdmin();
-
             return institution;
         }
 
-        public async Task<Institution?> Update(Institution institutionToUpdate)
+        public async Task<Institution?> Update(UpdateInstitutionDTO institutionToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
             if (!canEdit)
@@ -95,7 +101,7 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            institution = await _institutionService.Update(institutionToUpdate);
+            institution = await _institutionService.Update(institutionToUpdate, institution);
 
             if (!await _unitOfWork.CommitAsync())
             {

@@ -1,6 +1,7 @@
 using ClubManager.App.Services.Infrastructures;
 using ClubManager.Domain.DTOs.Infrastructures;
 using ClubManager.Domain.Entities.Infrastructures;
+using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Services;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -12,11 +13,11 @@ namespace ClubManager.Controllers.MembersTeams
     [Route("[controller]")]
     public class FacilityController : ControllerBase
     {
-        private readonly NotificationContext _notificationContext;
-        private readonly ModelErrorsContext _modelErrorsContext;
+        private readonly INotificationContext _notificationContext;
+        private readonly IModelErrorsContext _modelErrorsContext;
         private readonly IFacilityAppService _facilityAppService;
 
-        public FacilityController(NotificationContext notificationContext, ModelErrorsContext modelErrorsContext, IFacilityAppService facilityAppService)
+        public FacilityController(INotificationContext notificationContext, IModelErrorsContext modelErrorsContext, IFacilityAppService facilityAppService)
         {
             _notificationContext = notificationContext;
             _modelErrorsContext = modelErrorsContext;
@@ -42,7 +43,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// </summary>
         /// <param name="facilityId"></param>
         /// <returns></returns>
-        [HttpGet("Facility")]
+        [HttpGet("FacilityId")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
         public async Task<IActionResult> GetFacility(long facilityId)
         {
@@ -54,7 +55,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// get all Facility
         /// </summary>
         /// <returns></returns>
-        [HttpGet("Facility")]
+        [HttpGet("AllFacility")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
         public async Task<IActionResult> GetAllFacility()
         {

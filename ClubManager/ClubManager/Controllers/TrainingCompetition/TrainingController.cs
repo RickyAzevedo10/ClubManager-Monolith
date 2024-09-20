@@ -1,6 +1,7 @@
 using ClubManager.App.Interfaces.Identity;
 using ClubManager.Domain.DTOs.TrainingCompetition;
 using ClubManager.Domain.Entities.TrainingCompetition;
+using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Services;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -12,11 +13,11 @@ namespace ClubManager.Controllers.MembersTeams
     [Route("[controller]")]
     public class TrainingController : ControllerBase
     {
-        private readonly NotificationContext _notificationContext;
-        private readonly ModelErrorsContext _modelErrorsContext;
+        private readonly INotificationContext _notificationContext;
+        private readonly IModelErrorsContext _modelErrorsContext;
         private readonly ITrainingAppService _trainingAppService;
 
-        public TrainingController(NotificationContext notificationContext, ModelErrorsContext modelErrorsContext, ITrainingAppService trainingAppService)
+        public TrainingController(INotificationContext notificationContext, IModelErrorsContext modelErrorsContext, ITrainingAppService trainingAppService)
         {
             _notificationContext = notificationContext;
             _modelErrorsContext = modelErrorsContext;
@@ -68,7 +69,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// </summary>
         /// <param name="trainingSessionId"></param>
         /// <returns></returns>
-        [HttpGet("TrainingSession")]
+        [HttpGet("TrainingSessionId")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
         public async Task<IActionResult> GetTrainingSession(long trainingSessionId)
         {

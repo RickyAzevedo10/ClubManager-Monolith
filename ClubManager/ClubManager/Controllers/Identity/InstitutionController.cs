@@ -1,6 +1,7 @@
 using ClubManager.App.Interfaces.Identity;
+using ClubManager.Domain.DTOs.Identity;
 using ClubManager.Domain.Entities.Identity;
-using ClubManager.Domain.Services;
+using ClubManager.Domain.Interfaces;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,10 @@ namespace ClubManager.Controllers.Identity
     public class InstitutionController : ControllerBase
     {
         private readonly IInstitutionAppService _institutionAppService;
-        private readonly NotificationContext _notificationContext;
-        private readonly ModelErrorsContext _modelErrorsContext;
+        private readonly INotificationContext _notificationContext;
+        private readonly IModelErrorsContext _modelErrorsContext;
         
-        public InstitutionController(IInstitutionAppService institutionAppService, NotificationContext notificationContext, ModelErrorsContext modelErrorsContext)
+        public InstitutionController(IInstitutionAppService institutionAppService, INotificationContext notificationContext, IModelErrorsContext modelErrorsContext)
         {
             _institutionAppService = institutionAppService;
             _notificationContext = notificationContext;
@@ -48,13 +49,13 @@ namespace ClubManager.Controllers.Identity
         }
 
         /// <summary>
-        /// Create a new institution
+        /// Create a new institution and a admin user for that institution
         /// </summary>
         /// <param name="institutionBody"></param>
         /// <returns></returns>
         [HttpPost("Institution")]
         [AllowAnonymous]
-        public async Task<IActionResult> Post(Institution institutionBody)
+        public async Task<IActionResult> Post(CreateInstitutionDTO institutionBody)
         {
             Institution? response = await _institutionAppService.Create(institutionBody);
             return DomainResult<Institution?>.Ok(response, _notificationContext, _modelErrorsContext);
@@ -67,7 +68,7 @@ namespace ClubManager.Controllers.Identity
         /// <returns></returns>
         [HttpPut("Institution")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Put(Institution institutionToUpdate)
+        public async Task<IActionResult> Put(UpdateInstitutionDTO institutionToUpdate)
         {
             Institution? response = await _institutionAppService.Update(institutionToUpdate);
             return DomainResult<Institution?>.Ok(response, _notificationContext, _modelErrorsContext);

@@ -3,7 +3,6 @@ using ClubManager.Domain.Entities.Financial;
 using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Entities.MembersTeams;
 using System.Collections;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -25,25 +24,21 @@ namespace ClubManager.Domain.Entities.Identity
         public DateTime? DateOfLastAccess { get; set; }
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpire { get; set; }
-        public string PasswordResetToken { get; set; }
+        public string? PasswordResetToken { get; set; }
         public DateTime? PasswordResetTokenExpire { get; set; }
         public long UserRoleId { get; set; }
         public UserRoles UserRole { get; set; }  
         public long UserPermissionId { get; set; }
         public UserPermissions UserPermission { get; set; }
 
-        [ForeignKey("UserId")]
-        public UserClubMember UserClubMember { get; set; }
-
-        [ForeignKey("ResponsibleUserId")]
-        public Expense Expense { get; set; }
-
         public ICollection<TeamCoach> TeamCoaches { get; set; }
         public ICollection<MaintenanceRequest> MaintenanceRequests { get; set; }
         public ICollection<MaintenanceHistory> MaintenanceHistory { get; set; }
         public ICollection<FacilityReservation> FacilityReservation { get; set; }
-        
-        // Construtor necessário para EF
+        public virtual UserClubMember UserClubMember { get; set; }
+        public virtual Expense Expense { get; set; }
+        public virtual Revenue Revenue { get; set; }
+
         private User(){}
 
         public User(CreateUserDTO user)
@@ -75,6 +70,11 @@ namespace ClubManager.Domain.Entities.Identity
         public void SetPasswordResetTokenExpire(int expiresHours)
         {
             PasswordResetTokenExpire = DateTime.UtcNow.AddHours(expiresHours);
+        }
+
+        public void SetUserPermissionId(long userPermissionId)
+        {
+            UserPermissionId = userPermissionId;
         }
 
         public bool ValidatePassword(string password)

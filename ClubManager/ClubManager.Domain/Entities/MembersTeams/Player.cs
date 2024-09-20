@@ -1,4 +1,6 @@
-﻿using ClubManager.Domain.Entities.TrainingCompetition;
+﻿using ClubManager.Domain.Entities.Financial;
+using ClubManager.Domain.Entities.TrainingCompetition;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClubManager.Domain.Entities.MembersTeams
 {
@@ -21,7 +23,8 @@ namespace ClubManager.Domain.Entities.MembersTeams
         public ICollection<TeamPlayer> TeamPlayers { get; set; }
         public ICollection<MatchStatistic> MatchStatistic { get; set; }
         public ICollection<TrainingAttendance> TrainingAttendance { get; set; }
-
+        [ForeignKey("PlayerId")]
+        public Entity Entity { get; set; }
 
         public Player()
         {

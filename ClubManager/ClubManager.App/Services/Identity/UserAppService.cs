@@ -284,24 +284,35 @@ namespace ClubManager.App.Services.Identity
             return userPermissions;
         }
 
-        public async Task<User?> CreateUserAdmin()
+        public async Task<User?> CreateUserAdmin(string abbreviation)
         {
-            //criar utilizador do tipo admin
+            CreateUserPermissionsDTO createUserPermissionsDTO = new()
+            {
+                Consult = true,
+                Edit = true,
+                Delete = true,
+                Create = true
+            };
+
+            UserPermissions? userPermissions = await _userService.CreateUserPermissions(createUserPermissionsDTO);
+
             CreateUserDTO userAdmin = new()
             {
-                Email = "admin@gmail.com",
-                Password = "admin",
-                Username = "admin",
-                RoleId = 1
+                Email = "admin" + abbreviation + "@gmail.com",
+                Password = "Admin123",
+                Username = "Admin",
+                RoleId = 1,
+                Consult = true,
+                Edit = true,
+                Delete = true,
+                Create = true,
             };
 
             User? user= await _userService.Create(userAdmin);
 
-            if (!await _unitOfWork.CommitAsync())
-            {
-                _notificationContext.AddNotification(NotificationKeys.DATABASE_COMMIT_ERROR, string.Empty);
-                return null;
-            }
+            if (userPermissions != null && user != null)
+                user.UserPermission = userPermissions;
+
             return user;
         }
 

@@ -18,8 +18,8 @@ namespace ClubManager.Domain.Entities.Financial
         [ForeignKey("CategoryId")]
         public virtual ExpenseCategory ExpenseCategory { get; set; } 
         public virtual Entity Entity { get; set; }
+        [ForeignKey("ResponsibleUserId")]
         public virtual User User { get; set; }
-
 
         public void SetExpenseDate(DateTime expenseDate)
         {
