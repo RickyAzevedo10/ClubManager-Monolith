@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "kGQtOJHut57PScCEal5Nc/AThNYYPMk3ucCoWrVQNtouN5eTa3GG8jknXy0g8PK0yDxb2CUATWM0kAG2YKSjIg==",
+  "dgSpecHash": "cpHh5LQJuEOflmu5wAzr5lxKE7qiX3HGUNmnhXYG2Aft4YNuL9BNigV+WUE1GD00uWBSWhTOrtIVdLE7IUVw0A==",
   "success": true,
   "projectFilePath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager\\ClubManager.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\fluentvalidation\\11.9.2\\fluentvalidation.11.9.2.nupkg.sha512",

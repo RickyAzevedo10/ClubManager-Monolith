@@ -1,7 +1,7 @@
-﻿using ClubManager.App.Interfaces.Identity;
+﻿using AutoMapper;
+using ClubManager.App.Interfaces.Identity;
 using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.MembersTeams;
-using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Entities.MembersTeams;
 using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Interfaces.Identity;
@@ -16,17 +16,19 @@ namespace ClubManager.App.Services.Identity
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
         private readonly IPlayerService _playerService;
+        private readonly IMapper _mapper;
 
-        public PlayerAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IPlayerService playerService)
+        public PlayerAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IPlayerService playerService, IMapper mapper)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _playerService = playerService;
+            _mapper = mapper;
         }
 
         #region Player
-        public async Task<Player?> GetPlayer(long id)
+        public async Task<PlayerResponseDTO?> GetPlayer(long id)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -36,12 +38,12 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            Player player = await _unitOfWork.PlayerRepository.GetById(id);
+            Player? player = await _unitOfWork.PlayerRepository.GetByIdAsync(id);
 
-            return player;
+            return _mapper.Map<PlayerResponseDTO>(player); 
         }
 
-        public async Task<Player?> DeletePlayer(long id)
+        public async Task<PlayerResponseDTO?> DeletePlayer(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -59,10 +61,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return playerDeleted;
+            return _mapper.Map<PlayerResponseDTO>(playerDeleted);
         }
 
-        public async Task<Player?> CreatePlayer(CreatePlayerDTO playerBody)
+        public async Task<PlayerResponseDTO?> CreatePlayer(CreatePlayerDTO playerBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -88,10 +90,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return player;
+            return _mapper.Map<PlayerResponseDTO>(player);
         }
 
-        public async Task<Player?> UpdatePlayer(UpdatePlayerDTO playerToUpdate)
+        public async Task<PlayerResponseDTO?> UpdatePlayer(UpdatePlayerDTO playerToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -104,7 +106,7 @@ namespace ClubManager.App.Services.Identity
             Player? player = null;
 
             if (playerToUpdate.Id != null)
-                player = await _unitOfWork.PlayerRepository.GetById(playerToUpdate.Id);
+                player = await _unitOfWork.PlayerRepository.GetById((long)playerToUpdate.Id);
 
             if (player == null)
             {
@@ -128,10 +130,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return player;
+            return _mapper.Map<PlayerResponseDTO>(player);
         }
 
-        public async Task<List<Player>?> SearchPlayersAsync(string? firstName, string? lastName, string? position)
+        public async Task<List<PlayerResponseDTO>?> SearchPlayersAsync(string? firstName, string? lastName, string? position)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -143,12 +145,12 @@ namespace ClubManager.App.Services.Identity
 
             IEnumerable<Player>? player = await _unitOfWork.PlayerRepository.SearchPlayersAsync(firstName, lastName, position);
 
-            return player.ToList();
+            return _mapper.Map<List<PlayerResponseDTO>>(player);
         }
         #endregion
 
         #region PlayerTransfer
-        public async Task<List<PlayerTransfer>?> GetPlayerTransfer(long id)
+        public async Task<List<PlayerTransferResponseDTO>?> GetPlayerTransfer(long id)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -160,10 +162,10 @@ namespace ClubManager.App.Services.Identity
 
             List<PlayerTransfer>? playerTransfer = await _unitOfWork.PlayerTransferRepository.GetAllPlayerTransferAsync(id);
 
-            return playerTransfer;
+            return _mapper.Map<List<PlayerTransferResponseDTO>>(playerTransfer);
         }
 
-        public async Task<PlayerTransfer?> DeletePlayerTransfer(long id)
+        public async Task<PlayerTransferResponseDTO?> DeletePlayerTransfer(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -181,10 +183,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return playerTransferDeleted;
+            return _mapper.Map<PlayerTransferResponseDTO>(playerTransferDeleted);
         }
 
-        public async Task<PlayerTransfer?> CreatePlayerTransfer(CreatePlayerTransferDTO playerTransferBody)
+        public async Task<PlayerTransferResponseDTO?> CreatePlayerTransfer(CreatePlayerTransferDTO playerTransferBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -202,10 +204,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return playerTransfer;
+            return _mapper.Map<PlayerTransferResponseDTO>(playerTransfer);
         }
 
-        public async Task<PlayerTransfer?> UpdatePlayerTransfer(UpdatePlayerTransferDTO playerTransferToUpdate)
+        public async Task<PlayerTransferResponseDTO?> UpdatePlayerTransfer(UpdatePlayerTransferDTO playerTransferToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -218,7 +220,7 @@ namespace ClubManager.App.Services.Identity
             PlayerTransfer? playerTransfer = null;
 
             if (playerTransferToUpdate.Id != null)
-                playerTransfer = await _unitOfWork.PlayerTransferRepository.GetById(playerTransferToUpdate.Id);
+                playerTransfer = await _unitOfWork.PlayerTransferRepository.GetById((long)playerTransferToUpdate.Id);
 
             if (playerTransfer == null)
             {
@@ -234,12 +236,12 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return playerTransfer;
+            return _mapper.Map<PlayerTransferResponseDTO>(playerTransfer);
         }
         #endregion
 
         #region PlayerContract
-        public async Task<PlayerContract?> CreatePlayerContract(CreatePlayerContractDTO playerContractBody)
+        public async Task<PlayerContractResponseDTO?> CreatePlayerContract(CreatePlayerContractDTO playerContractBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -265,10 +267,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return playerContract;
+            return _mapper.Map<PlayerContractResponseDTO>(playerContract); 
         }
 
-        public async Task<List<PlayerContract>?> GetPlayerContract(long id)
+        public async Task<List<PlayerContractResponseDTO>?> GetPlayerContract(long id)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -280,10 +282,10 @@ namespace ClubManager.App.Services.Identity
 
             List<PlayerContract>? playerContract = await _unitOfWork.PlayerContractRepository.GetAllPlayerContractAsync(id);
 
-            return playerContract;
+            return _mapper.Map<List<PlayerContractResponseDTO>>(playerContract); 
         }
 
-        public async Task<PlayerContract?> DeletePlayerContract(long id)
+        public async Task<PlayerContractResponseDTO?> DeletePlayerContract(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -301,10 +303,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return playerContractDeleted;
+            return _mapper.Map<PlayerContractResponseDTO>(playerContractDeleted);
         }
 
-        public async Task<PlayerContract?> UpdatePlayerContract(UpdatePlayerContractDTO playerContractToUpdate)
+        public async Task<PlayerContractResponseDTO?> UpdatePlayerContract(UpdatePlayerContractDTO playerContractToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -317,7 +319,7 @@ namespace ClubManager.App.Services.Identity
             PlayerContract? playerContract = null;
 
             if (playerContractToUpdate.Id != null)
-                playerContract = await _unitOfWork.PlayerContractRepository.GetById(playerContractToUpdate.Id);
+                playerContract = await _unitOfWork.PlayerContractRepository.GetById((long)playerContractToUpdate.Id);
 
             if (playerContract == null)
             {
@@ -333,12 +335,12 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return playerContract;
+            return _mapper.Map<PlayerContractResponseDTO>(playerContract);
         }
         #endregion
 
         #region PlayerPerformanceHistory
-        public async Task<PlayerPerformanceHistory?> DeletePlayerPerformanceHistory(long id)
+        public async Task<PlayerPerformanceHistorySimpleResponseDTO?> DeletePlayerPerformanceHistory(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -356,10 +358,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return playerPerformanceHistoryDeleted;
+            return _mapper.Map<PlayerPerformanceHistorySimpleResponseDTO>(playerPerformanceHistoryDeleted); 
         }
 
-        public async Task<PlayerPerformanceHistory?> CreatePlayerPerformanceHistory(CreatePlayerPerformanceHistoryDTO playerPerformanceHistoryBody)
+        public async Task<PlayerPerformanceHistorySimpleResponseDTO?> CreatePlayerPerformanceHistory(CreatePlayerPerformanceHistoryDTO playerPerformanceHistoryBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -377,10 +379,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return playerPerformanceHistory;
+            return _mapper.Map<PlayerPerformanceHistorySimpleResponseDTO>(playerPerformanceHistory); 
         }
 
-        public async Task<PlayerPerformanceHistory?> UpdatePlayerPerformanceHistory(UpdatePlayerPerformanceHistoryDTO playerPerformanceHistoryToUpdate)
+        public async Task<PlayerPerformanceHistorySimpleResponseDTO?> UpdatePlayerPerformanceHistory(UpdatePlayerPerformanceHistoryDTO playerPerformanceHistoryToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -393,7 +395,7 @@ namespace ClubManager.App.Services.Identity
             PlayerPerformanceHistory? playerPerformanceHistory = null;
 
             if (playerPerformanceHistoryToUpdate.Id != null)
-                playerPerformanceHistory = await _unitOfWork.PlayerPerformanceHistoryRepository.GetById(playerPerformanceHistoryToUpdate.Id);
+                playerPerformanceHistory = await _unitOfWork.PlayerPerformanceHistoryRepository.GetById((long)playerPerformanceHistoryToUpdate.Id);
 
             if (playerPerformanceHistory == null)
             {
@@ -409,7 +411,7 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return playerPerformanceHistory;
+            return _mapper.Map<PlayerPerformanceHistorySimpleResponseDTO>(playerPerformanceHistory);
         }
 
         public async Task<PlayerPerformanceHistoryResponseDTO?> GetPlayerPerformanceHistory(long playerId, string season)

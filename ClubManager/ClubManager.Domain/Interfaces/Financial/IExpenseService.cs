@@ -8,7 +8,7 @@ namespace ClubManager.Domain.Interfaces.Identity
     public interface IExpenseService
     {
         Task<Expense?> DeleteExpense(long id);
-        Task<List<Expense>?> CreateExpense(List<ExpenseDTO> expenseBody);
-        Task<List<Expense>?> UpdateExpense(List<UpdateExpenseDTO> expenseBody);
+        Task<Expense> CreateExpense(ExpenseDTO expenseBody);
+        Task<Expense> UpdateExpense(UpdateExpenseDTO expenseBody);
     }
 }

@@ -1,6 +1,4 @@
-﻿using ClubManager.Domain.DTOs.Identity;
-
-namespace ClubManager.Domain.Entities.Identity
+﻿namespace ClubManager.Domain.Entities.Identity
 {
     public class UserPermissions : BaseEntity
     {
@@ -8,9 +6,7 @@ namespace ClubManager.Domain.Entities.Identity
         public bool Create { get; set; }
         public bool Delete { get; set; }
         public bool Consult { get; set; }
-        public ICollection<User> Users { get; set; }
-
-        public UserPermissions(){}
+        public User Users { get; set; }
 
         public UserPermissions(bool edit, bool create, bool delete, bool consult)
         {

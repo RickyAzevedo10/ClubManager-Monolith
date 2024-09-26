@@ -6,7 +6,7 @@
         public string Opponent { get; set; } 
         public string Location { get; set; } 
         public string CompetitionType { get; set; } 
-        public int TeamId { get; set; } 
+        public long TeamId { get; set; } 
         public bool IsCanceled { get; set; } 
     }
 }

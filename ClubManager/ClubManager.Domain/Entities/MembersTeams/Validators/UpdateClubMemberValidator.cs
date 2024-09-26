@@ -7,7 +7,7 @@ namespace ClubManager.Domain.Entities.Identity.Validators
     {
         public UpdateClubMemberValidator()
         {
-            RuleFor(x => x.ClubMemberId)
+            RuleFor(x => x.Id)
                 .NotEmpty().WithMessage("ClubMemberId cannot be null.")
                 .NotNull().WithMessage("ClubMemberId cannot be empty.");
             RuleFor(x => x.FirstName)

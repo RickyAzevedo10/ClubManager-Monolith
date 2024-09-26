@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace ClubManager.Domain.Entities.Identity.Validators
 {
-    public class PasswordValidator : AbstractValidator<ResetPassword>
+    public class PasswordValidator : AbstractValidator<ResetPasswordDTO>
     {
         public PasswordValidator()
         {

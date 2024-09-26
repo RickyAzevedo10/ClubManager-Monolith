@@ -1,8 +1,6 @@
 using ClubManager.App.Interfaces.Identity;
 using ClubManager.Domain.DTOs.MembersTeams;
-using ClubManager.Domain.Entities.MembersTeams;
 using ClubManager.Domain.Interfaces;
-using ClubManager.Domain.Services;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,8 +30,8 @@ namespace ClubManager.Controllers.MembersTeams
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário,Treinador")]
         public async Task<IActionResult> GetTeams()
         {
-            List<Team>? response = await _teamAppService.GetTeams();
-            return DomainResult<List<Team>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<TeamResponseDTO>? response = await _teamAppService.GetTeams();
+            return DomainResult<List<TeamResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -43,10 +41,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("Team")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário,Treinador")]
-        public async Task<IActionResult> GetAllPlayersFromTeam(long teamId)
+        public async Task<IActionResult> GetAllPlayersFromTeam([FromQuery] long teamId)
         {
-            List<Team>? response = await _teamAppService.GetAllPlayersFromTeam(teamId);
-            return DomainResult<List<Team>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<TeamResponseDTO>? response = await _teamAppService.GetAllPlayersFromTeam(teamId);
+            return DomainResult<List<TeamResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -56,10 +54,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("Team")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário,Treinador")]
-        public async Task<IActionResult> PutPlayerTransfer(UpdateTeamDTO teamToUpdate)
+        public async Task<IActionResult> PutTeam([FromBody] UpdateTeamDTO teamToUpdate)
         {
-            Team? response = await _teamAppService.UpdateTeam(teamToUpdate);
-            return DomainResult<Team?>.Ok(response, _notificationContext, _modelErrorsContext);
+            TeamResponseDTO? response = await _teamAppService.UpdateTeam(teamToUpdate);
+            return DomainResult<TeamResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -69,10 +67,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("Team")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário,Treinador")]
-        public async Task<IActionResult> DeleteTeam(long id)
+        public async Task<IActionResult> DeleteTeam([FromQuery] long id)
         {
-            Team? response = await _teamAppService.DeleteTeam(id);
-            return DomainResult<Team?>.Ok(response, _notificationContext, _modelErrorsContext);
+            TeamResponseDTO? response = await _teamAppService.DeleteTeam(id);
+            return DomainResult<TeamResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -82,10 +80,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("Team")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário,Treinador")]
-        public async Task<IActionResult> PostTeam(CreateTeamDTO teamBody)
+        public async Task<IActionResult> PostTeam([FromBody] CreateTeamDTO teamBody)
         {
-            Team? response = await _teamAppService.CreateTeam(teamBody);
-            return DomainResult<Team?>.Ok(response, _notificationContext, _modelErrorsContext);
+            TeamResponseDTO? response = await _teamAppService.CreateTeam(teamBody);
+            return DomainResult<TeamResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
     }
 }

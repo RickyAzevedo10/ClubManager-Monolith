@@ -1,6 +1,5 @@
 using ClubManager.App.Interfaces.Identity;
 using ClubManager.Domain.DTOs.Identity;
-using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Interfaces;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -28,12 +27,12 @@ namespace ClubManager.Controllers.Identity
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("Institution/{id}")]
+        [HttpGet("Institution")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Get(long id)
+        public async Task<IActionResult> Get([FromQuery] long id)
         {
-            Institution? response = await _institutionAppService.Get(id);
-            return DomainResult<Institution?>.Ok(response, _notificationContext, _modelErrorsContext);
+            InstitutionResponseDTO? response = await _institutionAppService.Get(id);
+            return DomainResult<InstitutionResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -44,8 +43,8 @@ namespace ClubManager.Controllers.Identity
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
-            List<Institution>? response = await _institutionAppService.GetAll();
-            return DomainResult<List<Institution>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<InstitutionResponseDTO>? response = await _institutionAppService.GetAll();
+            return DomainResult<List<InstitutionResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -55,10 +54,10 @@ namespace ClubManager.Controllers.Identity
         /// <returns></returns>
         [HttpPost("Institution")]
         [AllowAnonymous]
-        public async Task<IActionResult> Post(CreateInstitutionDTO institutionBody)
+        public async Task<IActionResult> Post([FromBody] CreateInstitutionDTO institutionBody)
         {
-            Institution? response = await _institutionAppService.Create(institutionBody);
-            return DomainResult<Institution?>.Ok(response, _notificationContext, _modelErrorsContext);
+            InstitutionResponseDTO? response = await _institutionAppService.Create(institutionBody);
+            return DomainResult<InstitutionResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -68,10 +67,10 @@ namespace ClubManager.Controllers.Identity
         /// <returns></returns>
         [HttpPut("Institution")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Put(UpdateInstitutionDTO institutionToUpdate)
+        public async Task<IActionResult> Put([FromBody] UpdateInstitutionDTO institutionToUpdate)
         {
-            Institution? response = await _institutionAppService.Update(institutionToUpdate);
-            return DomainResult<Institution?>.Ok(response, _notificationContext, _modelErrorsContext);
+            InstitutionResponseDTO? response = await _institutionAppService.Update(institutionToUpdate);
+            return DomainResult<InstitutionResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -81,10 +80,10 @@ namespace ClubManager.Controllers.Identity
         /// <returns></returns>
         [HttpDelete("Institution")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete([FromQuery] long id)
         {
-            Institution? response = await _institutionAppService.Delete(id);
-            return DomainResult<Institution?>.Ok(response, _notificationContext, _modelErrorsContext);
+            InstitutionResponseDTO? response = await _institutionAppService.Delete(id);
+            return DomainResult<InstitutionResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
     }
 }

@@ -105,10 +105,10 @@ namespace ClubManager.Domain.Services.Infrastructures
 
             MaintenanceHistory maintenanceHistory = new();
             maintenanceHistory.SetMaintenanceType(maintenanceRequest.MaintenanceType);
-            maintenanceRequest.SetFacilityId(maintenanceRequest.FacilityId);
+            maintenanceHistory.SetFacilityId(maintenanceRequest.FacilityId);
             maintenanceHistory.SetDescription(maintenanceRequest.ProblemDescription);
             maintenanceHistory.SetMaintenanceDate(maintenanceRequest.RequestDate);
-            maintenanceRequest.SetRequestedUserId(maintenanceRequest.RequestedUserId);
+            maintenanceHistory.SetRequestUserId(maintenanceRequest.RequestedUserId);
 
             return await _unitOfWork.MaintenanceHistoryRepository.AddAsync(maintenanceHistory);
         }

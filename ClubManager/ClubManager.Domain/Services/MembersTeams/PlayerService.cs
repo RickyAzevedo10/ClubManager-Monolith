@@ -100,7 +100,7 @@ namespace ClubManager.Domain.Services.Identity
                 }
 
                 PlayerResponsible newPlayerResponsible = new();
-                newPlayerResponsible.SetPlayerId((int)player.Id);
+                newPlayerResponsible.SetPlayerId(player.Id);
                 newPlayerResponsible.SetRelationship(item.Relationship);
                 newPlayerResponsible.SetIsPrimaryContact(item.IsPrimaryContact);
                 newPlayerResponsible.SetMemberId(item.ResponsibleId);

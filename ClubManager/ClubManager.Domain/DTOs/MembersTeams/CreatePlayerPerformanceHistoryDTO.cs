@@ -2,7 +2,7 @@
 {
     public class CreatePlayerPerformanceHistoryDTO
     {
-        public int PlayerId { get; set; }
+        public long PlayerId { get; set; }
         public string Season { get; set; }
         public string ClubOpponent { get; set; }
         public int Goals { get; set; }

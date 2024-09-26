@@ -37,14 +37,14 @@ namespace ClubManager.Domain.Services.Identity
 
         public async Task<List<Institution>?> GetAll()
         {
-            List<Institution>? institutions = await _unitOfWork.InstitutionRepository.GetAllAsync();
+            IEnumerable<Institution>? institutions = await _unitOfWork.InstitutionRepository.GetAllAsync();
 
             if (institutions == null)
             {
                 _notificationContext.AddNotification(NotificationKeys.InstitutionNotifications.INSTITUTION_NOT_FOUND, string.Empty);
                 return null;
             }
-            return institutions;
+            return institutions.ToList();
         }
 
         public async Task<Institution?> Create(CreateInstitutionDTO institutionBody)

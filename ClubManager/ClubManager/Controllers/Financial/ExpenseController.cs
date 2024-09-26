@@ -1,6 +1,5 @@
 using ClubManager.App.Services.Infrastructures;
 using ClubManager.Domain.DTOs.Financial;
-using ClubManager.Domain.Entities.Financial;
 using ClubManager.Domain.Interfaces;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +14,7 @@ namespace ClubManager.Controllers.MembersTeams
         private readonly INotificationContext _notificationContext;
         private readonly IModelErrorsContext _modelErrorsContext;
         private readonly IExpenseAppService _expenseAppService;
+
         public ExpenseController(INotificationContext notificationContext, IModelErrorsContext modelErrorsContext, IExpenseAppService expenseAppService)
         {
             _notificationContext = notificationContext;
@@ -29,10 +29,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("Expense")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
-        public async Task<IActionResult> PostExpense(CreateExpenseDTO expenseBody)
+        public async Task<IActionResult> PostExpense([FromBody] ExpenseDTO expenseBody)
         {
-            List<Expense>? response = await _expenseAppService.CreateExpense(expenseBody);
-            return DomainResult<List<Expense>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            ExpenseResponseDTO? response = await _expenseAppService.CreateExpense(expenseBody);
+            return DomainResult<ExpenseResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -42,10 +42,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("Expense")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
-        public async Task<IActionResult> DeleteExpense(long id)
+        public async Task<IActionResult> DeleteExpense([FromQuery] long id)
         {
-            Expense? response = await _expenseAppService.DeleteExpense(id);
-            return DomainResult<Expense?>.Ok(response, _notificationContext, _modelErrorsContext);
+            ExpenseResponseDTO? response = await _expenseAppService.DeleteExpense(id);
+            return DomainResult<ExpenseResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -55,10 +55,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("Expense")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
-        public async Task<IActionResult> PutExpense(UpdateEntityExpenseDTO expenseToUpdate)
+        public async Task<IActionResult> PutExpense([FromBody] UpdateExpenseDTO expenseToUpdate)
         {
-            List<Expense>? response = await _expenseAppService.UpdateExpense(expenseToUpdate);
-            return DomainResult<List<Expense>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            ExpenseResponseDTO? response = await _expenseAppService.UpdateExpense(expenseToUpdate);
+            return DomainResult<ExpenseResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -66,12 +66,12 @@ namespace ClubManager.Controllers.MembersTeams
         /// </summary>
         /// <param name="expenseId"></param>
         /// <returns></returns>
-        [HttpGet("ExpenseId")]
+        [HttpGet("Expense")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
-        public async Task<IActionResult> GetExpense(long expenseId)
+        public async Task<IActionResult> GetExpense([FromQuery] long expenseId)
         {
-            Entity? response = await _expenseAppService.GetExpense(expenseId);
-            return DomainResult<Entity?>.Ok(response, _notificationContext, _modelErrorsContext);
+            ExpenseResponseDTO? response = await _expenseAppService.GetExpense(expenseId);
+            return DomainResult<ExpenseResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -82,8 +82,8 @@ namespace ClubManager.Controllers.MembersTeams
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
         public async Task<IActionResult> GetAllExpense()
         {
-            List<Entity>? response = await _expenseAppService.GetAllExpense();
-            return DomainResult<List<Entity>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<ExpenseResponseDTO>? response = await _expenseAppService.GetAllExpense();
+            return DomainResult<List<ExpenseResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
     }
 }

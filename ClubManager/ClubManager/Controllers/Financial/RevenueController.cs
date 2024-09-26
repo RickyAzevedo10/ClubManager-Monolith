@@ -1,6 +1,5 @@
 using ClubManager.App.Services.Infrastructures;
 using ClubManager.Domain.DTOs.Financial;
-using ClubManager.Domain.Entities.Financial;
 using ClubManager.Domain.Interfaces;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -30,10 +29,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("Revenue")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
-        public async Task<IActionResult> PostRevenue(CreateRevenueDTO revenueBody)
+        public async Task<IActionResult> PostRevenue([FromBody] RevenueDTO revenueBody)
         {
-            List<Revenue>? response = await _revenueAppService.CreateRevenue(revenueBody);
-            return DomainResult<List<Revenue>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            RevenueResponseDTO? response = await _revenueAppService.CreateRevenue(revenueBody);
+            return DomainResult<RevenueResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -43,10 +42,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("Revenue")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
-        public async Task<IActionResult> PutRevenue(UpdateEntityRevenueDTO revenueToUpdate)
+        public async Task<IActionResult> PutRevenue([FromBody] UpdateRevenueDTO revenueToUpdate)
         {
-            List<Revenue>? response = await _revenueAppService.UpdateRevenue(revenueToUpdate);
-            return DomainResult<List<Revenue>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            RevenueResponseDTO? response = await _revenueAppService.UpdateRevenue(revenueToUpdate);
+            return DomainResult<RevenueResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -56,10 +55,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("Revenue")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
-        public async Task<IActionResult> DeleteRevenue(long id)
+        public async Task<IActionResult> DeleteRevenue([FromQuery] long id)
         {
-            Revenue? response = await _revenueAppService.DeleteRevenue(id);
-            return DomainResult<Revenue?>.Ok(response, _notificationContext, _modelErrorsContext);
+            RevenueResponseDTO? response = await _revenueAppService.DeleteRevenue(id);
+            return DomainResult<RevenueResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -69,10 +68,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("RevenueId")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
-        public async Task<IActionResult> GetRevenue(long revenueId)
+        public async Task<IActionResult> GetRevenue([FromQuery] long revenueId)
         {
-            Entity? response = await _revenueAppService.GetRevenue(revenueId);
-            return DomainResult<Entity?>.Ok(response, _notificationContext, _modelErrorsContext);
+            RevenueResponseDTO? response = await _revenueAppService.GetRevenue(revenueId);
+            return DomainResult<RevenueResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -83,8 +82,8 @@ namespace ClubManager.Controllers.MembersTeams
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
         public async Task<IActionResult> GetAllRevenue()
         {
-            List<Entity>? response = await _revenueAppService.GetAllRevenue();
-            return DomainResult<List<Entity>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<RevenueResponseDTO>? response = await _revenueAppService.GetAllRevenue();
+            return DomainResult<List<RevenueResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
     }
 }

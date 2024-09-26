@@ -23,8 +23,8 @@ namespace ClubManager.Domain.Entities.MembersTeams
         public ICollection<TeamPlayer> TeamPlayers { get; set; }
         public ICollection<MatchStatistic> MatchStatistic { get; set; }
         public ICollection<TrainingAttendance> TrainingAttendance { get; set; }
-        [ForeignKey("PlayerId")]
-        public Entity Entity { get; set; }
+        
+        public virtual Entity Entity { get; set; }
 
         public Player()
         {

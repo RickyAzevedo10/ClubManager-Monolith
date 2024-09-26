@@ -5,16 +5,16 @@ namespace ClubManager.App.Interfaces.Identity
 {
     public interface IMembersAppService
     {
-        Task<ClubMember?> Create(CreateClubMemberDTO memberToCreate);
-        Task<ClubMember?> Delete(long id);
-        Task<List<ClubMember>?> GetAllClubMembers();
-        Task<ClubMember?> Update(UpdateClubMemberDTO clubMemberToUpdate);
+        Task<ClubMemberResponseDTO?> Create(CreateClubMemberDTO memberToCreate);
+        Task<ClubMemberResponseDTO?> Delete(long id);
+        Task<List<ClubMemberResponseDTO>?> GetAllClubMembers();
+        Task<ClubMemberResponseDTO?> Update(UpdateClubMemberDTO clubMemberToUpdate);
+        Task<List<ClubMemberResponseDTO>?> SearchClubMembersAsync(string? firstName, string? lastName);
 
-        Task<MinorClubMember?> DeleteMinorClubMember(long id);
-        Task<List<MinorClubMember>?> GetAllMinorClubMembers();
-        Task<MinorClubMember?> CreateMinorClubMembers(CreateMinorClubMemberDTO minorMemberToCreate);
-        Task<MinorClubMember?> UpdateMinorMembers(UpdateMinorClubMemberDTO minorClubMemberToUpdate);
-        Task<List<ClubMember>?> SearchClubMembersAsync(string? firstName, string? lastName);
-        Task<List<MinorClubMember>?> SearchMinorMembersAsync(string? firstName, string? lastName);
+        Task<MinorClubMemberResponseDTO?> DeleteMinorClubMember(long id);
+        Task<List<MinorClubMemberResponseDTO>?> GetAllMinorClubMembers();
+        Task<MinorClubMemberResponseDTO?> CreateMinorClubMembers(CreateMinorClubMemberDTO minorMemberToCreate);
+        Task<MinorClubMemberResponseDTO?> UpdateMinorMembers(UpdateMinorClubMemberDTO minorClubMemberToUpdate);
+        Task<List<MinorClubMemberResponseDTO>?> SearchMinorMembersAsync(string? firstName, string? lastName);
     }
 }

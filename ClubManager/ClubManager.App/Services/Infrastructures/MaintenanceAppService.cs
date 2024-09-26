@@ -1,4 +1,5 @@
-﻿using ClubManager.App.Interfaces.Infrastructure;
+﻿using AutoMapper;
+using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.Infrastructures;
 using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Interfaces;
@@ -14,17 +15,20 @@ namespace ClubManager.App.Services.Infrastructures
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
         private readonly IMaintenanceService _maintenanceService;
+        private readonly IMapper _mapper;
 
-        public MaintenanceAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IMaintenanceService maintenanceService)
+        public MaintenanceAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, 
+            IMaintenanceService maintenanceService, IMapper mapper)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _maintenanceService = maintenanceService;
+            _mapper = mapper;
         }
 
         #region MaintenanceRequest
-        public async Task<MaintenanceRequest?> GetMaintenanceRequest(long maintenanceRequestId)
+        public async Task<MaintenanceRequestResponseDTO?> GetMaintenanceRequest(long maintenanceRequestId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -36,10 +40,10 @@ namespace ClubManager.App.Services.Infrastructures
 
             MaintenanceRequest? maintenanceRequest = await _unitOfWork.MaintenanceRequestRepository.GetById(maintenanceRequestId);
 
-            return maintenanceRequest;
+            return _mapper.Map<MaintenanceRequestResponseDTO>(maintenanceRequest); 
         }
 
-        public async Task<MaintenanceRequest?> DeleteMaintenanceRequest(long id)
+        public async Task<MaintenanceRequestResponseDTO?> DeleteMaintenanceRequest(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -57,10 +61,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return maintenanceRequestDeleted;
+            return _mapper.Map<MaintenanceRequestResponseDTO>(maintenanceRequestDeleted); 
         }
 
-        public async Task<MaintenanceRequest?> CreateMaintenanceRequest(CreateMaintenanceRequestDTO maintenanceRequestBody)
+        public async Task<MaintenanceRequestResponseDTO?> CreateMaintenanceRequest(CreateMaintenanceRequestDTO maintenanceRequestBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -78,10 +82,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return maintenanceRequest;
+            return _mapper.Map<MaintenanceRequestResponseDTO>(maintenanceRequest); 
         }
 
-        public async Task<MaintenanceRequest?> UpdateMaintenanceRequest(UpdateMaintenanceRequestDTO maintenanceRequestToUpdate)
+        public async Task<MaintenanceRequestResponseDTO?> UpdateMaintenanceRequest(UpdateMaintenanceRequestDTO maintenanceRequestToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -116,7 +120,7 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return maintenanceRequest;
+            return _mapper.Map<MaintenanceRequestResponseDTO>(maintenanceRequest);
         }
         #endregion
 
@@ -152,7 +156,7 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            if ((startDate > endDate) || (startDate > DateTime.Now || endDate > DateTime.Now))
+            if (startDate > endDate)
             {
                 _notificationContext.AddNotification(NotificationKeys.MaintenanceHistoryNotifications.MAINTENANCE_HISTORY_DATETIME_INVALID, string.Empty);
                 return null;

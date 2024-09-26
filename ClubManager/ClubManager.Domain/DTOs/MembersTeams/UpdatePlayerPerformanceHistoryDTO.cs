@@ -2,8 +2,8 @@
 {
     public class UpdatePlayerPerformanceHistoryDTO
     {
-        public int? Id { get; set; }
-        public int PlayerId { get; set; }
+        public long? Id { get; set; }
+        public long PlayerId { get; set; }
         public string Season { get; set; }
         public string ClubOpponent { get; set; }
         public int Goals { get; set; }

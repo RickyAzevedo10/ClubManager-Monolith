@@ -1,4 +1,5 @@
-﻿using ClubManager.App.Interfaces.Infrastructure;
+﻿using AutoMapper;
+using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.Financial;
 using ClubManager.Domain.Entities.Financial;
 using ClubManager.Domain.Interfaces;
@@ -14,16 +15,18 @@ namespace ClubManager.App.Services.Infrastructures
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
         private readonly IRevenueService _revenueService;
+        private readonly IMapper _mapper;
 
-        public RevenueAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IRevenueService revenueService)
+        public RevenueAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IRevenueService revenueService, IMapper mapper)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _revenueService = revenueService;
+            _mapper = mapper;
         }
 
-        public async Task<List<Revenue>?> CreateRevenue(CreateRevenueDTO revenueBody)
+        public async Task<RevenueResponseDTO?> CreateRevenue(RevenueDTO revenueBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -33,7 +36,7 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            List<Revenue>? revenueList = await _revenueService.CreateRevenue(revenueBody.Revenues);
+            Revenue? revenueList = await _revenueService.CreateRevenue(revenueBody);
 
             if (!await _unitOfWork.CommitAsync())
             {
@@ -41,10 +44,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return revenueList;
+            return _mapper.Map<RevenueResponseDTO>(revenueList);
         }
 
-        public async Task<Revenue?> DeleteRevenue(long id)
+        public async Task<RevenueResponseDTO?> DeleteRevenue(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -62,10 +65,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return revenueDeleted;
+            return _mapper.Map<RevenueResponseDTO>(revenueDeleted);
         }
 
-        public async Task<List<Revenue>?> UpdateRevenue(UpdateEntityRevenueDTO revenueToUpdate)
+        public async Task<RevenueResponseDTO?> UpdateRevenue(UpdateRevenueDTO revenueToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -77,8 +80,8 @@ namespace ClubManager.App.Services.Infrastructures
 
             Entity? entity = null;
 
-            if (revenueToUpdate.Entity.Id != null)
-                entity = await _unitOfWork.EntityRepository.GetById(revenueToUpdate.Entity.Id);
+            if (revenueToUpdate.EntityId != null)
+                entity = await _unitOfWork.EntityRepository.GetById(revenueToUpdate.EntityId);
 
             if (entity == null)
             {
@@ -86,7 +89,7 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            List<Revenue>? revenueList = await _revenueService.UpdateRevenue(revenueToUpdate.Revenues);
+            Revenue? revenue = await _revenueService.UpdateRevenue(revenueToUpdate);
 
             if (!await _unitOfWork.CommitAsync())
             {
@@ -94,10 +97,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return revenueList;
+            return _mapper.Map<RevenueResponseDTO>(revenue);
         }
 
-        public async Task<Entity?> GetRevenue(long revenueId)
+        public async Task<RevenueResponseDTO?> GetRevenue(long revenueId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -107,12 +110,12 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            Entity? entity = await _unitOfWork.EntityRepository.GetRevenueWithEntity(revenueId);
+            Revenue? revenue = await _unitOfWork.RevenueRepository.GetById(revenueId);
 
-            return entity;
+            return _mapper.Map<RevenueResponseDTO>(revenue);
         }
 
-        public async Task<List<Entity>?> GetAllRevenue()
+        public async Task<List<RevenueResponseDTO>?> GetAllRevenue()
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -122,9 +125,9 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            IEnumerable<Entity>? allEntity = await _unitOfWork.EntityRepository.GetAllRevenueWithEntity();
+            IEnumerable<Revenue>? allRevenue = await _unitOfWork.RevenueRepository.GetAllAsync();
 
-            return allEntity.ToList();
+            return _mapper.Map<List<RevenueResponseDTO>>(allRevenue);
         }
     }
 }

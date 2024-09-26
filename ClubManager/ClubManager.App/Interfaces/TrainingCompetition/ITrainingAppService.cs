@@ -5,14 +5,14 @@ namespace ClubManager.App.Interfaces.Identity
 {
     public interface ITrainingAppService
     {
-        Task<TrainingSession?> DeleteTrainingSession(long id);
-        Task<TrainingSession?> GetTrainingSession(long trainingSessionId);
-        Task<TrainingSession?> CreateTrainingSession(CreateTrainingSessionDTO trainingSessionBody);
-        Task<TrainingSession?> UpdateTrainingSession(UpdateTrainingSessionDTO trainingSessionToUpdate);
-        Task<TrainingAttendance?> CreateTrainingAttendance(CreateTrainingAttendanceDTO trainingAttendanceBody);
-        Task<TrainingAttendance?> DeleteTrainingAttendance(long id);
-        Task<TrainingAttendance?> UpdateTrainingAttendance(UpdateTrainingAttendanceDTO trainingAttendanceToUpdate);
-        Task<List<TrainingAttendance>?> GetTrainingAttendance(long trainingAttendanceId);
-        Task<List<TrainingSession>?> GetTrainingSessionsByDateRange(DateTime startDate, DateTime endDate);
+        Task<TrainingSessionResponseDTO?> DeleteTrainingSession(long id);
+        Task<TrainingSessionResponseDTO?> GetTrainingSession(long trainingSessionId);
+        Task<TrainingSessionResponseDTO?> CreateTrainingSession(CreateTrainingSessionDTO trainingSessionBody);
+        Task<TrainingSessionResponseDTO?> UpdateTrainingSession(UpdateTrainingSessionDTO trainingSessionToUpdate);
+        Task<TrainingAttendanceResponseDTO?> CreateTrainingAttendance(CreateTrainingAttendanceDTO trainingAttendanceBody);
+        Task<TrainingAttendanceResponseDTO?> DeleteTrainingAttendance(long id);
+        Task<TrainingAttendanceResponseDTO?> UpdateTrainingAttendance(UpdateTrainingAttendanceDTO trainingAttendanceToUpdate);
+        Task<List<TrainingAttendanceResponseDTO>?> GetTrainingAttendance(long trainingAttendanceId);
+        Task<List<TrainingSessionResponseDTO>?> GetTrainingSessionsByDateRange(DateTime startDate, DateTime endDate);
     }
 }

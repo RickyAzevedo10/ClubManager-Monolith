@@ -12,6 +12,11 @@ namespace ClubManager.Infra.Repositories.Identity
         {
         }
 
+        public async Task<Player?> GetByIdAsync(long id)
+        {
+            return await GetEntity().Include(x => x.PlayerResponsibles).FirstOrDefaultAsync(u => u.Id == id);
+        }
+
         public async Task<IEnumerable<Player>> SearchPlayersAsync(string? firstName, string? lastName, string? position)
         {
             var query = GetEntity();

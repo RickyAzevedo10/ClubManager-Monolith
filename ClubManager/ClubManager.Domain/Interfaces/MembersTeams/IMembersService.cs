@@ -11,5 +11,7 @@ namespace ClubManager.Domain.Interfaces.Identity
         Task<MinorClubMember?> CreateMinorClubMember(CreateMinorClubMemberDTO createMinorClubMember);
         Task<ClubMember?> Update(UpdateClubMemberDTO clubMemberToUpdate, ClubMember clubMember);
         Task<MinorClubMember?> UpdateMinorClubMember(UpdateMinorClubMemberDTO minorClubMemberToUpdate, MinorClubMember minorClubMember);
+        Task<UserClubMember?> Create(long userId, long clubMemberId);
+        Task<UserClubMember?> UpdateUserClubMember(long userId, long clubMemberId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using ClubManager.App.Interfaces.Identity;
+﻿using AutoMapper;
+using ClubManager.App.Interfaces.Identity;
 using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.MembersTeams;
 using ClubManager.Domain.Entities.MembersTeams;
@@ -15,16 +16,18 @@ namespace ClubManager.App.Services.Identity
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
         private readonly ITeamService _teamService;
+        private readonly IMapper _mapper;
 
-        public TeamAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, ITeamService teamService)
+        public TeamAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, ITeamService teamService, IMapper mapper)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _teamService = teamService;
+            _mapper = mapper;
         }
 
-        public async Task<List<Team>?> GetTeams()
+        public async Task<List<TeamResponseDTO>?> GetTeams()
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -36,10 +39,10 @@ namespace ClubManager.App.Services.Identity
 
             IEnumerable<Team>? allTeams = await _unitOfWork.TeamRepository.GetAllAsync();
 
-            return allTeams.ToList();
+            return _mapper.Map<List<TeamResponseDTO>>(allTeams);
         }
 
-        public async Task<List<Team>?> GetAllPlayersFromTeam(long teamId)
+        public async Task<List<TeamResponseDTO>?> GetAllPlayersFromTeam(long teamId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -51,10 +54,10 @@ namespace ClubManager.App.Services.Identity
 
             List<Team>? allTeams = await _unitOfWork.TeamRepository.GetAllPlayerFromTeamAsync(teamId);
 
-            return allTeams;
+            return _mapper.Map<List<TeamResponseDTO>>(allTeams);
         }
 
-        public async Task<Team?> DeleteTeam(long id)
+        public async Task<TeamResponseDTO?> DeleteTeam(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -72,10 +75,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return teamDeleted;
+            return _mapper.Map<TeamResponseDTO>(teamDeleted); 
         }
 
-        public async Task<Team?> CreateTeam(CreateTeamDTO teamBody)
+        public async Task<TeamResponseDTO?> CreateTeam(CreateTeamDTO teamBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -86,6 +89,10 @@ namespace ClubManager.App.Services.Identity
             }
 
             Team? team = await _teamService.CreateTeam(teamBody);
+            if (_notificationContext.HasNotifications())
+            {
+                return null;
+            }
 
             team.TeamCoaches = await _teamService.CreateTeamCoach(teamBody.TeamCoachDTO, team);
             team.TeamPlayers = await _teamService.CreateTeamPlayer(teamBody.PlayerId, team);
@@ -96,10 +103,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return team;
+            return _mapper.Map<TeamResponseDTO>(team);
         }
 
-        public async Task<Team?> UpdateTeam(UpdateTeamDTO teamToUpdate)
+        public async Task<TeamResponseDTO?> UpdateTeam(UpdateTeamDTO teamToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -112,7 +119,7 @@ namespace ClubManager.App.Services.Identity
             Team? team = null;
 
             if (teamToUpdate.Id != null)
-                team = await _unitOfWork.TeamRepository.GetById(teamToUpdate.Id);
+                team = await _unitOfWork.TeamRepository.GetById((long)teamToUpdate.Id);
 
             if (team == null)
             {
@@ -122,11 +129,8 @@ namespace ClubManager.App.Services.Identity
 
             team = await _teamService.UpdateTeam(teamToUpdate, team);
 
-            if (team == null)
-            {
-                _notificationContext.AddNotification(NotificationKeys.TeamNotifications.ERROR_TEAM_UPDATED, string.Empty);
+            if (team == null || _notificationContext.HasNotifications())
                 return null;
-            }
 
             team.TeamCoaches = await _teamService.UpdateTeamCoaches(teamToUpdate, team);
             team.TeamPlayers = await _teamService.UpdateTeamPlayers(teamToUpdate, team);
@@ -137,7 +141,7 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return team;
+            return _mapper.Map<TeamResponseDTO>(team);
         }
     }
 }

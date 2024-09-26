@@ -1,6 +1,6 @@
 ﻿namespace ClubManager.Domain.DTOs.Identity
 {
-    public class RecoverPasswordRequest
+    public class RecoverPasswordRequestDTO
     {
         public string Email { get; set; }
     }

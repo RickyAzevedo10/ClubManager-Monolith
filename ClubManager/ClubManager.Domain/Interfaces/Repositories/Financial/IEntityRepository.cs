@@ -8,5 +8,6 @@ namespace ClubManager.Domain.Interfaces.Repositories.Identity
         Task<List<Entity>?> GetAllExpenseWithEntity();
         Task<List<Entity>?> GetAllRevenueWithEntity();
         Task<Entity?> GetRevenueWithEntity(long revenueId);
+        Task<Entity?> GetEntityByID(long Id);
     }
 }

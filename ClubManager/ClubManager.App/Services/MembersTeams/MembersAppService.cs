@@ -1,4 +1,5 @@
-﻿using ClubManager.App.Interfaces.Identity;
+﻿using AutoMapper;
+using ClubManager.App.Interfaces.Identity;
 using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.MembersTeams;
 using ClubManager.Domain.Entities.MembersTeams;
@@ -15,17 +16,20 @@ namespace ClubManager.App.Services.Identity
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
         private readonly IMembersService _membersService;
+        private readonly IMapper _mapper;
 
-        public MembersAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IMembersService membersService)
+        public MembersAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, 
+            IMembersService membersService, IMapper mapper)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _membersService = membersService;
+            _mapper = mapper;
         }
 
         #region ClubMember
-        public async Task<ClubMember?> Create(CreateClubMemberDTO memberToCreate)
+        public async Task<ClubMemberResponseDTO?> Create(CreateClubMemberDTO memberToCreate)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -47,7 +51,7 @@ namespace ClubManager.App.Services.Identity
 
             if(memberToCreate.IsUser && memberToCreate.UserId != 0)
             {
-                //TODO:create registo no userclubmember
+                clubMember.UserClubMember = await _membersService.Create(memberToCreate.UserId, clubMember.Id);
             }
 
             if (!await _unitOfWork.CommitAsync())
@@ -56,10 +60,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return clubMember;
+            return _mapper.Map<ClubMemberResponseDTO>(clubMember); 
         }
 
-        public async Task<ClubMember?> Delete(long id)
+        public async Task<ClubMemberResponseDTO?> Delete(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -77,10 +81,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return clubMemberDeleted;
+            return _mapper.Map<ClubMemberResponseDTO>(clubMemberDeleted);
         }
 
-        public async Task<List<ClubMember>?> GetAllClubMembers()
+        public async Task<List<ClubMemberResponseDTO>?> GetAllClubMembers()
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -92,10 +96,10 @@ namespace ClubManager.App.Services.Identity
 
             IEnumerable<ClubMember>? clubMembers = await _unitOfWork.ClubMemberRepository.GetAllAsync();
 
-            return clubMembers.ToList();
+            return _mapper.Map<List<ClubMemberResponseDTO>>(clubMembers);
         }
 
-        public async Task<List<ClubMember>?> SearchClubMembersAsync(string? firstName, string? lastName)
+        public async Task<List<ClubMemberResponseDTO>?> SearchClubMembersAsync(string? firstName, string? lastName)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -107,10 +111,10 @@ namespace ClubManager.App.Services.Identity
 
             IEnumerable<ClubMember>? clubMembers = await _unitOfWork.ClubMemberRepository.SearchClubMembersAsync(firstName, lastName);
 
-            return clubMembers.ToList();
+            return _mapper.Map<List<ClubMemberResponseDTO>>(clubMembers);
         }
 
-        public async Task<ClubMember?> Update(UpdateClubMemberDTO clubMemberToUpdate)
+        public async Task<ClubMemberResponseDTO?> Update(UpdateClubMemberDTO clubMemberToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -122,8 +126,8 @@ namespace ClubManager.App.Services.Identity
 
             ClubMember? clubMember = null;
             
-            if(clubMemberToUpdate.ClubMemberId != null)
-                clubMember = await _unitOfWork.ClubMemberRepository.GetById(clubMemberToUpdate.ClubMemberId);
+            if(clubMemberToUpdate.Id != 0)
+                clubMember = await _unitOfWork.ClubMemberRepository.GetById((long)clubMemberToUpdate.Id);
 
             if (clubMember == null)
             {
@@ -133,18 +137,23 @@ namespace ClubManager.App.Services.Identity
 
             clubMember = await _membersService.Update(clubMemberToUpdate, clubMember);
 
+            if (clubMemberToUpdate.IsUser && clubMemberToUpdate.UserId != 0)
+            {
+                clubMember.UserClubMember = await _membersService.UpdateUserClubMember(clubMemberToUpdate.UserId, clubMember.Id);
+            }
+
             if (!await _unitOfWork.CommitAsync())
             {
                 _notificationContext.AddNotification(NotificationKeys.DATABASE_COMMIT_ERROR, string.Empty);
                 return null;
             }
 
-            return clubMember;
+            return _mapper.Map<ClubMemberResponseDTO>(clubMember);
         }
         #endregion
 
         #region MinorClubMember
-        public async Task<MinorClubMember?> CreateMinorClubMembers(CreateMinorClubMemberDTO minorMemberToCreate)
+        public async Task<MinorClubMemberResponseDTO?> CreateMinorClubMembers(CreateMinorClubMemberDTO minorMemberToCreate)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -170,10 +179,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return minorClubMember;
+            return _mapper.Map<MinorClubMemberResponseDTO>(minorClubMember); 
         }
 
-        public async Task<MinorClubMember?> DeleteMinorClubMember(long id)
+        public async Task<MinorClubMemberResponseDTO?> DeleteMinorClubMember(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -191,10 +200,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return minorClubMemberDeleted;
+            return _mapper.Map<MinorClubMemberResponseDTO>(minorClubMemberDeleted);
         }
 
-        public async Task<List<MinorClubMember>?> GetAllMinorClubMembers()
+        public async Task<List<MinorClubMemberResponseDTO>?> GetAllMinorClubMembers()
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -206,10 +215,10 @@ namespace ClubManager.App.Services.Identity
 
             IEnumerable<MinorClubMember>? minorClubMembers = await _unitOfWork.MinorClubMemberRepository.GetAllAsync();
 
-            return minorClubMembers.ToList();
+            return _mapper.Map<List<MinorClubMemberResponseDTO>>(minorClubMembers);
         }
 
-        public async Task<MinorClubMember?> UpdateMinorMembers(UpdateMinorClubMemberDTO minorClubMemberToUpdate)
+        public async Task<MinorClubMemberResponseDTO?> UpdateMinorMembers(UpdateMinorClubMemberDTO minorClubMemberToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -221,8 +230,8 @@ namespace ClubManager.App.Services.Identity
 
             MinorClubMember? minorClubMember = null;
 
-            if (minorClubMemberToUpdate.MinorClubMemberId != null)
-                minorClubMember = await _unitOfWork.MinorClubMemberRepository.GetById(minorClubMemberToUpdate.MinorClubMemberId);
+            if (minorClubMemberToUpdate.Id != null)
+                minorClubMember = await _unitOfWork.MinorClubMemberRepository.GetById((long)minorClubMemberToUpdate.Id);
 
             if (minorClubMember == null)
             {
@@ -238,10 +247,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return minorClubMember;
+            return _mapper.Map<MinorClubMemberResponseDTO>(minorClubMember);
         }
 
-        public async Task<List<MinorClubMember>?> SearchMinorMembersAsync(string? firstName, string? lastName)
+        public async Task<List<MinorClubMemberResponseDTO>?> SearchMinorMembersAsync(string? firstName, string? lastName)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -253,7 +262,7 @@ namespace ClubManager.App.Services.Identity
 
             IEnumerable<MinorClubMember>? minorClubMembers = await _unitOfWork.MinorClubMemberRepository.SearchMinorClubMemberAsync(firstName, lastName);
 
-            return minorClubMembers.ToList();
+            return _mapper.Map<List<MinorClubMemberResponseDTO>>(minorClubMembers);
         }
         #endregion
     }

@@ -1,8 +1,6 @@
 using ClubManager.App.Interfaces.Identity;
 using ClubManager.Domain.DTOs.MembersTeams;
-using ClubManager.Domain.Entities.MembersTeams;
 using ClubManager.Domain.Interfaces;
-using ClubManager.Domain.Services;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,10 +30,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("Members")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> Post(CreateClubMemberDTO memberBody)
+        public async Task<IActionResult> Post([FromBody] CreateClubMemberDTO memberBody)
         {
-            ClubMember? response = await _membersAppService.Create(memberBody);
-            return DomainResult<ClubMember?>.Ok(response, _notificationContext, _modelErrorsContext);
+            ClubMemberResponseDTO? response = await _membersAppService.Create(memberBody);
+            return DomainResult<ClubMemberResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -45,10 +43,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("Members")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete([FromQuery] long id)
         {
-            ClubMember? response = await _membersAppService.Delete(id);
-            return DomainResult<ClubMember?>.Ok(response, _notificationContext, _modelErrorsContext);
+            ClubMemberResponseDTO? response = await _membersAppService.Delete(id);
+            return DomainResult<ClubMemberResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -61,8 +59,8 @@ namespace ClubManager.Controllers.MembersTeams
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
         public async Task<IActionResult> SearchClubMembers([FromQuery] string? firstName, [FromQuery] string? lastName)
         {
-            List<ClubMember>? response = await _membersAppService.SearchClubMembersAsync(firstName, lastName);
-            return DomainResult<List<ClubMember>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<ClubMemberResponseDTO>? response = await _membersAppService.SearchClubMembersAsync(firstName, lastName);
+            return DomainResult<List<ClubMemberResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -73,8 +71,8 @@ namespace ClubManager.Controllers.MembersTeams
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
         public async Task<IActionResult> GetAllClubMembers()
         {
-            List<ClubMember>? response = await _membersAppService.GetAllClubMembers();
-            return DomainResult<List<ClubMember>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<ClubMemberResponseDTO>? response = await _membersAppService.GetAllClubMembers();
+            return DomainResult<List<ClubMemberResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -84,10 +82,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("Members")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> Put(UpdateClubMemberDTO memberToUpdate)
+        public async Task<IActionResult> Put([FromBody] UpdateClubMemberDTO memberToUpdate)
         {
-            ClubMember? response = await _membersAppService.Update(memberToUpdate);
-            return DomainResult<ClubMember?>.Ok(response, _notificationContext, _modelErrorsContext);
+            ClubMemberResponseDTO? response = await _membersAppService.Update(memberToUpdate);
+            return DomainResult<ClubMemberResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
         #endregion
 
@@ -99,10 +97,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("MinorMembers")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> PostMinorMembers(CreateMinorClubMemberDTO memberBody)
+        public async Task<IActionResult> PostMinorMembers([FromBody] CreateMinorClubMemberDTO memberBody)
         {
-            MinorClubMember? response = await _membersAppService.CreateMinorClubMembers(memberBody);
-            return DomainResult<MinorClubMember?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MinorClubMemberResponseDTO? response = await _membersAppService.CreateMinorClubMembers(memberBody);
+            return DomainResult<MinorClubMemberResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -112,10 +110,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("MinorMembers")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> PutMinorMembers(UpdateMinorClubMemberDTO minorMemberToUpdate)
+        public async Task<IActionResult> PutMinorMembers([FromBody] UpdateMinorClubMemberDTO minorMemberToUpdate)
         {
-            MinorClubMember? response = await _membersAppService.UpdateMinorMembers(minorMemberToUpdate);
-            return DomainResult<MinorClubMember?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MinorClubMemberResponseDTO? response = await _membersAppService.UpdateMinorMembers(minorMemberToUpdate);
+            return DomainResult<MinorClubMemberResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -128,8 +126,8 @@ namespace ClubManager.Controllers.MembersTeams
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
         public async Task<IActionResult> SearchMinorMembers([FromQuery] string? firstName, [FromQuery] string? lastName)
         {
-            List<MinorClubMember>? response = await _membersAppService.SearchMinorMembersAsync(firstName, lastName);
-            return DomainResult<List<MinorClubMember>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<MinorClubMemberResponseDTO>? response = await _membersAppService.SearchMinorMembersAsync(firstName, lastName);
+            return DomainResult<List<MinorClubMemberResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -140,8 +138,8 @@ namespace ClubManager.Controllers.MembersTeams
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
         public async Task<IActionResult> GetAllMinorClubMembers()
         {
-            List<MinorClubMember>? response = await _membersAppService.GetAllMinorClubMembers();
-            return DomainResult<List<MinorClubMember>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<MinorClubMemberResponseDTO>? response = await _membersAppService.GetAllMinorClubMembers();
+            return DomainResult<List<MinorClubMemberResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -151,10 +149,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("MinorMembers")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> DeleteMinorClubMembers(long id)
+        public async Task<IActionResult> DeleteMinorClubMembers([FromQuery] long id)
         {
-            MinorClubMember? response = await _membersAppService.DeleteMinorClubMember(id);
-            return DomainResult<MinorClubMember?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MinorClubMemberResponseDTO? response = await _membersAppService.DeleteMinorClubMember(id);
+            return DomainResult<MinorClubMemberResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
         #endregion
     }

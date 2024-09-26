@@ -14,7 +14,7 @@ namespace ClubManager.Infra.Repositories.Identity
 
         public async Task<List<UserPermissions>?> GetUserPermissions(long userId)
         {
-            return await GetEntity().Where(x => x.Users.FirstOrDefault()!.Id == userId).ToListAsync();
+            return await GetEntity().Where(x => x.Users.Id == userId).ToListAsync();
         }
 
     }

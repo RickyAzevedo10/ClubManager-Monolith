@@ -12,6 +12,15 @@ namespace ClubManager.Infra.Repositories.Identity
         {
         }
 
+        public async Task<Entity?> GetEntityByID(long Id)
+        {
+            return await GetEntity()
+                .Include(x => x.Player)
+                .Include(x => x.UserClubMember)
+                .Where(x => x.Id == Id)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<Entity?> GetExpenseWithEntity(long expenseId)
         {
             return await GetEntity()

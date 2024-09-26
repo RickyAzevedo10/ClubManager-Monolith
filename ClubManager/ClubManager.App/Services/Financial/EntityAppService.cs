@@ -1,4 +1,5 @@
-﻿using ClubManager.App.Interfaces.Infrastructure;
+﻿using AutoMapper;
+using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.Financial;
 using ClubManager.Domain.Entities.Financial;
 using ClubManager.Domain.Interfaces;
@@ -14,16 +15,18 @@ namespace ClubManager.App.Services.Infrastructures
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
         private readonly IEntityService _entityService;
+        private readonly IMapper _mapper;
 
-        public EntityAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IEntityService entityService)
+        public EntityAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IEntityService entityService, IMapper mapper)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _entityService = entityService;
+            _mapper = mapper;
         }
 
-        public async Task<Entity?> CreateEntity(CreateEntityDTO entityBody)
+        public async Task<EntityResponseDTO?> CreateEntity(CreateEntityDTO entityBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -41,10 +44,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return entity;
+            return _mapper.Map<EntityResponseDTO>(entity);
         }
 
-        public async Task<Entity?> DeleteEntity(long id)
+        public async Task<EntityResponseDTO?> DeleteEntity(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -62,10 +65,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return entityDeleted;
+            return _mapper.Map<EntityResponseDTO>(entityDeleted);
         }
 
-        public async Task<Entity?> UpdateEntity(UpdateEntityDTO entityToUpdate)
+        public async Task<EntityResponseDTO?> UpdateEntity(UpdateEntityDTO entityToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -94,10 +97,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return entity;
+            return _mapper.Map<EntityResponseDTO>(entity);
         }
 
-        public async Task<Entity?> GetEntity(long entityId)
+        public async Task<EntityResponseDTO?> GetEntity(long entityId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -107,12 +110,12 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            Entity? entity = await _unitOfWork.EntityRepository.GetById(entityId);
+            Entity? entity = await _unitOfWork.EntityRepository.GetEntityByID(entityId);
 
-            return entity;
+            return _mapper.Map<EntityResponseDTO>(entity);
         }
 
-        public async Task<List<Entity>?> GetAllEntity()
+        public async Task<List<EntityResponseDTO>?> GetAllEntity()
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -124,7 +127,7 @@ namespace ClubManager.App.Services.Infrastructures
 
             IEnumerable<Entity>? allEntity = await _unitOfWork.EntityRepository.GetAllAsync();
 
-            return allEntity.ToList();
+            return _mapper.Map<List<EntityResponseDTO>>(allEntity);
         }
     }
 }

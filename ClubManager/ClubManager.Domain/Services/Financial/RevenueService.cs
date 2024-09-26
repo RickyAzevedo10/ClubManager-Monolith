@@ -23,72 +23,63 @@ namespace ClubManager.Domain.Services.Identity
             _revenueValidator = revenueValidator;
         }
 
-        public async Task<List<Revenue>?> CreateRevenue(List<RevenueDTO> revenueBody)
+        public async Task<Revenue?> CreateRevenue(RevenueDTO revenueBody)
         {
-            List<Revenue> revenues = [];
-
-            foreach (var item in revenueBody)
+            bool validationResult = _entityValidationService.Validate(_revenueValidator, revenueBody);
+            if (!validationResult)
             {
-                bool validationResult = _entityValidationService.Validate(_revenueValidator, item);
-                if (!validationResult)
-                {
-                    _notificationContext.AddNotification(NotificationKeys.ExpenseNotifications.ERROR_EXPENSE_CREATED, string.Empty);
-                    return null;
-                }
-                Revenue revenue = new();
-                revenue.SetAmount(item.Amount);
-                revenue.SetRevenueDate(item.RevenueDate);
-                revenue.SetSource(item.Source);
-                revenue.SetCategoryId(item.CategoryId);
-                revenue.SetDescription(item.Description);
-                revenue.SetPaymentReference(item.PaymentReference);
-                revenue.SetEntityId(item.EntityId);
-
-                await _unitOfWork.RevenueRepository.AddAsync(revenue);
-                revenues.Add(revenue);
+                _notificationContext.AddNotification(NotificationKeys.ExpenseNotifications.ERROR_EXPENSE_CREATED, string.Empty);
+                return null;
             }
+            Revenue revenue = new();
+            revenue.SetAmount(revenueBody.Amount);
+            revenue.SetRevenueDate(revenueBody.RevenueDate);
+            revenue.SetSource(revenueBody.Source);
+            revenue.SetCategoryId(revenueBody.CategoryId);
+            revenue.SetDescription(revenueBody.Description);
+            revenue.SetPaymentReference(revenueBody.PaymentReference);
+            revenue.SetEntityId(revenueBody.EntityId);
+            revenue.SetResponsibleUserId(revenueBody.ResponsibleUserId);
 
-            return revenues;
+            await _unitOfWork.RevenueRepository.AddAsync(revenue);
+
+            return revenue;
         }
 
-        public async Task<List<Revenue>?> UpdateRevenue(List<UpdateRevenueDTO> revenueBody)
+        public async Task<Revenue?> UpdateRevenue(UpdateRevenueDTO revenueBody)
         {
-            List<Revenue>? listRevenue = [];
-            foreach (var item in revenueBody)
+            Revenue revenue = await _unitOfWork.RevenueRepository.GetById(revenueBody.Id);
+            RevenueDTO revenueDTO = new()
             {
-                Revenue revenue = await _unitOfWork.RevenueRepository.GetById(item.Id);
-                RevenueDTO revenueDTO = new()
-                {
-                    RevenueDate = item.RevenueDate,
-                    Source = item.Source,
-                    Amount = item.Amount,
-                    Description = item.Description,
-                    CategoryId = item.CategoryId,
-                    PaymentReference = item.PaymentReference,
-                    EntityId = item.EntityId,
-                    ResponsibleUserId = item.ResponsibleUserId
-                };
+                RevenueDate = revenueBody.RevenueDate,
+                Source = revenueBody.Source,
+                Amount = revenueBody.Amount,
+                Description = revenueBody.Description,
+                CategoryId = revenueBody.CategoryId,
+                PaymentReference = revenueBody.PaymentReference,
+                EntityId = revenueBody.EntityId,
+                ResponsibleUserId = revenueBody.ResponsibleUserId
+            };
 
-                bool validationResult = _entityValidationService.Validate(_revenueValidator, revenueDTO);
+            bool validationResult = _entityValidationService.Validate(_revenueValidator, revenueDTO);
 
-                if (!validationResult && revenue == null)
-                {
-                    _notificationContext.AddNotification(NotificationKeys.ExpenseNotifications.ERROR_EXPENSE_UPDATED, string.Empty);
-                    return null;
-                }
-
-                revenue.SetAmount(item.Amount);
-                revenue.SetRevenueDate(item.RevenueDate);
-                revenue.SetSource(item.Source);
-                revenue.SetCategoryId(item.CategoryId);
-                revenue.SetDescription(item.Description);
-                revenue.SetPaymentReference(item.PaymentReference);
-                revenue.SetEntityId(item.EntityId);
-
-                _unitOfWork.RevenueRepository.Update(revenue);
-                listRevenue.Add(revenue);
+            if (!validationResult && revenue == null)
+            {
+                _notificationContext.AddNotification(NotificationKeys.ExpenseNotifications.ERROR_EXPENSE_UPDATED, string.Empty);
+                return null;
             }
-            return listRevenue;
+
+            revenue.SetAmount(revenueBody.Amount);
+            revenue.SetRevenueDate(revenueBody.RevenueDate);
+            revenue.SetSource(revenueBody.Source);
+            revenue.SetCategoryId(revenueBody.CategoryId);
+            revenue.SetDescription(revenueBody.Description);
+            revenue.SetPaymentReference(revenueBody.PaymentReference);
+            revenue.SetEntityId(revenueBody.EntityId);
+
+            _unitOfWork.RevenueRepository.Update(revenue);
+              
+            return revenue;
         }
 
         public async Task<Revenue?> DeleteRevenue(long id)

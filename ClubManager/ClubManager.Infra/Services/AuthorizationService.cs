@@ -22,7 +22,7 @@ namespace ClubManager.Infra.Services
             bool canEdit = false;
 
             if (userAuthenticated != null)
-                canEdit = _unitOfWork.UserPermissionsRepository.GetEntity().Where(x => x.Users.FirstOrDefault()!.Id == userAuthenticated.Id).FirstOrDefault()?.Edit ?? false;
+                canEdit = _unitOfWork.UserPermissionsRepository.GetEntity().Where(x => x.Users.Id == userAuthenticated.Id).FirstOrDefault()?.Edit ?? false;
 
             return canEdit;
         }
@@ -34,7 +34,7 @@ namespace ClubManager.Infra.Services
             bool canConsult = false;
 
             if (userAuthenticated != null)
-                canConsult = _unitOfWork.UserPermissionsRepository.GetEntity().Where(x => x.Users.FirstOrDefault()!.Id == userAuthenticated.Id).FirstOrDefault()?.Consult ?? false;
+                canConsult = _unitOfWork.UserPermissionsRepository.GetEntity().Where(x => x.Users.Id == userAuthenticated.Id).FirstOrDefault()?.Consult ?? false;
 
             return canConsult;
         }
@@ -46,7 +46,7 @@ namespace ClubManager.Infra.Services
             bool canDelete = false;
 
             if (userAuthenticated != null)
-                canDelete = _unitOfWork.UserPermissionsRepository.GetEntity().Where(x => x.Users.FirstOrDefault()!.Id == userAuthenticated.Id).FirstOrDefault()?.Delete ?? false;
+                canDelete = _unitOfWork.UserPermissionsRepository.GetEntity().Where(x => x.Users.Id == userAuthenticated.Id).FirstOrDefault()?.Delete ?? false;
 
             return canDelete;
         }
@@ -58,7 +58,7 @@ namespace ClubManager.Infra.Services
             bool canCreate = false;
 
             if (userAuthenticated != null)
-                canCreate = _unitOfWork.UserPermissionsRepository.GetEntity().Where(x => x.Users.FirstOrDefault()!.Id == userAuthenticated.Id).FirstOrDefault()?.Create ?? false;
+                canCreate = _unitOfWork.UserPermissionsRepository.GetEntity().Where(x => x.Users.Id == userAuthenticated.Id).FirstOrDefault()?.Create ?? false;
 
             return canCreate;
         }

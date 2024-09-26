@@ -20,7 +20,7 @@ namespace ClubManager.Infra.Persistence
             return _dbSet.AsQueryable();
         }
 
-        public virtual async Task<T> GetById(object id)
+        public virtual async Task<T> GetById(long id)
         {
             return await _dbSet.FindAsync(id);
         }

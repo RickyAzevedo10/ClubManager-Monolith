@@ -2,8 +2,8 @@
 {
     public class CreateTrainingAttendanceDTO
     {
-        public int TrainingSessionId { get; set; }
-        public int PlayerId { get; set; } 
+        public long TrainingSessionId { get; set; }
+        public long PlayerId { get; set; } 
         public bool IsPresent { get; set; } 
         public string? AbsenceReason { get; set; }
     }

@@ -2,8 +2,8 @@
 {
     public class UpdatePlayerTransferDTO
     {
-        public int? Id { get; set; }
-        public int PlayerId { get; set; }
+        public long? Id { get; set; }
+        public long PlayerId { get; set; }
         public string FromClub { get; set; }
         public string ToClub { get; set; }
         public DateTime TransferDate { get; set; }

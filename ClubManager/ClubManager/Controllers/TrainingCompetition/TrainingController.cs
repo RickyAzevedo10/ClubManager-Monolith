@@ -1,8 +1,6 @@
 using ClubManager.App.Interfaces.Identity;
 using ClubManager.Domain.DTOs.TrainingCompetition;
-using ClubManager.Domain.Entities.TrainingCompetition;
 using ClubManager.Domain.Interfaces;
-using ClubManager.Domain.Services;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,10 +30,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("TrainingSession")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> PostTrainingSession(CreateTrainingSessionDTO trainingSessionBody)
+        public async Task<IActionResult> PostTrainingSession([FromBody] CreateTrainingSessionDTO trainingSessionBody)
         {
-            TrainingSession? response = await _trainingAppService.CreateTrainingSession(trainingSessionBody);
-            return DomainResult<TrainingSession?>.Ok(response, _notificationContext, _modelErrorsContext);
+            TrainingSessionResponseDTO? response = await _trainingAppService.CreateTrainingSession(trainingSessionBody);
+            return DomainResult<TrainingSessionResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -45,10 +43,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("TrainingSession")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> PutTrainingSession(UpdateTrainingSessionDTO trainingSessionToUpdate)
+        public async Task<IActionResult> PutTrainingSession([FromBody] UpdateTrainingSessionDTO trainingSessionToUpdate)
         {
-            TrainingSession? response = await _trainingAppService.UpdateTrainingSession(trainingSessionToUpdate);
-            return DomainResult<TrainingSession?>.Ok(response, _notificationContext, _modelErrorsContext);
+            TrainingSessionResponseDTO? response = await _trainingAppService.UpdateTrainingSession(trainingSessionToUpdate);
+            return DomainResult<TrainingSessionResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -58,10 +56,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("TrainingSession")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> DeleteTrainingSession(long id)
+        public async Task<IActionResult> DeleteTrainingSession([FromQuery] long id)
         {
-            TrainingSession? response = await _trainingAppService.DeleteTrainingSession(id);
-            return DomainResult<TrainingSession?>.Ok(response, _notificationContext, _modelErrorsContext);
+            TrainingSessionResponseDTO? response = await _trainingAppService.DeleteTrainingSession(id);
+            return DomainResult<TrainingSessionResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -71,10 +69,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("TrainingSessionId")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> GetTrainingSession(long trainingSessionId)
+        public async Task<IActionResult> GetTrainingSession([FromQuery] long trainingSessionId)
         {
-            TrainingSession? response = await _trainingAppService.GetTrainingSession(trainingSessionId);
-            return DomainResult<TrainingSession?>.Ok(response, _notificationContext, _modelErrorsContext);
+            TrainingSessionResponseDTO? response = await _trainingAppService.GetTrainingSession(trainingSessionId);
+            return DomainResult<TrainingSessionResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -85,14 +83,12 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("TrainingSession")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> GetTrainingSessionsByDateRange(DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> GetTrainingSessionsByDateRange([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
-            List<TrainingSession>? response = await _trainingAppService.GetTrainingSessionsByDateRange(startDate, endDate);
-            return DomainResult<List<TrainingSession>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<TrainingSessionResponseDTO>? response = await _trainingAppService.GetTrainingSessionsByDateRange(startDate, endDate);
+            return DomainResult<List<TrainingSessionResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
-
         #endregion
-
 
         #region TrainingAttendance
         /// <summary>
@@ -102,10 +98,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("TrainingAttendance")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> PostTrainingAttendance(CreateTrainingAttendanceDTO trainingAttendanceBody)
+        public async Task<IActionResult> PostTrainingAttendance([FromBody] CreateTrainingAttendanceDTO trainingAttendanceBody)
         {
-            TrainingAttendance? response = await _trainingAppService.CreateTrainingAttendance(trainingAttendanceBody);
-            return DomainResult<TrainingAttendance?>.Ok(response, _notificationContext, _modelErrorsContext);
+            TrainingAttendanceResponseDTO? response = await _trainingAppService.CreateTrainingAttendance(trainingAttendanceBody);
+            return DomainResult<TrainingAttendanceResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -115,10 +111,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("TrainingAttendance")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> PutTrainingAttendance(UpdateTrainingAttendanceDTO trainingAttendanceToUpdate)
+        public async Task<IActionResult> PutTrainingAttendance([FromBody] UpdateTrainingAttendanceDTO trainingAttendanceToUpdate)
         {
-            TrainingAttendance? response = await _trainingAppService.UpdateTrainingAttendance(trainingAttendanceToUpdate);
-            return DomainResult<TrainingAttendance?>.Ok(response, _notificationContext, _modelErrorsContext);
+            TrainingAttendanceResponseDTO? response = await _trainingAppService.UpdateTrainingAttendance(trainingAttendanceToUpdate);
+            return DomainResult<TrainingAttendanceResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -128,10 +124,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("TrainingAttendance")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> DeleteTrainingAttendance(long id)
+        public async Task<IActionResult> DeleteTrainingAttendance([FromQuery] long id)
         {
-            TrainingAttendance? response = await _trainingAppService.DeleteTrainingAttendance(id);
-            return DomainResult<TrainingAttendance?>.Ok(response, _notificationContext, _modelErrorsContext);
+            TrainingAttendanceResponseDTO? response = await _trainingAppService.DeleteTrainingAttendance(id);
+            return DomainResult<TrainingAttendanceResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -141,10 +137,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("TrainingAttendance")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> GetTrainingAttendance(long trainingAttendanceId)
+        public async Task<IActionResult> GetTrainingAttendance([FromQuery] long trainingAttendanceId)
         {
-            List<TrainingAttendance>? response = await _trainingAppService.GetTrainingAttendance(trainingAttendanceId);
-            return DomainResult<List<TrainingAttendance>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<TrainingAttendanceResponseDTO>? response = await _trainingAppService.GetTrainingAttendance(trainingAttendanceId);
+            return DomainResult<List<TrainingAttendanceResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
         #endregion
 

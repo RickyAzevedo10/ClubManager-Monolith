@@ -5,10 +5,10 @@ namespace ClubManager.App.Services.Infrastructures
 {
     public interface IMaintenanceAppService
     {
-        Task<MaintenanceRequest?> GetMaintenanceRequest(long maintenanceRequestId);
-        Task<MaintenanceRequest?> DeleteMaintenanceRequest(long id);
-        Task<MaintenanceRequest?> CreateMaintenanceRequest(CreateMaintenanceRequestDTO maintenanceRequestBody);
-        Task<MaintenanceRequest?> UpdateMaintenanceRequest(UpdateMaintenanceRequestDTO maintenanceRequestToUpdate);
+        Task<MaintenanceRequestResponseDTO?> GetMaintenanceRequest(long maintenanceRequestId);
+        Task<MaintenanceRequestResponseDTO?> DeleteMaintenanceRequest(long id);
+        Task<MaintenanceRequestResponseDTO?> CreateMaintenanceRequest(CreateMaintenanceRequestDTO maintenanceRequestBody);
+        Task<MaintenanceRequestResponseDTO?> UpdateMaintenanceRequest(UpdateMaintenanceRequestDTO maintenanceRequestToUpdate);
         Task<MaintenanceHistory?> CreateMaintenanceHistory(long maintenanceRequestId);
         Task<List<MaintenanceHistory>?> GetMaintenanceHistory(DateTime startDate, DateTime endDate);
     }

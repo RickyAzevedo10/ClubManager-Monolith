@@ -1,4 +1,5 @@
-﻿using ClubManager.App.Interfaces.Identity;
+﻿using AutoMapper;
+using ClubManager.App.Interfaces.Identity;
 using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.TrainingCompetition;
 using ClubManager.Domain.Entities.TrainingCompetition;
@@ -15,17 +16,20 @@ namespace ClubManager.App.Services.Identity
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
         private readonly ITrainingService _trainingService;
+        private readonly IMapper _mapper;
 
-        public TrainingAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, ITrainingService trainingService)
+        public TrainingAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, 
+            ITrainingService trainingService, IMapper mapper)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _trainingService = trainingService;
+            _mapper = mapper;
         }
 
         #region TrainingSession
-        public async Task<TrainingSession?> CreateTrainingSession(CreateTrainingSessionDTO trainingSessionBody)
+        public async Task<TrainingSessionResponseDTO?> CreateTrainingSession(CreateTrainingSessionDTO trainingSessionBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -43,10 +47,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return trainingSession;
+            return _mapper.Map<TrainingSessionResponseDTO>(trainingSession); 
         }
 
-        public async Task<TrainingSession?> DeleteTrainingSession(long id)
+        public async Task<TrainingSessionResponseDTO?> DeleteTrainingSession(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -64,10 +68,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return trainingSessionDeleted;
+            return _mapper.Map<TrainingSessionResponseDTO>(trainingSessionDeleted); 
         }
 
-        public async Task<TrainingSession?> GetTrainingSession(long trainingSessionId)
+        public async Task<TrainingSessionResponseDTO?> GetTrainingSession(long trainingSessionId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -79,10 +83,10 @@ namespace ClubManager.App.Services.Identity
 
             TrainingSession trainingSession = await _unitOfWork.TrainingSessionRepository.GetById(trainingSessionId);
 
-            return trainingSession;
+            return _mapper.Map<TrainingSessionResponseDTO>(trainingSession);
         }
 
-        public async Task<TrainingSession?> UpdateTrainingSession(UpdateTrainingSessionDTO trainingSessionToUpdate)
+        public async Task<TrainingSessionResponseDTO?> UpdateTrainingSession(UpdateTrainingSessionDTO trainingSessionToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -117,10 +121,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return trainingSession;
+            return _mapper.Map<TrainingSessionResponseDTO>(trainingSession);
         }
 
-        public async Task<List<TrainingSession>?> GetTrainingSessionsByDateRange(DateTime startDate, DateTime endDate)
+        public async Task<List<TrainingSessionResponseDTO>?> GetTrainingSessionsByDateRange(DateTime startDate, DateTime endDate)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -132,12 +136,12 @@ namespace ClubManager.App.Services.Identity
 
             List<TrainingSession> trainingSession = await _unitOfWork.TrainingSessionRepository.GetTrainingSessionsByDateRangeAsync(startDate, endDate);
 
-            return trainingSession;
+            return _mapper.Map<List<TrainingSessionResponseDTO>>(trainingSession);
         }
         #endregion
 
         #region TrainingAttendance
-        public async Task<TrainingAttendance?> CreateTrainingAttendance(CreateTrainingAttendanceDTO trainingAttendanceBody)
+        public async Task<TrainingAttendanceResponseDTO?> CreateTrainingAttendance(CreateTrainingAttendanceDTO trainingAttendanceBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -155,10 +159,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return trainingAttendance;
+            return _mapper.Map<TrainingAttendanceResponseDTO>(trainingAttendance); 
         }
 
-        public async Task<TrainingAttendance?> DeleteTrainingAttendance(long id)
+        public async Task<TrainingAttendanceResponseDTO?> DeleteTrainingAttendance(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -176,10 +180,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return trainingAttendanceDeleted;
+            return _mapper.Map<TrainingAttendanceResponseDTO>(trainingAttendanceDeleted);
         }
 
-        public async Task<TrainingAttendance?> UpdateTrainingAttendance(UpdateTrainingAttendanceDTO trainingAttendanceToUpdate)
+        public async Task<TrainingAttendanceResponseDTO?> UpdateTrainingAttendance(UpdateTrainingAttendanceDTO trainingAttendanceToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -214,10 +218,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return trainingAttendance;
+            return _mapper.Map<TrainingAttendanceResponseDTO>(trainingAttendance);
         }
 
-        public async Task<List<TrainingAttendance>?> GetTrainingAttendance(long trainingAttendanceId)
+        public async Task<List<TrainingAttendanceResponseDTO>?> GetTrainingAttendance(long trainingAttendanceId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -229,7 +233,7 @@ namespace ClubManager.App.Services.Identity
 
             List<TrainingAttendance>? trainingAttendance = await _unitOfWork.TrainingAttendanceRepository.GetTrainingAttendanceByPlayerId(trainingAttendanceId);
 
-            return trainingAttendance;
+            return _mapper.Map<List<TrainingAttendanceResponseDTO>>(trainingAttendance);
         }
         #endregion
     }

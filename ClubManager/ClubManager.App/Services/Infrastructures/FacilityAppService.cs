@@ -1,4 +1,5 @@
-﻿using ClubManager.App.Interfaces.Infrastructure;
+﻿using AutoMapper;
+using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.Infrastructures;
 using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Interfaces;
@@ -14,17 +15,19 @@ namespace ClubManager.App.Services.Infrastructures
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
         private readonly IFacilityService _facilityService;
-
-        public FacilityAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IFacilityService facilityService)
+        private readonly IMapper _mapper;
+        public FacilityAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, 
+            IFacilityService facilityService, IMapper mapper)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _facilityService = facilityService;
+            _mapper = mapper;
         }
 
         #region Facility
-        public async Task<Facility?> GetFacility(long facilityId)
+        public async Task<FacilityResponseDTO?> GetFacility(long facilityId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -36,10 +39,10 @@ namespace ClubManager.App.Services.Infrastructures
 
             Facility? facility = await _unitOfWork.FacilityRepository.GetById(facilityId);
 
-            return facility;  
+            return _mapper.Map<FacilityResponseDTO>(facility);
         }
 
-        public async Task<List<Facility>?> GetAllFacility()
+        public async Task<List<FacilityResponseDTO>?> GetAllFacility()
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -51,10 +54,10 @@ namespace ClubManager.App.Services.Infrastructures
 
             IEnumerable<Facility>? allFacility = await _unitOfWork.FacilityRepository.GetAllAsync();
 
-            return allFacility.ToList();
+            return _mapper.Map<List<FacilityResponseDTO>>(allFacility);
         }
 
-        public async Task<Facility?> DeleteFacility(long id)
+        public async Task<FacilityResponseDTO?> DeleteFacility(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -72,10 +75,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return facilityDeleted;
+            return _mapper.Map<FacilityResponseDTO>(facilityDeleted);
         }
         
-        public async Task<Facility?> CreateFacility(CreateFacilityDTO facilityBody)
+        public async Task<FacilityResponseDTO?> CreateFacility(CreateFacilityDTO facilityBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -94,10 +97,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return facility;
+            return _mapper.Map<FacilityResponseDTO>(facility);
         }
 
-        public async Task<Facility?> UpdateFacility(UpdateFacilityDTO facilityToUpdate)
+        public async Task<FacilityResponseDTO?> UpdateFacility(UpdateFacilityDTO facilityToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -132,12 +135,12 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return facility;
+            return _mapper.Map<FacilityResponseDTO>(facility);
         }
         #endregion
 
         #region FacilityReservation
-        public async Task<FacilityReservation?> GetFacilityReservation(long facilityReservationId)
+        public async Task<FacilityReservationResponseDTO?> GetFacilityReservation(long facilityReservationId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -149,10 +152,10 @@ namespace ClubManager.App.Services.Infrastructures
 
             FacilityReservation? facilityReservation = await _unitOfWork.FacilityReservationRepository.GetById(facilityReservationId);
 
-            return facilityReservation;
+            return _mapper.Map<FacilityReservationResponseDTO>(facilityReservation);
         }
 
-        public async Task<FacilityReservation?> DeleteFacilityReservation(long id)
+        public async Task<FacilityReservationResponseDTO?> DeleteFacilityReservation(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -170,10 +173,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return facilityReservationDeleted;
+            return _mapper.Map<FacilityReservationResponseDTO>(facilityReservationDeleted);
         }
 
-        public async Task<FacilityReservation?> CreateFacilityReservation(CreateFacilityReservationDTO facilityReservationBody)
+        public async Task<FacilityReservationResponseDTO?> CreateFacilityReservation(CreateFacilityReservationDTO facilityReservationBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -191,10 +194,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return facilityReservation;
+            return _mapper.Map<FacilityReservationResponseDTO>(facilityReservation);
         }
 
-        public async Task<FacilityReservation?> UpdateFacilityReservation(UpdateFacilityReservationDTO facilityReservationToUpdate)
+        public async Task<FacilityReservationResponseDTO?> UpdateFacilityReservation(UpdateFacilityReservationDTO facilityReservationToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -229,7 +232,7 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return facilityReservation;
+            return _mapper.Map<FacilityReservationResponseDTO>(facilityReservation);
         }
         #endregion
     }

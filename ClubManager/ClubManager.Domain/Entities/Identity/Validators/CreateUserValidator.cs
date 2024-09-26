@@ -26,17 +26,17 @@ namespace ClubManager.Domain.Entities.Identity.Validators
                 .NotNull().WithMessage("RoleId cannot be null.")
                 .InclusiveBetween(1, 7).WithMessage("RoleId must be between 1 and 7.");
             RuleFor(x => x.Consult)
-                .NotEmpty().WithMessage("Consult cannot be null.")
-                .NotNull().WithMessage("Consult cannot be empty.");
-            RuleFor(user => user.Edit)
-                .NotEmpty().WithMessage("Edit cannot be empty.")
-                .NotNull().WithMessage("Edit cannot be null.");
-            RuleFor(user => user.Delete)
-                .NotEmpty().WithMessage("Delete cannot be empty.")
-                .NotNull().WithMessage("Delete cannot be null.");
-            RuleFor(user => user.Create)
-                .NotEmpty().WithMessage("Create cannot be empty.")
-                .NotNull().WithMessage("Create cannot be null.");
+                .Must(x => x == true || x == false).WithMessage("Consult must be a boolean value.");
+
+            RuleFor(x => x.Edit)
+                .Must(x => x == true || x == false).WithMessage("Edit must be a boolean value.");
+
+            RuleFor(x => x.Delete)
+                .Must(x => x == true || x == false).WithMessage("Delete must be a boolean value.");
+
+            RuleFor(x => x.Create)
+                .Must(x => x == true || x == false).WithMessage("Create must be a boolean value.");
+
         }
     }
 }

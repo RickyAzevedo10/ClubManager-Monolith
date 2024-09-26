@@ -37,7 +37,7 @@ namespace ClubManager.Infra.Persistence
         public IBaseRepository<TeamCategory> _teamCategoryRepository { get; private set; }
         public IBaseRepository<TeamPlayer> _teamPlayerRepository { get; private set; }
         public IBaseRepository<TeamCoach> _teamCoachRepository { get; private set; }
-        public IBaseRepository<UserClubMember> _userClubMemberRepository { get; private set; }
+        public IUserClubMemberRepository _userClubMemberRepository { get; private set; }
 
         //Infrastructures
         public IBaseRepository<FacilityCategory> _facilityCategoryRepository { get; private set; }
@@ -261,13 +261,13 @@ namespace ClubManager.Infra.Persistence
             }
         }
 
-        public IBaseRepository<UserClubMember> UserClubMemberRepository
+        public IUserClubMemberRepository UserClubMemberRepository
         {
             get
             {
                 if (_userClubMemberRepository == null)
                 {
-                    _userClubMemberRepository = new BaseRepository<UserClubMember>(_context);
+                    _userClubMemberRepository = new UserClubMemberRepository(_context);
                 }
                 return _userClubMemberRepository;
             }

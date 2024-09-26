@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ClubManager.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCreate2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,7 +28,6 @@ namespace ClubManager.Infra.Migrations
                     Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClubMemberId = table.Column<long>(type: "bigint", nullable: false),
                     DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -179,31 +178,6 @@ namespace ClubManager.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Entities",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Internal = table.Column<bool>(type: "bit", nullable: false),
-                    External = table.Column<bool>(type: "bit", nullable: false),
-                    EntityType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EntityName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClubMemberId = table.Column<long>(type: "bigint", nullable: true),
-                    PlayerId = table.Column<long>(type: "bigint", nullable: true),
-                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Entities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Entities_ClubMember_ClubMemberId",
-                        column: x => x.ClubMemberId,
-                        principalTable: "ClubMember",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MinorClubMember",
                 columns: table => new
                 {
@@ -233,28 +207,6 @@ namespace ClubManager.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserClubMembers",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    ClubMemberId = table.Column<long>(type: "bigint", nullable: false),
-                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserClubMembers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserClubMembers_ClubMember_ClubMemberId",
-                        column: x => x.ClubMemberId,
-                        principalTable: "ClubMember",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Facilities",
                 columns: table => new
                 {
@@ -275,6 +227,35 @@ namespace ClubManager.Infra.Migrations
                         name: "FK_Facilities_FacilityCategories_FacilityCategoryId",
                         column: x => x.FacilityCategoryId,
                         principalTable: "FacilityCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Player",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Nationality = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Height = table.Column<int>(type: "int", nullable: false),
+                    Weight = table.Column<int>(type: "int", nullable: false),
+                    PreferredFoot = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PlayerCategoryId = table.Column<long>(type: "bigint", nullable: false),
+                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Player", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Player_PlayerCategory_PlayerCategoryId",
+                        column: x => x.PlayerCategoryId,
+                        principalTable: "PlayerCategory",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -311,163 +292,6 @@ namespace ClubManager.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Expenses",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ExpenseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    Destination = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PaymentReference = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EntityId = table.Column<long>(type: "bigint", nullable: false),
-                    ResponsibleUserId = table.Column<long>(type: "bigint", nullable: false),
-                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Expenses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Expenses_Entities_EntityId",
-                        column: x => x.EntityId,
-                        principalTable: "Entities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Expenses_ExpenseCategories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "ExpenseCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Player",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Nationality = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Height = table.Column<int>(type: "int", nullable: false),
-                    Weight = table.Column<int>(type: "int", nullable: false),
-                    PreferredFoot = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PlayerCategoryId = table.Column<long>(type: "bigint", nullable: false),
-                    PlayerId = table.Column<long>(type: "bigint", nullable: false),
-                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Player", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Player_Entities_PlayerId",
-                        column: x => x.PlayerId,
-                        principalTable: "Entities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Player_PlayerCategory_PlayerCategoryId",
-                        column: x => x.PlayerCategoryId,
-                        principalTable: "PlayerCategory",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Revenues",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RevenueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PaymentReference = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EntityId = table.Column<long>(type: "bigint", nullable: false),
-                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Revenues", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Revenues_Entities_EntityId",
-                        column: x => x.EntityId,
-                        principalTable: "Entities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Revenues_RevenueCategories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "RevenueCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Matches",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Opponent = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CompetitionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TeamId = table.Column<long>(type: "bigint", nullable: false),
-                    IsCanceled = table.Column<bool>(type: "bit", nullable: false),
-                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Matches", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Matches_Team_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Team",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TrainingSessions",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TeamId = table.Column<long>(type: "bigint", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Duration = table.Column<int>(type: "int", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Objectives = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsCanceled = table.Column<bool>(type: "bit", nullable: false),
-                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TrainingSessions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TrainingSessions_Team_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Team",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -490,8 +314,6 @@ namespace ClubManager.Infra.Migrations
                     PasswordResetTokenExpire = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserRoleId = table.Column<long>(type: "bigint", nullable: false),
                     UserPermissionId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    ResponsibleUserId = table.Column<long>(type: "bigint", nullable: false),
                     DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -499,21 +321,9 @@ namespace ClubManager.Infra.Migrations
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_Expenses_ResponsibleUserId",
-                        column: x => x.ResponsibleUserId,
-                        principalTable: "Expenses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_User_Institution_InstitutionId",
                         column: x => x.InstitutionId,
                         principalTable: "Institution",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_User_UserClubMembers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "UserClubMembers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -526,6 +336,37 @@ namespace ClubManager.Infra.Migrations
                         name: "FK_User_UserRoles_UserRoleId",
                         column: x => x.UserRoleId,
                         principalTable: "UserRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Entities",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Internal = table.Column<bool>(type: "bit", nullable: false),
+                    External = table.Column<bool>(type: "bit", nullable: false),
+                    EntityType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EntityName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClubMemberId = table.Column<long>(type: "bigint", nullable: true),
+                    PlayerId = table.Column<long>(type: "bigint", nullable: true),
+                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Entities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Entities_ClubMember_ClubMemberId",
+                        column: x => x.ClubMemberId,
+                        principalTable: "ClubMember",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Entities_Player_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Player",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -639,6 +480,32 @@ namespace ClubManager.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Matches",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Opponent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompetitionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TeamId = table.Column<long>(type: "bigint", nullable: false),
+                    IsCanceled = table.Column<bool>(type: "bit", nullable: false),
+                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Matches", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Matches_Team_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Team",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TeamPlayer",
                 columns: table => new
                 {
@@ -667,65 +534,29 @@ namespace ClubManager.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MatchStatistics",
+                name: "TrainingSessions",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MatchId = table.Column<long>(type: "bigint", nullable: false),
-                    PlayerId = table.Column<long>(type: "bigint", nullable: false),
-                    Goals = table.Column<int>(type: "int", nullable: false),
-                    Assists = table.Column<int>(type: "int", nullable: false),
-                    YellowCards = table.Column<int>(type: "int", nullable: false),
-                    RedCards = table.Column<int>(type: "int", nullable: false),
-                    MinutesPlayed = table.Column<int>(type: "int", nullable: false),
-                    Substitutions = table.Column<int>(type: "int", nullable: false),
+                    TeamId = table.Column<long>(type: "bigint", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Duration = table.Column<int>(type: "int", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Objectives = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsCanceled = table.Column<bool>(type: "bit", nullable: false),
                     DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MatchStatistics", x => x.Id);
+                    table.PrimaryKey("PK_TrainingSessions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MatchStatistics_Matches_MatchId",
-                        column: x => x.MatchId,
-                        principalTable: "Matches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MatchStatistics_Player_PlayerId",
-                        column: x => x.PlayerId,
-                        principalTable: "Player",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TrainingAttendances",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TrainingSessionId = table.Column<long>(type: "bigint", nullable: false),
-                    PlayerId = table.Column<long>(type: "bigint", nullable: false),
-                    IsPresent = table.Column<bool>(type: "bit", nullable: false),
-                    AbsenceReason = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TrainingAttendances", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TrainingAttendances_Player_PlayerId",
-                        column: x => x.PlayerId,
-                        principalTable: "Player",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TrainingAttendances_TrainingSessions_TrainingSessionId",
-                        column: x => x.TrainingSessionId,
-                        principalTable: "TrainingSessions",
+                        name: "FK_TrainingSessions_Team_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Team",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -846,7 +677,7 @@ namespace ClubManager.Infra.Migrations
                         column: x => x.TeamId,
                         principalTable: "Team",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TeamCoach_User_UserId",
                         column: x => x.UserId,
@@ -855,26 +686,198 @@ namespace ClubManager.Infra.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserClubMembers",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    ClubMemberId = table.Column<long>(type: "bigint", nullable: false),
+                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserClubMembers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserClubMembers_ClubMember_ClubMemberId",
+                        column: x => x.ClubMemberId,
+                        principalTable: "ClubMember",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserClubMembers_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Expenses",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExpenseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Destination = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PaymentReference = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EntityId = table.Column<long>(type: "bigint", nullable: false),
+                    ResponsibleUserId = table.Column<long>(type: "bigint", nullable: false),
+                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Expenses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Expenses_Entities_EntityId",
+                        column: x => x.EntityId,
+                        principalTable: "Entities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Expenses_ExpenseCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "ExpenseCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Expenses_User_ResponsibleUserId",
+                        column: x => x.ResponsibleUserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Revenues",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RevenueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PaymentReference = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EntityId = table.Column<long>(type: "bigint", nullable: false),
+                    ResponsibleUserId = table.Column<long>(type: "bigint", nullable: false),
+                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Revenues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Revenues_Entities_EntityId",
+                        column: x => x.EntityId,
+                        principalTable: "Entities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Revenues_RevenueCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "RevenueCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Revenues_User_ResponsibleUserId",
+                        column: x => x.ResponsibleUserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MatchStatistics",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MatchId = table.Column<long>(type: "bigint", nullable: false),
+                    PlayerId = table.Column<long>(type: "bigint", nullable: false),
+                    Goals = table.Column<int>(type: "int", nullable: false),
+                    Assists = table.Column<int>(type: "int", nullable: false),
+                    YellowCards = table.Column<int>(type: "int", nullable: false),
+                    RedCards = table.Column<int>(type: "int", nullable: false),
+                    MinutesPlayed = table.Column<int>(type: "int", nullable: false),
+                    Substitutions = table.Column<int>(type: "int", nullable: false),
+                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MatchStatistics", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MatchStatistics_Matches_MatchId",
+                        column: x => x.MatchId,
+                        principalTable: "Matches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MatchStatistics_Player_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Player",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TrainingAttendances",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrainingSessionId = table.Column<long>(type: "bigint", nullable: false),
+                    PlayerId = table.Column<long>(type: "bigint", nullable: false),
+                    IsPresent = table.Column<bool>(type: "bit", nullable: false),
+                    AbsenceReason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TrainingAttendances", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TrainingAttendances_Player_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Player",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TrainingAttendances_TrainingSessions_TrainingSessionId",
+                        column: x => x.TrainingSessionId,
+                        principalTable: "TrainingSessions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "ExpenseCategories",
                 columns: new[] { "Id", "DateOfCreation", "DateOfModification", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1139), null, "Despesas relacionadas com o pagamento de salários a jogadores, treinadores e funcionários.", "Salários" },
-                    { 2L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1144), null, "Custos associados à compra de equipamento e material desportivo necessário para a equipa.", "Material Desportivo" },
-                    { 3L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1145), null, "Despesas com viagens e alojamento para jogos fora de casa, incluindo transporte e estadia.", "Custos de Viagem" },
-                    { 4L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1146), null, "Custos associados à manutenção e reparação do estádio e outras infraestruturas do clube.", "Manutenção do Estádio" },
-                    { 5L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1147), null, "Despesas com campanhas de marketing e publicidade para promover o clube e atrair patrocinadores e adeptos.", "Marketing e Publicidade" },
-                    { 6L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1148), null, "Custos gerais de administração, incluindo despesas com escritório e administração do clube.", "Despesas Administrativas" },
-                    { 7L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1149), null, "Despesas com seguros para proteger o clube, jogadores e infraestruturas contra riscos e danos.", "Seguros" },
-                    { 8L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1150), null, "Custos com serviços de consultoria e honorários profissionais, como advogados e contabilistas.", "Honorários e Consultoria" },
-                    { 9L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1151), null, "Custos relacionados com a organização de eventos especiais, como receções, eventos de angariação de fundos e outros eventos promocionais.", "Despesas com Eventos" },
-                    { 10L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1152), null, "Custos associados com a formação e desenvolvimento contínuo de jogadores e equipa técnica.", "Despesas com Formação" },
-                    { 11L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1153), null, "Custos relacionados com licenças e autorizações necessárias para operar o clube e participar em competições.", "Despesas de Licenciamento" },
-                    { 12L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1155), null, "Custos com serviços essenciais, como eletricidade, água e gás para as instalações do clube.", "Despesas de Utilidades" },
-                    { 13L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1156), null, "Custos com a reparação e manutenção de equipamentos e infraestruturas do clube.", "Despesas de Reparação e Manutenção" },
-                    { 14L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1157), null, "Custos relacionados com empréstimos e financiamentos, incluindo juros e amortizações.", "Despesas de Empréstimo" },
-                    { 15L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(1158), null, "Custos não categorizados especificamente, mas que podem incluir diversas despesas operacionais e imprevistos.", "Despesas Variáveis" }
+                    { 1L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8094), null, "Despesas relacionadas com o pagamento de salários a jogadores, treinadores e funcionários.", "Salários" },
+                    { 2L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8106), null, "Custos associados à compra de equipamento e material desportivo necessário para a equipa.", "Material Desportivo" },
+                    { 3L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8107), null, "Despesas com viagens e alojamento para jogos fora de casa, incluindo transporte e estadia.", "Custos de Viagem" },
+                    { 4L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8109), null, "Custos associados à manutenção e reparação do estádio e outras infraestruturas do clube.", "Manutenção do Estádio" },
+                    { 5L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8110), null, "Despesas com campanhas de marketing e publicidade para promover o clube e atrair patrocinadores e adeptos.", "Marketing e Publicidade" },
+                    { 6L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8112), null, "Custos gerais de administração, incluindo despesas com escritório e administração do clube.", "Despesas Administrativas" },
+                    { 7L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8114), null, "Despesas com seguros para proteger o clube, jogadores e infraestruturas contra riscos e danos.", "Seguros" },
+                    { 8L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8115), null, "Custos com serviços de consultoria e honorários profissionais, como advogados e contabilistas.", "Honorários e Consultoria" },
+                    { 9L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8117), null, "Custos relacionados com a organização de eventos especiais, como receções, eventos de angariação de fundos e outros eventos promocionais.", "Despesas com Eventos" },
+                    { 10L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8118), null, "Custos associados com a formação e desenvolvimento contínuo de jogadores e equipa técnica.", "Despesas com Formação" },
+                    { 11L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8120), null, "Custos relacionados com licenças e autorizações necessárias para operar o clube e participar em competições.", "Despesas de Licenciamento" },
+                    { 12L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8122), null, "Custos com serviços essenciais, como eletricidade, água e gás para as instalações do clube.", "Despesas de Utilidades" },
+                    { 13L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8123), null, "Custos com a reparação e manutenção de equipamentos e infraestruturas do clube.", "Despesas de Reparação e Manutenção" },
+                    { 14L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8125), null, "Custos relacionados com empréstimos e financiamentos, incluindo juros e amortizações.", "Despesas de Empréstimo" },
+                    { 15L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8157), null, "Custos não categorizados especificamente, mas que podem incluir diversas despesas operacionais e imprevistos.", "Despesas Variáveis" }
                 });
 
             migrationBuilder.InsertData(
@@ -882,12 +885,12 @@ namespace ClubManager.Infra.Migrations
                 columns: new[] { "Id", "DateOfCreation", "DateOfModification", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(454), null, "Outdoor or indoor areas designed for sports activities, such as soccer fields, tennis courts, etc.", "Sports Field" },
-                    { 2L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(456), null, "Fitness centers equipped with exercise machines, weights, and other fitness equipment.", "Gym" },
-                    { 3L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(457), null, "Rooms designated for meetings, conferences, and other business-related gatherings.", "Meeting Room" },
-                    { 4L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(458), null, "Facilities providing restroom and changing areas, including showers and lockers.", "Restroom" },
-                    { 5L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(459), null, "Workspaces for administrative tasks, including private offices and open office areas.", "Office" },
-                    { 6L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(460), null, "Large rooms or halls designed for lectures, presentations, and performances.", "Auditorium" }
+                    { 1L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(6707), null, "Outdoor or indoor areas designed for sports activities, such as soccer fields, tennis courts, etc.", "Sports Field" },
+                    { 2L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(6722), null, "Fitness centers equipped with exercise machines, weights, and other fitness equipment.", "Gym" },
+                    { 3L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(6724), null, "Rooms designated for meetings, conferences, and other business-related gatherings.", "Meeting Room" },
+                    { 4L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(6725), null, "Facilities providing restroom and changing areas, including showers and lockers.", "Restroom" },
+                    { 5L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(6727), null, "Workspaces for administrative tasks, including private offices and open office areas.", "Office" },
+                    { 6L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(6728), null, "Large rooms or halls designed for lectures, presentations, and performances.", "Auditorium" }
                 });
 
             migrationBuilder.InsertData(
@@ -895,22 +898,22 @@ namespace ClubManager.Infra.Migrations
                 columns: new[] { "Id", "DateOfCreation", "DateOfModification", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(127), null, "Pré-Petizes", "Sub-5" },
-                    { 2L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(139), null, "Petizes 1º ano", "Sub-6" },
-                    { 3L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(140), null, "Petizes 2º ano", "Sub-7" },
-                    { 4L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(141), null, "Traquinas 1º ano", "Sub-8" },
-                    { 5L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(142), null, "Traquinas 2º ano", "Sub-9" },
-                    { 6L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(144), null, "Benjamins 1º ano", "Sub-10" },
-                    { 7L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(145), null, "Benjamins 2º ano", "Sub-11" },
-                    { 8L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(146), null, "Infantis 1º ano", "Sub-12" },
-                    { 9L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(147), null, "Infantis 2º ano", "Sub-13" },
-                    { 10L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(148), null, "Iniciados 1º ano", "Sub-14" },
-                    { 11L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(149), null, "Iniciados 2º ano", "Sub-15" },
-                    { 12L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(150), null, "Juvenis 1º ano", "Sub-16" },
-                    { 13L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(151), null, "Juvenis 2º ano", "Sub-17" },
-                    { 14L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(152), null, "Juniores 1º ano", "Sub-18" },
-                    { 15L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(153), null, "Juniores 2º ano", "Sub-19" },
-                    { 16L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(154), null, "Seniores", "Seniores" }
+                    { 1L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4640), null, "Pré-Petizes", "Sub-5" },
+                    { 2L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4663), null, "Petizes 1º ano", "Sub-6" },
+                    { 3L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4665), null, "Petizes 2º ano", "Sub-7" },
+                    { 4L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4667), null, "Traquinas 1º ano", "Sub-8" },
+                    { 5L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4668), null, "Traquinas 2º ano", "Sub-9" },
+                    { 6L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4670), null, "Benjamins 1º ano", "Sub-10" },
+                    { 7L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4671), null, "Benjamins 2º ano", "Sub-11" },
+                    { 8L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4673), null, "Infantis 1º ano", "Sub-12" },
+                    { 9L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4674), null, "Infantis 2º ano", "Sub-13" },
+                    { 10L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4676), null, "Iniciados 1º ano", "Sub-14" },
+                    { 11L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4678), null, "Iniciados 2º ano", "Sub-15" },
+                    { 12L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4679), null, "Juvenis 1º ano", "Sub-16" },
+                    { 13L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4681), null, "Juvenis 2º ano", "Sub-17" },
+                    { 14L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4682), null, "Juniores 1º ano", "Sub-18" },
+                    { 15L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4684), null, "Juniores 2º ano", "Sub-19" },
+                    { 16L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4686), null, "Seniores", "Seniores" }
                 });
 
             migrationBuilder.InsertData(
@@ -918,21 +921,21 @@ namespace ClubManager.Infra.Migrations
                 columns: new[] { "Id", "DateOfCreation", "DateOfModification", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(791), null, "Receitas provenientes de acordos com empresas que patrocinam o clube, como patrocínios de camisas ou nomeação do estádio.", "Patrocínios" },
-                    { 2L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(795), null, "Renda gerada com a venda de bilhetes, merchandising e alimentos e bebidas nos dias de jogo.", "Receitas de Dia de Jogo" },
-                    { 3L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(796), null, "Receitas recebidas pela venda dos direitos de transmissão dos jogos para televisão ou plataformas de streaming.", "Direitos de Transmissão" },
-                    { 4L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(797), null, "Receita gerada pela venda de produtos relacionados ao clube, como camisas, cachecóis e outros artigos.", "Merchandising" },
-                    { 5L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(798), null, "Dinheiro recebido como prémio por desempenho em competições, como torneios nacionais ou internacionais.", "Prémios em Dinheiro" },
-                    { 6L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(800), null, "Receitas provenientes de parcerias comerciais com marcas e empresas para eventos especiais ou produtos conjuntos.", "Parcerias Comerciais" },
-                    { 7L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(801), null, "Receitas das taxas pagas pelos associados do clube para acesso a benefícios exclusivos, como bilhetes preferenciais ou eventos especiais.", "Taxas de Associação" },
-                    { 8L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(802), null, "Receitas geradas pela venda dos direitos de nomeação do estádio do clube.", "Direitos de Nomeação do Estádio" },
-                    { 9L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(803), null, "Receitas provenientes da venda ou empréstimo de jogadores para outros clubes.", "Transferências de Jogadores" },
-                    { 10L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(804), null, "Receitas geradas pela publicidade dentro do estádio ou em outras plataformas relacionadas ao clube.", "Publicidade" },
-                    { 11L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(805), null, "Receitas obtidas com a venda de pacotes de hospitalidade corporativa, que incluem bilhetes para jogos e serviços adicionais.", "Hospedagem Corporativa" },
-                    { 12L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(806), null, "Receitas provenientes da realização de eventos especiais no estádio, como concertos ou eventos corporativos.", "Receitas de Eventos" },
-                    { 13L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(807), null, "Receitas geradas por taxas de inscrição ou desenvolvimento de jovens talentos e futuras transferências.", "Receitas da Academia de Jovens" },
-                    { 14L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(808), null, "Receitas obtidas pelo aluguel de instalações do clube, como campos de treino ou áreas do estádio para eventos externos.", "Renda de Aluguel" },
-                    { 15L, new DateTime(2024, 9, 19, 19, 6, 53, 453, DateTimeKind.Local).AddTicks(809), null, "Dinheiro recebido de subsídios governamentais, fundações ou doações privadas para apoiar o clube.", "Subsídios e Doações" }
+                    { 1L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7340), null, "Receitas provenientes de acordos com empresas que patrocinam o clube, como patrocínios de camisas ou nomeação do estádio.", "Patrocínios" },
+                    { 2L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7349), null, "Renda gerada com a venda de bilhetes, merchandising e alimentos e bebidas nos dias de jogo.", "Receitas de Dia de Jogo" },
+                    { 3L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7351), null, "Receitas recebidas pela venda dos direitos de transmissão dos jogos para televisão ou plataformas de streaming.", "Direitos de Transmissão" },
+                    { 4L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7352), null, "Receita gerada pela venda de produtos relacionados ao clube, como camisas, cachecóis e outros artigos.", "Merchandising" },
+                    { 5L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7354), null, "Dinheiro recebido como prémio por desempenho em competições, como torneios nacionais ou internacionais.", "Prémios em Dinheiro" },
+                    { 6L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7355), null, "Receitas provenientes de parcerias comerciais com marcas e empresas para eventos especiais ou produtos conjuntos.", "Parcerias Comerciais" },
+                    { 7L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7356), null, "Receitas das taxas pagas pelos associados do clube para acesso a benefícios exclusivos, como bilhetes preferenciais ou eventos especiais.", "Taxas de Associação" },
+                    { 8L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7358), null, "Receitas geradas pela venda dos direitos de nomeação do estádio do clube.", "Direitos de Nomeação do Estádio" },
+                    { 9L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7359), null, "Receitas provenientes da venda ou empréstimo de jogadores para outros clubes.", "Transferências de Jogadores" },
+                    { 10L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7361), null, "Receitas geradas pela publicidade dentro do estádio ou em outras plataformas relacionadas ao clube.", "Publicidade" },
+                    { 11L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7362), null, "Receitas obtidas com a venda de pacotes de hospitalidade corporativa, que incluem bilhetes para jogos e serviços adicionais.", "Hospedagem Corporativa" },
+                    { 12L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7364), null, "Receitas provenientes da realização de eventos especiais no estádio, como concertos ou eventos corporativos.", "Receitas de Eventos" },
+                    { 13L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7365), null, "Receitas geradas por taxas de inscrição ou desenvolvimento de jovens talentos e futuras transferências.", "Receitas da Academia de Jovens" },
+                    { 14L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7367), null, "Receitas obtidas pelo aluguel de instalações do clube, como campos de treino ou áreas do estádio para eventos externos.", "Renda de Aluguel" },
+                    { 15L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7368), null, "Dinheiro recebido de subsídios governamentais, fundações ou doações privadas para apoiar o clube.", "Subsídios e Doações" }
                 });
 
             migrationBuilder.InsertData(
@@ -940,15 +943,15 @@ namespace ClubManager.Infra.Migrations
                 columns: new[] { "Id", "DateOfCreation", "DateOfModification", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3415), null, "Pré-Petizes", "Pré-Petizes" },
-                    { 2L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3417), null, "Petizes", "Petizes" },
-                    { 3L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3418), null, "Traquinas", "Traquinas" },
-                    { 4L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3419), null, "Benjamins", "Benjamins" },
-                    { 5L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3420), null, "Infantis", "Infantis" },
-                    { 6L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3422), null, "Iniciados", "Iniciados" },
-                    { 7L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3423), null, "Juvenis", "Juvenis" },
-                    { 8L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3424), null, "Juniores", "Juniores" },
-                    { 9L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3425), null, "Seniores", "Seniores" }
+                    { 1L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(2), null, "Pré-Petizes", "Pré-Petizes" },
+                    { 2L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(10), null, "Petizes", "Petizes" },
+                    { 3L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(11), null, "Traquinas", "Traquinas" },
+                    { 4L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(12), null, "Benjamins", "Benjamins" },
+                    { 5L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(14), null, "Infantis", "Infantis" },
+                    { 6L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(15), null, "Iniciados", "Iniciados" },
+                    { 7L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(17), null, "Juvenis", "Juvenis" },
+                    { 8L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(18), null, "Juniores", "Juniores" },
+                    { 9L, new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(20), null, "Seniores", "Seniores" }
                 });
 
             migrationBuilder.InsertData(
@@ -956,13 +959,13 @@ namespace ClubManager.Infra.Migrations
                 columns: new[] { "Id", "DateOfCreation", "DateOfModification", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3012), null, "Função administrativa para gerenciamento da instituição. Acesso total a toda a informação dentro da instituição.", "Admin" },
-                    { 2L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3076), null, "Supervisiona todas as operações do clube, toma decisões estratégicas e tem acesso a todos as operações e funcionalidades da aplicação.", "Presidente" },
-                    { 3L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3078), null, "Encarregado das operações futebolísticas, incluindo gestão de treinadores, jogadores, transferências e contratações.", "Diretor Desportivo" },
-                    { 4L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3080), null, "Gere a equipe técnica, planeia treinos, táticas de jogo, escolhe a equipa para os jogos e monitoriza o desempenho dos jogadores.", "Treinador" },
-                    { 5L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3102), null, "Gere as finanças do clube, incluindo orçamento, salários, receitas de bilheteira, patrocínios e outras fontes de receita.", "Diretor Financeiro" },
-                    { 6L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3104), null, "Gere as instalações do clube, incluindo estádios, campos de treino e outras infraestruturas.", "Gestor de Infraestruturas" },
-                    { 7L, new DateTime(2024, 9, 19, 19, 6, 53, 452, DateTimeKind.Local).AddTicks(3105), null, "Trata de toda a documentação e administração necessária para o funcionamento do clube.", "Secretário" }
+                    { 1L, new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9487), null, "Função administrativa para gerenciamento da instituição. Acesso total a toda a informação dentro da instituição.", "Admin" },
+                    { 2L, new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9550), null, "Supervisiona todas as operações do clube, toma decisões estratégicas e tem acesso a todos as operações e funcionalidades da aplicação.", "Presidente" },
+                    { 3L, new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9551), null, "Encarregado das operações futebolísticas, incluindo gestão de treinadores, jogadores, transferências e contratações.", "Diretor Desportivo" },
+                    { 4L, new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9552), null, "Gere a equipe técnica, planeia treinos, táticas de jogo, escolhe a equipa para os jogos e monitoriza o desempenho dos jogadores.", "Treinador" },
+                    { 5L, new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9553), null, "Gere as finanças do clube, incluindo orçamento, salários, receitas de bilheteira, patrocínios e outras fontes de receita.", "Diretor Financeiro" },
+                    { 6L, new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9554), null, "Gere as instalações do clube, incluindo estádios, campos de treino e outras infraestruturas.", "Gestor de Infraestruturas" },
+                    { 7L, new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9555), null, "Trata de toda a documentação e administração necessária para o funcionamento do clube.", "Secretário" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -975,6 +978,13 @@ namespace ClubManager.Infra.Migrations
                 name: "IX_Entities_ClubMemberId",
                 table: "Entities",
                 column: "ClubMemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Entities_PlayerId",
+                table: "Entities",
+                column: "PlayerId",
+                unique: true,
+                filter: "[PlayerId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExpenseCategories_Name",
@@ -992,6 +1002,12 @@ namespace ClubManager.Infra.Migrations
                 name: "IX_Expenses_EntityId",
                 table: "Expenses",
                 column: "EntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Expenses_ResponsibleUserId",
+                table: "Expenses",
+                column: "ResponsibleUserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Facilities_FacilityCategoryId",
@@ -1060,12 +1076,6 @@ namespace ClubManager.Infra.Migrations
                 column: "PlayerCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Player_PlayerId",
-                table: "Player",
-                column: "PlayerId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PlayerContract_PlayerId",
                 table: "PlayerContract",
                 column: "PlayerId");
@@ -1106,6 +1116,12 @@ namespace ClubManager.Infra.Migrations
                 name: "IX_Revenues_EntityId",
                 table: "Revenues",
                 column: "EntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Revenues_ResponsibleUserId",
+                table: "Revenues",
+                column: "ResponsibleUserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Team_ClubId",
@@ -1164,21 +1180,10 @@ namespace ClubManager.Infra.Migrations
                 column: "InstitutionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_ResponsibleUserId",
-                table: "User",
-                column: "ResponsibleUserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_UserId",
-                table: "User",
-                column: "UserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_User_UserPermissionId",
                 table: "User",
-                column: "UserPermissionId");
+                column: "UserPermissionId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_UserRoleId",
@@ -1192,6 +1197,12 @@ namespace ClubManager.Infra.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserClubMembers_UserId",
+                table: "UserClubMembers",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_Name",
                 table: "UserRoles",
                 column: "Name",
@@ -1201,6 +1212,9 @@ namespace ClubManager.Infra.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Expenses");
+
             migrationBuilder.DropTable(
                 name: "FacilityReservations");
 
@@ -1241,31 +1255,40 @@ namespace ClubManager.Infra.Migrations
                 name: "TrainingAttendances");
 
             migrationBuilder.DropTable(
+                name: "UserClubMembers");
+
+            migrationBuilder.DropTable(
+                name: "ExpenseCategories");
+
+            migrationBuilder.DropTable(
                 name: "Facilities");
 
             migrationBuilder.DropTable(
                 name: "Matches");
 
             migrationBuilder.DropTable(
+                name: "Entities");
+
+            migrationBuilder.DropTable(
                 name: "RevenueCategories");
-
-            migrationBuilder.DropTable(
-                name: "User");
-
-            migrationBuilder.DropTable(
-                name: "Player");
 
             migrationBuilder.DropTable(
                 name: "TrainingSessions");
 
             migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
                 name: "FacilityCategories");
 
             migrationBuilder.DropTable(
-                name: "Expenses");
+                name: "ClubMember");
 
             migrationBuilder.DropTable(
-                name: "UserClubMembers");
+                name: "Player");
+
+            migrationBuilder.DropTable(
+                name: "Team");
 
             migrationBuilder.DropTable(
                 name: "UserPermissions");
@@ -1277,22 +1300,10 @@ namespace ClubManager.Infra.Migrations
                 name: "PlayerCategory");
 
             migrationBuilder.DropTable(
-                name: "Team");
-
-            migrationBuilder.DropTable(
-                name: "Entities");
-
-            migrationBuilder.DropTable(
-                name: "ExpenseCategories");
-
-            migrationBuilder.DropTable(
                 name: "Institution");
 
             migrationBuilder.DropTable(
                 name: "TeamCategory");
-
-            migrationBuilder.DropTable(
-                name: "ClubMember");
         }
     }
 }

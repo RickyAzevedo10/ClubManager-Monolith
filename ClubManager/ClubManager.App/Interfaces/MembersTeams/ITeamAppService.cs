@@ -5,10 +5,10 @@ namespace ClubManager.App.Interfaces.Identity
 {
     public interface ITeamAppService
     {
-        Task<List<Team>?> GetTeams();
-        Task<List<Team>?> GetAllPlayersFromTeam(long teamId);
-        Task<Team?> DeleteTeam(long id);
-        Task<Team?> CreateTeam(CreateTeamDTO teamBody);
-        Task<Team?> UpdateTeam(UpdateTeamDTO teamToUpdate);
+        Task<List<TeamResponseDTO>?> GetTeams();
+        Task<List<TeamResponseDTO>?> GetAllPlayersFromTeam(long teamId);
+        Task<TeamResponseDTO?> DeleteTeam(long id);
+        Task<TeamResponseDTO?> CreateTeam(CreateTeamDTO teamBody);
+        Task<TeamResponseDTO?> UpdateTeam(UpdateTeamDTO teamToUpdate);
     }
 }

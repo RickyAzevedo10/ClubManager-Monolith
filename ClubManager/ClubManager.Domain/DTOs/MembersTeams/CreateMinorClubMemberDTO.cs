@@ -2,10 +2,10 @@
 {
     public class CreateMinorClubMemberDTO
     {
-        public int MemberId { get; set; }
+        public long MemberId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public bool Partner { get; set; } // se é socio ou nao
+        public bool Partner { get; set; } 
         public DateTime DateOfJoining { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Email { get; set; }

@@ -47,6 +47,8 @@ namespace ClubManager.Domain.Entities.Identity
             SetPassword(user.Password);
             Username = user.Username;
             UserRoleId = user.RoleId;
+            InstitutionId = user.InstitutionId;
+            PhoneNumber = user.PhoneNumber;
         }
 
         public void UpdateRefreshToken(string refreshToken, int expiresHours)
@@ -60,6 +62,16 @@ namespace ClubManager.Domain.Entities.Identity
             using var hmac = new HMACSHA256();
             PasswordSalt = hmac.Key;
             PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        }
+
+        public void SetPhoneNumber(string phoneNumber)
+        {
+            PhoneNumber = phoneNumber;
+        }
+
+        public void SetRoleId(long roleId)
+        {
+            UserRoleId = roleId;
         }
 
         public void SetPasswordResetToken(string passwordResetToken)

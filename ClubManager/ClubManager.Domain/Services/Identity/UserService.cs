@@ -15,12 +15,15 @@ namespace ClubManager.Domain.Services.Identity
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEntityValidationService _entityValidationService;
         private readonly IValidator<CreateUserDTO> _userValidator;
+        private readonly IValidator<UpdateUserDTO> _userUpdateValidator;
         private readonly IValidator<UpdateUserPermissionsDTO> _userUpdatePermissionsValidator;
         private readonly IValidator<CreateUserPermissionsDTO> _userPermissionsValidator;
-        private readonly IValidator<ResetPassword> _passwordValidator;
+        private readonly IValidator<ResetPasswordDTO> _passwordValidator;
         private readonly IConfiguration _configuration;
 
-        public UserService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IConfiguration configuration, IEntityValidationService entityValidationService, IValidator<CreateUserDTO> userValidator, IValidator<CreateUserPermissionsDTO> userPermissionsValidator, IValidator<UpdateUserPermissionsDTO> userUpdatePermissionsValidator, IValidator<ResetPassword> passwordValidator)
+        public UserService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IConfiguration configuration, 
+            IEntityValidationService entityValidationService, IValidator<CreateUserDTO> userValidator, IValidator<CreateUserPermissionsDTO> userPermissionsValidator,
+            IValidator<UpdateUserPermissionsDTO> userUpdatePermissionsValidator, IValidator<ResetPasswordDTO> passwordValidator, IValidator<UpdateUserDTO> userUpdateValidator)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
@@ -30,6 +33,7 @@ namespace ClubManager.Domain.Services.Identity
             _userPermissionsValidator = userPermissionsValidator;
             _userUpdatePermissionsValidator = userUpdatePermissionsValidator;
             _passwordValidator = passwordValidator;
+            _userUpdateValidator = userUpdateValidator;
         }
 
         public async Task<User?> Get(long id)
@@ -72,18 +76,20 @@ namespace ClubManager.Domain.Services.Identity
             return await _unitOfWork.UserRepository.AddAsync(user);
         }
 
-        public async Task<User?> Update(CreateUserDTO userToUpdate, User user)
+        public async Task<User?> Update(UpdateUserDTO userToUpdate, User user)
         {
-            bool validationResult = _entityValidationService.Validate(_userValidator, userToUpdate);
+            bool validationResult = _entityValidationService.Validate(_userUpdateValidator, userToUpdate);
             if (!validationResult)
             {
-                _notificationContext.AddNotification(NotificationKeys.UserNotifications.ERROR_USER_CREATED, string.Empty);
+                _notificationContext.AddNotification(NotificationKeys.UserNotifications.ERROR_USER_UPDATED, string.Empty);
                 return null;
             }
 
             user.Email = userToUpdate.Email;
             user.Username = userToUpdate.Username;
             user.SetPassword(userToUpdate.Password);
+            user.SetPhoneNumber(userToUpdate.PhoneNumber);
+            user.SetRoleId(userToUpdate.RoleId);
 
             _unitOfWork.UserRepository.Update(user);
             return user;
@@ -166,7 +172,7 @@ namespace ClubManager.Domain.Services.Identity
             _unitOfWork.UserRepository.Update(user);
         }
 
-        public async Task<User?> UpdatePassword(User user, ResetPassword request)
+        public async Task<User?> UpdatePassword(User user, ResetPasswordDTO request)
         {
             bool validationResult = _entityValidationService.Validate(_passwordValidator, request);
             if (!validationResult)

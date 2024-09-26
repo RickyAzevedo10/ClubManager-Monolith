@@ -5,16 +5,16 @@ namespace ClubManager.App.Interfaces.Identity
 {
     public interface IMatchAppService
     {
-        Task<Match?> CreateMatch(CreateMatchDTO matchBody);
-        Task<Match?> DeleteMatch(long id);
-        Task<Match?> GetMatch(long matchId);
-        Task<List<Match>?> GetTeamMatches(long teamId);
-        Task<Match?> UpdateMatch(UpdateMatchDTO matchToUpdate);
-        Task<MatchStatistic?> DeleteMatchStatistic(long id);
-        Task<List<MatchStatistic>?> GetMatchStatisticsFromMatchID(long matchId);
-        Task<List<MatchStatistic>?> GetPlayerMatchStatistics(long playerId);
-        Task<List<MatchStatistic>?> GetPlayerMatchStatisticsFromMatchId(long playerId, long matchId);
-        Task<MatchStatistic?> CreateMatchStatistic(CreateMatchStatisticDTO matchStatisticBody);
-        Task<MatchStatistic?> UpdateMatchStatistic(UpdateMatchStatisticDTO matchStatisticToUpdate);
+        Task<MatchResponseDTO?> CreateMatch(CreateMatchDTO matchBody);
+        Task<MatchResponseDTO?> DeleteMatch(long id);
+        Task<MatchResponseDTO?> GetMatch(long matchId);
+        Task<List<MatchResponseDTO>?> GetTeamMatches(long teamId);
+        Task<MatchResponseDTO?> UpdateMatch(UpdateMatchDTO matchToUpdate);
+        Task<MatchStatisticResponseDTO?> DeleteMatchStatistic(long id);
+        Task<List<MatchStatisticResponseDTO>?> GetMatchStatisticsFromMatchID(long matchId);
+        Task<List<MatchStatisticResponseDTO>?> GetPlayerMatchStatistics(long playerId);
+        Task<List<MatchStatisticResponseDTO>?> GetPlayerMatchStatisticsFromMatchId(long playerId, long matchId);
+        Task<MatchStatisticResponseDTO?> CreateMatchStatistic(CreateMatchStatisticDTO matchStatisticBody);
+        Task<MatchStatisticResponseDTO?> UpdateMatchStatistic(UpdateMatchStatisticDTO matchStatisticToUpdate);
     }
 }

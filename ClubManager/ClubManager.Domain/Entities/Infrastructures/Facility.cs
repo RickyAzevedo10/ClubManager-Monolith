@@ -14,7 +14,7 @@
             Name = name;
         }
 
-        public void SetFacilityCategoryId(int facilityCategoryId)
+        public void SetFacilityCategoryId(long facilityCategoryId)
         {
             FacilityCategoryId = facilityCategoryId;
         }

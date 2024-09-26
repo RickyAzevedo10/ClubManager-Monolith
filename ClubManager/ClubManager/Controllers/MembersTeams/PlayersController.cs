@@ -1,8 +1,6 @@
 using ClubManager.App.Interfaces.Identity;
 using ClubManager.Domain.DTOs.MembersTeams;
-using ClubManager.Domain.Entities.MembersTeams;
 using ClubManager.Domain.Interfaces;
-using ClubManager.Domain.Services;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,10 +30,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("Player")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> PostPlayer(CreatePlayerDTO playerBody)
+        public async Task<IActionResult> PostPlayer([FromBody] CreatePlayerDTO playerBody)
         {
-            Player? response = await _playerAppService.CreatePlayer(playerBody);
-            return DomainResult<Player?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerResponseDTO? response = await _playerAppService.CreatePlayer(playerBody);
+            return DomainResult<PlayerResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -45,10 +43,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("Player")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> DeletePlayer(long id)
+        public async Task<IActionResult> DeletePlayer([FromQuery] long id)
         {
-            Player? response = await _playerAppService.DeletePlayer(id);
-            return DomainResult<Player?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerResponseDTO? response = await _playerAppService.DeletePlayer(id);
+            return DomainResult<PlayerResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -62,8 +60,8 @@ namespace ClubManager.Controllers.MembersTeams
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
         public async Task<IActionResult> SearchPlayers([FromQuery] string? firstName, [FromQuery] string? lastName, [FromQuery] string? position)
         {
-            var players = await _playerAppService.SearchPlayersAsync(firstName, lastName, position);
-            return Ok(players);
+            List<PlayerResponseDTO>? response = await _playerAppService.SearchPlayersAsync(firstName, lastName, position);
+            return DomainResult<List<PlayerResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -73,10 +71,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("Players")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> GetPlayer(long playerId) //TODO: adicionar a informacao do responsavel do player
+        public async Task<IActionResult> GetPlayer([FromQuery] long playerId) 
         {
-            Player? response = await _playerAppService.GetPlayer(playerId);
-            return DomainResult<Player?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerResponseDTO? response = await _playerAppService.GetPlayer(playerId);
+            return DomainResult<PlayerResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -86,10 +84,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("Players")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> PutPlayers(UpdatePlayerDTO playerToUpdate)
+        public async Task<IActionResult> PutPlayers([FromBody] UpdatePlayerDTO playerToUpdate)
         {
-            Player? response = await _playerAppService.UpdatePlayer(playerToUpdate);
-            return DomainResult<Player?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerResponseDTO? response = await _playerAppService.UpdatePlayer(playerToUpdate);
+            return DomainResult<PlayerResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         #endregion
@@ -102,10 +100,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("PlayerTransfer")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> PostPlayerTransfer(CreatePlayerTransferDTO playerTransferBody)
+        public async Task<IActionResult> PostPlayerTransfer([FromBody] CreatePlayerTransferDTO playerTransferBody)
         {
-            PlayerTransfer? response = await _playerAppService.CreatePlayerTransfer(playerTransferBody);
-            return DomainResult<PlayerTransfer?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerTransferResponseDTO? response = await _playerAppService.CreatePlayerTransfer(playerTransferBody);
+            return DomainResult<PlayerTransferResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -115,10 +113,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("PlayerTransfer")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> DeletePlayerTransfer(long id)
+        public async Task<IActionResult> DeletePlayerTransfer([FromQuery] long id)
         {
-            PlayerTransfer? response = await _playerAppService.DeletePlayerTransfer(id);
-            return DomainResult<PlayerTransfer?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerTransferResponseDTO? response = await _playerAppService.DeletePlayerTransfer(id);
+            return DomainResult<PlayerTransferResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -128,10 +126,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("PlayerTransfer")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> GetPlayerTransfer(long playerId)
+        public async Task<IActionResult> GetPlayerTransfer([FromQuery] long playerId)
         {
-            List<PlayerTransfer>? response = await _playerAppService.GetPlayerTransfer(playerId);
-            return DomainResult<List<PlayerTransfer>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<PlayerTransferResponseDTO>? response = await _playerAppService.GetPlayerTransfer(playerId);
+            return DomainResult<List<PlayerTransferResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -141,10 +139,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("PlayerTransfer")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> PutPlayerTransfer(UpdatePlayerTransferDTO playerTransferToUpdate)
+        public async Task<IActionResult> PutPlayerTransfer([FromBody] UpdatePlayerTransferDTO playerTransferToUpdate)
         {
-            PlayerTransfer? response = await _playerAppService.UpdatePlayerTransfer(playerTransferToUpdate);
-            return DomainResult<PlayerTransfer?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerTransferResponseDTO? response = await _playerAppService.UpdatePlayerTransfer(playerTransferToUpdate);
+            return DomainResult<PlayerTransferResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
         #endregion
 
@@ -156,10 +154,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("PlayerContract")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> PostPlayerContract(CreatePlayerContractDTO playerContractBody)
+        public async Task<IActionResult> PostPlayerContract([FromBody] CreatePlayerContractDTO playerContractBody)
         {
-            PlayerContract? response = await _playerAppService.CreatePlayerContract(playerContractBody);
-            return DomainResult<PlayerContract?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerContractResponseDTO? response = await _playerAppService.CreatePlayerContract(playerContractBody);
+            return DomainResult<PlayerContractResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -169,10 +167,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("PlayerContract")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> DeletePlayerContract(long id)
+        public async Task<IActionResult> DeletePlayerContract([FromQuery] long id)
         {
-            PlayerContract? response = await _playerAppService.DeletePlayerContract(id);
-            return DomainResult<PlayerContract?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerContractResponseDTO? response = await _playerAppService.DeletePlayerContract(id);
+            return DomainResult<PlayerContractResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -182,10 +180,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("PlayerContract")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> GetPlayerContract(long playerId)
+        public async Task<IActionResult> GetPlayerContract([FromQuery] long playerId)
         {
-            List<PlayerContract>? response = await _playerAppService.GetPlayerContract(playerId);
-            return DomainResult<List<PlayerContract>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<PlayerContractResponseDTO>? response = await _playerAppService.GetPlayerContract(playerId);
+            return DomainResult<List<PlayerContractResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -195,10 +193,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("PlayerContract")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> PutPlayerContract(UpdatePlayerContractDTO playerContractToUpdate)
+        public async Task<IActionResult> PutPlayerContract([FromBody] UpdatePlayerContractDTO playerContractToUpdate)
         {
-            PlayerContract? response = await _playerAppService.UpdatePlayerContract(playerContractToUpdate);
-            return DomainResult<PlayerContract?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerContractResponseDTO? response = await _playerAppService.UpdatePlayerContract(playerContractToUpdate);
+            return DomainResult<PlayerContractResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
         #endregion
 
@@ -210,10 +208,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("PlayerPerformanceHistory")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> PostPlayerPerformanceHistory(CreatePlayerPerformanceHistoryDTO playerPerformanceHistory)
+        public async Task<IActionResult> PostPlayerPerformanceHistory([FromBody] CreatePlayerPerformanceHistoryDTO playerPerformanceHistory)
         {
-            PlayerPerformanceHistory? response = await _playerAppService.CreatePlayerPerformanceHistory(playerPerformanceHistory);
-            return DomainResult<PlayerPerformanceHistory?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerPerformanceHistorySimpleResponseDTO? response = await _playerAppService.CreatePlayerPerformanceHistory(playerPerformanceHistory);
+            return DomainResult<PlayerPerformanceHistorySimpleResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -223,10 +221,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("PlayerPerformanceHistory")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> DeletePlayerPerformanceHistory(long id)
+        public async Task<IActionResult> DeletePlayerPerformanceHistory([FromQuery] long id)
         {
-            PlayerPerformanceHistory? response = await _playerAppService.DeletePlayerPerformanceHistory(id);
-            return DomainResult<PlayerPerformanceHistory?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerPerformanceHistorySimpleResponseDTO? response = await _playerAppService.DeletePlayerPerformanceHistory(id);
+            return DomainResult<PlayerPerformanceHistorySimpleResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -237,7 +235,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("PlayerPerformanceHistory")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> GetPlayerPerformanceHistory(long playerId, string season)
+        public async Task<IActionResult> GetPlayerPerformanceHistory([FromQuery] long playerId, [FromQuery] string season)
         {
             PlayerPerformanceHistoryResponseDTO? response = await _playerAppService.GetPlayerPerformanceHistory(playerId, season);
             return DomainResult<PlayerPerformanceHistoryResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
@@ -250,10 +248,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("PlayerPerformanceHistory")]
         [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
-        public async Task<IActionResult> PutPlayerPerformanceHistory(UpdatePlayerPerformanceHistoryDTO playerPerformanceHistoryToUpdate)
+        public async Task<IActionResult> PutPlayerPerformanceHistory([FromBody] UpdatePlayerPerformanceHistoryDTO playerPerformanceHistoryToUpdate)
         {
-            PlayerPerformanceHistory? response = await _playerAppService.UpdatePlayerPerformanceHistory(playerPerformanceHistoryToUpdate);
-            return DomainResult<PlayerPerformanceHistory?>.Ok(response, _notificationContext, _modelErrorsContext);
+            PlayerPerformanceHistorySimpleResponseDTO? response = await _playerAppService.UpdatePlayerPerformanceHistory(playerPerformanceHistoryToUpdate);
+            return DomainResult<PlayerPerformanceHistorySimpleResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
         #endregion
     }

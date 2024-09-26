@@ -11,5 +11,15 @@ namespace ClubManager.Domain.Entities.MembersTeams
         public User User { get; set; }
         [ForeignKey("ClubMemberId")]
         public ClubMember ClubMember { get; set; }
+
+        public void SetUserId(long userId)
+        {
+            UserId = userId;
+        }
+
+        public void SetClubMemberId(long clubMemberId)
+        {
+            ClubMemberId = clubMemberId;
+        }
     }
 }

@@ -12,9 +12,9 @@ namespace ClubManager.Infra.Repositories.Identity
         {
         }
 
-        public async Task<ClubMember?> GetByIdAsync(long userId)
+        public async Task<ClubMember?> GetByIdAsync(long id)
         {
-            return await GetEntity().FirstOrDefaultAsync(u => u.Id == userId);
+            return await GetEntity().Include(x => x.UserClubMember).FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<ClubMember?> GetByEmailAsync(string email)

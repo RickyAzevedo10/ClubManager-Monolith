@@ -1,4 +1,5 @@
-﻿using ClubManager.App.Interfaces.Identity;
+﻿using AutoMapper;
+using ClubManager.App.Interfaces.Identity;
 using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.Identity;
 using ClubManager.Domain.Entities.Identity;
@@ -16,17 +17,19 @@ namespace ClubManager.App.Services.Identity
         private readonly IAuthorizationService _authorizationService;
         private readonly IUserService _userService;
         private readonly IAuthenticationService _authenticationService;
+        private readonly IMapper _mapper;
 
-        public UserAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IUserService userService, IAuthenticationService authenticationService)
+        public UserAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IUserService userService, IAuthenticationService authenticationService, IMapper mapper)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _userService = userService;
             _authenticationService = authenticationService;
+            _mapper = mapper;
         }
 
-        public async Task<User?> Get(long id)
+        public async Task<UserResponseDTO?> Get(long id)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -38,10 +41,10 @@ namespace ClubManager.App.Services.Identity
 
             User? user = await _userService.Get(id);
 
-            return user;
+            return _mapper.Map<UserResponseDTO>(user);
         }
 
-        public async Task<List<User>?> GetAllFromInstitution(long idInstitution)
+        public async Task<List<UserResponseDTO>?> GetAllFromInstitution(long idInstitution)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -53,10 +56,10 @@ namespace ClubManager.App.Services.Identity
 
             List<User>? usersInstitution = await _userService.GetAllUsersFromInstitution(idInstitution);
 
-            return usersInstitution;
+            return _mapper.Map<List<UserResponseDTO>>(usersInstitution);
         }
 
-        public async Task<List<UserRoles>?> GetAllUserRoles()
+        public async Task<List<UserRoleResponseDTO>?> GetAllUserRoles()
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -68,10 +71,10 @@ namespace ClubManager.App.Services.Identity
 
             IEnumerable<UserRoles>? userRoles = await _unitOfWork.UserRolesRepository.GetAllAsync();
 
-            return userRoles.ToList();
+            return _mapper.Map<List<UserRoleResponseDTO>>(userRoles);
         }
 
-        public async Task<List<UserPermissions>?> GetUserPermissions(long id)
+        public async Task<List<UserPermissionResponseDTO>?> GetUserPermissions(long id)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -83,10 +86,10 @@ namespace ClubManager.App.Services.Identity
 
             List<UserPermissions>? userPermissions = await _unitOfWork.UserPermissionsRepository.GetUserPermissions(id);
 
-            return userPermissions;
+            return _mapper.Map<List<UserPermissionResponseDTO>>(userPermissions); 
         }
 
-        public async Task<User?> Create(CreateUserDTO userCreate)
+        public async Task<UserResponseDTO?> Create(CreateUserDTO userCreate)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -111,6 +114,7 @@ namespace ClubManager.App.Services.Identity
                 Delete = userCreate.Delete,
                 Create = userCreate.Create,
             };
+
             UserPermissions? userPermissions = await _userService.CreateUserPermissions(createUserPermissionsDTO);
 
             user = await _userService.Create(userCreate);
@@ -124,10 +128,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return user;
+            return _mapper.Map<UserResponseDTO>(user);
         }
 
-        public async Task<User?> Update(CreateUserDTO userCreateToUpdate)
+        public async Task<UserResponseDTO?> Update(UpdateUserDTO userCreateToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -137,7 +141,7 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            User? user = await _unitOfWork.UserRepository.GetByEmailAsync(userCreateToUpdate.Email);
+            User? user = await _unitOfWork.UserRepository.GetByIdAsync(userCreateToUpdate.Id);
 
             if (user == null)
             {
@@ -153,10 +157,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return user;
+            return _mapper.Map<UserResponseDTO>(user);
         }
 
-        public async Task<User?> Delete(long id)
+        public async Task<UserResponseDTO?> Delete(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -174,7 +178,7 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return userDeleted;
+            return _mapper.Map<UserResponseDTO>(userDeleted);
         }
 
         public async Task<UserLoginResponseDTO?> Login(UserLoginDTO user)
@@ -240,7 +244,7 @@ namespace ClubManager.App.Services.Identity
             };
         }
 
-        public async Task<UserPermissions?> PutUserPermissions(UpdateUserPermissionsDTO userPermissionsCreate)
+        public async Task<UserPermissionResponseDTO?> PutUserPermissions(UpdateUserPermissionsDTO userPermissionsCreate)
         {
             bool canEdit = await _authorizationService.CanEdit();
             
@@ -260,10 +264,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return userPermissions;
+            return _mapper.Map<UserPermissionResponseDTO>(userPermissions); 
         }
 
-        public async Task<UserPermissions?> DeleteUserPermissions(long id)
+        public async Task<UserPermissionResponseDTO?> DeleteUserPermissions(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
            
@@ -281,7 +285,7 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return userPermissions;
+            return _mapper.Map<UserPermissionResponseDTO>(userPermissions); 
         }
 
         public async Task<User?> CreateUserAdmin(string abbreviation)
@@ -316,7 +320,7 @@ namespace ClubManager.App.Services.Identity
             return user;
         }
 
-        public async Task<RecoverPasswordRequestResponse?> RecoverPassword(RecoverPasswordRequest request)
+        public async Task<RecoverPasswordRequestResponseDTO?> RecoverPassword(RecoverPasswordRequestDTO request)
         {
             User? user = await _unitOfWork.UserRepository.GetByEmailAsync(request.Email);
             if (user == null)
@@ -334,7 +338,7 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            RecoverPasswordRequestResponse response = new()
+            RecoverPasswordRequestResponseDTO response = new()
             {
                 Email = request.Email,
                 Token = resetToken
@@ -343,7 +347,7 @@ namespace ClubManager.App.Services.Identity
             return response;
         }
 
-        public async Task<ResetPasswordResponse?> ResetPassword(ResetPassword request)
+        public async Task<ResetPasswordResponseDTO?> ResetPassword(ResetPasswordDTO request)
         {
             User? user = await _unitOfWork.UserRepository.GetByPasswordResetTokenAsync(request.Token);
             if (user == null)
@@ -367,7 +371,7 @@ namespace ClubManager.App.Services.Identity
                 return null;
             } else
             {
-                ResetPasswordResponse response = new() { NewPassword = request.NewPassword, Message = "Password has been changed" };
+                ResetPasswordResponseDTO response = new() { NewPassword = request.NewPassword, Message = "Password has been changed" };
                 return response;
             }
         }

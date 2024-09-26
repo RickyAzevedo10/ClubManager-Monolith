@@ -17,11 +17,6 @@ namespace ClubManager.Infra.Repositories.Identity
             return await GetEntity().FirstOrDefaultAsync(u => u.Id == userId);
         }
 
-        public async Task<List<Institution>?> GetAllAsync()
-        {
-            return await GetAllAsync();
-        }
-
         public async Task<Institution?> GetByNameAsync(string name)
         {
             return await GetEntity().FirstOrDefaultAsync(u => u.Name == name);

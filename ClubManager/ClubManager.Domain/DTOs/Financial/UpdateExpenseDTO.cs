@@ -1,14 +1,8 @@
 ﻿namespace ClubManager.Domain.DTOs.Financial
 {
-    public class UpdateEntityExpenseDTO
-    {
-        public UpdateEntityDTO Entity { get; set; }
-        public List<UpdateExpenseDTO> Expenses { get; set; }
-    }
-
     public class UpdateExpenseDTO
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public DateTime ExpenseDate { get; set; }
         public decimal Amount { get; set; }
         public string Destination { get; set; }

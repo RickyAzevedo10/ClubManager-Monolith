@@ -32,10 +32,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("Facility")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> PostFacility(CreateFacilityDTO facilityBody)
+        public async Task<IActionResult> PostFacility([FromBody] CreateFacilityDTO facilityBody)
         {
-            Facility? response = await _facilityAppService.CreateFacility(facilityBody);
-            return DomainResult<Facility?>.Ok(response, _notificationContext, _modelErrorsContext);
+            FacilityResponseDTO? response = await _facilityAppService.CreateFacility(facilityBody);
+            return DomainResult<FacilityResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -45,10 +45,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("FacilityId")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> GetFacility(long facilityId)
+        public async Task<IActionResult> GetFacility([FromQuery] long facilityId)
         {
-            Facility? response = await _facilityAppService.GetFacility(facilityId);  
-            return DomainResult<Facility?>.Ok(response, _notificationContext, _modelErrorsContext);
+            FacilityResponseDTO? response = await _facilityAppService.GetFacility(facilityId);  
+            return DomainResult<FacilityResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace ClubManager.Controllers.MembersTeams
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
         public async Task<IActionResult> GetAllFacility()
         {
-            List<Facility>? response = await _facilityAppService.GetAllFacility();
-            return DomainResult<List<Facility>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<FacilityResponseDTO>? response = await _facilityAppService.GetAllFacility();
+            return DomainResult<List<FacilityResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -70,10 +70,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("Facility")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> DeleteFacility(long id)
+        public async Task<IActionResult> DeleteFacility([FromQuery] long id)
         {
-            Facility? response = await _facilityAppService.DeleteFacility(id);
-            return DomainResult<Facility?>.Ok(response, _notificationContext, _modelErrorsContext);
+            FacilityResponseDTO? response = await _facilityAppService.DeleteFacility(id);
+            return DomainResult<FacilityResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -83,10 +83,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("Facility")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> PutFacility(UpdateFacilityDTO facilityToUpdate)
+        public async Task<IActionResult> PutFacility([FromBody] UpdateFacilityDTO facilityToUpdate)
         {
-            Facility? response = await _facilityAppService.UpdateFacility(facilityToUpdate);
-            return DomainResult<Facility?>.Ok(response, _notificationContext, _modelErrorsContext);
+            FacilityResponseDTO? response = await _facilityAppService.UpdateFacility(facilityToUpdate);
+            return DomainResult<FacilityResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         #endregion
@@ -99,10 +99,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("FacilityReservation")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> PostFacilityReservation(CreateFacilityReservationDTO facilityReservationBody)
+        public async Task<IActionResult> PostFacilityReservation([FromBody] CreateFacilityReservationDTO facilityReservationBody)
         {
-            FacilityReservation? response = await _facilityAppService.CreateFacilityReservation(facilityReservationBody);
-            return DomainResult<FacilityReservation?>.Ok(response, _notificationContext, _modelErrorsContext);
+            FacilityReservationResponseDTO? response = await _facilityAppService.CreateFacilityReservation(facilityReservationBody);
+            return DomainResult<FacilityReservationResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -112,10 +112,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("FacilityReservation")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> GetFacilityReservation(long facilityReservationId)
+        public async Task<IActionResult> GetFacilityReservation([FromQuery] long facilityReservationId)
         {
-            FacilityReservation? response = await _facilityAppService.GetFacilityReservation(facilityReservationId);
-            return DomainResult<FacilityReservation?>.Ok(response, _notificationContext, _modelErrorsContext);
+            FacilityReservationResponseDTO? response = await _facilityAppService.GetFacilityReservation(facilityReservationId);
+            return DomainResult<FacilityReservationResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -125,10 +125,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("FacilityReservation")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> DeleteFacilityReservation(long id)
+        public async Task<IActionResult> DeleteFacilityReservation([FromQuery] long id)
         {
-            FacilityReservation? response = await _facilityAppService.DeleteFacilityReservation(id);
-            return DomainResult<FacilityReservation?>.Ok(response, _notificationContext, _modelErrorsContext);
+            FacilityReservationResponseDTO? response = await _facilityAppService.DeleteFacilityReservation(id);
+            return DomainResult<FacilityReservationResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -138,10 +138,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("FacilityReservation")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> PutFacilityReservation(UpdateFacilityReservationDTO facilityReservationToUpdate)
+        public async Task<IActionResult> PutFacilityReservation([FromBody] UpdateFacilityReservationDTO facilityReservationToUpdate)
         {
-            FacilityReservation? response = await _facilityAppService.UpdateFacilityReservation(facilityReservationToUpdate);
-            return DomainResult<FacilityReservation?>.Ok(response, _notificationContext, _modelErrorsContext);
+            FacilityReservationResponseDTO? response = await _facilityAppService.UpdateFacilityReservation(facilityReservationToUpdate);
+            return DomainResult<FacilityReservationResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
         #endregion
 

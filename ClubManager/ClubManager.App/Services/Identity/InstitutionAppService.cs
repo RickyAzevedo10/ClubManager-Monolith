@@ -1,4 +1,5 @@
-﻿using ClubManager.App.Interfaces.Identity;
+﻿using AutoMapper;
+using ClubManager.App.Interfaces.Identity;
 using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.Identity;
 using ClubManager.Domain.Entities.Identity;
@@ -16,19 +17,20 @@ namespace ClubManager.App.Services.Identity
         private readonly IAuthorizationService _authorizationService;
         private readonly IInstitutionService _institutionService;
         private readonly IUserAppService _userAppService;
+        private readonly IMapper _mapper;
 
-        public InstitutionAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IInstitutionService institutionService, IUserAppService userAppService)
+        public InstitutionAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IInstitutionService institutionService, IUserAppService userAppService, IMapper mapper)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _institutionService = institutionService;
             _userAppService = userAppService;
+            _mapper = mapper;
         }
 
-        public async Task<Institution?> Get(long id)
+        public async Task<InstitutionResponseDTO?> Get(long id)
         {
-            //validar se tem permissões para consultar
             bool canConsult = await _authorizationService.CanConsult();
 
             if(!canConsult)
@@ -38,10 +40,10 @@ namespace ClubManager.App.Services.Identity
             }
 
             Institution? institution = await _institutionService.Get(id);
-            return institution;
+            return _mapper.Map<InstitutionResponseDTO>(institution);
         }
 
-        public async Task<List<Institution>?> GetAll()
+        public async Task<List<InstitutionResponseDTO>?> GetAll()
         {
             bool canConsult = await _authorizationService.CanConsult();
             if (!canConsult)
@@ -51,12 +53,11 @@ namespace ClubManager.App.Services.Identity
             }
 
             List<Institution>? institution = await _institutionService.GetAll();
-            return institution;
+            return _mapper.Map<List<InstitutionResponseDTO>>(institution);
         }
 
-        public async Task<Institution?> Create(CreateInstitutionDTO institutionBody)
+        public async Task<InstitutionResponseDTO?> Create(CreateInstitutionDTO institutionBody)
         {
-            //validar se ja existe a instituição
             Institution? institution = await _unitOfWork.InstitutionRepository.GetByNameAsync(institutionBody.Name);
 
             if(institution != null)
@@ -80,10 +81,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return institution;
+            return _mapper.Map<InstitutionResponseDTO>(institution);
         }
 
-        public async Task<Institution?> Update(UpdateInstitutionDTO institutionToUpdate)
+        public async Task<InstitutionResponseDTO?> Update(UpdateInstitutionDTO institutionToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
             if (!canEdit)
@@ -92,8 +93,7 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            //validar se ja existe a instituição
-            Institution? institution = await _unitOfWork.InstitutionRepository.GetByNameAsync(institutionToUpdate.Name);
+            Institution? institution = await _unitOfWork.InstitutionRepository.GetById(institutionToUpdate.Id);
 
             if (institution == null)
             {
@@ -109,10 +109,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return institution;
+            return _mapper.Map<InstitutionResponseDTO>(institution);
         }
 
-        public async Task<Institution?> Delete(long id)
+        public async Task<InstitutionResponseDTO?> Delete(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
             if (!canDelete)
@@ -129,7 +129,7 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return institution;
+            return _mapper.Map<InstitutionResponseDTO>(institution);
         }
     }
 }

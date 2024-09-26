@@ -13,7 +13,7 @@ namespace ClubManager.Infra.Configuration.Identity
             entity.HasOne(tc => tc.Team)
                 .WithMany(t => t.TeamCoaches)
                 .HasForeignKey(tc => tc.TeamId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(tc => tc.User)
                 .WithMany(u => u.TeamCoaches)

@@ -73,7 +73,7 @@ namespace ClubManager.Domain.Services.Identity
                     return null;
                 }
                 TeamCoach teamCoach = new();
-                teamCoach.SetTeamId((int)team.Id);
+                teamCoach.SetTeamId(team.Id);
                 teamCoach.SetUserId(item.UserId);
                 teamCoach.SetIsHeadCoach(item.IsHeadCoach);
 
@@ -125,16 +125,71 @@ namespace ClubManager.Domain.Services.Identity
 
         public async Task<List<TeamCoach>?> UpdateTeamCoaches(UpdateTeamDTO teamToUpdate, Team team)
         {
-            await _unitOfWork.TeamCoachRepository.DeleteAllAsync();
+            List<TeamCoach> teamCoaches = [];
 
-            return await CreateTeamCoach(teamToUpdate.TeamCoachDTO, team);
+            foreach (var item in teamToUpdate.TeamCoachDTO)
+            {
+                if(item.Id != 0)
+                {
+                    //update if exists
+                    TeamCoach teamCoach = await _unitOfWork.TeamCoachRepository.GetById(item.Id);
+                    if (teamCoach != null)
+                    {
+                        teamCoach.SetTeamId(team.Id);
+                        teamCoach.SetUserId(item.UserId);
+                        teamCoach.SetIsHeadCoach(item.IsHeadCoach);
+                        _unitOfWork.TeamCoachRepository.Update(teamCoach);
+                        teamCoaches.Add(teamCoach);
+                    }
+                } else
+                {
+                    //create a new one
+                    CreateTeamCoachDTO teamCoachDTO = new()
+                    {
+                        UserId = item.UserId,
+                        IsHeadCoach = item.IsHeadCoach
+                    };
+                    List<CreateTeamCoachDTO> listTeamCoachDTO = [teamCoachDTO];
+                    List<TeamCoach>? teamCoachCreated = await CreateTeamCoach(listTeamCoachDTO, team);
+                    if(teamCoachCreated != null && teamCoachCreated.Any())
+                        teamCoaches.Add(teamCoachCreated[1]);
+                }
+            }
+            return teamCoaches;
+            //await _unitOfWork.TeamCoachRepository.DeleteAllAsync();
+            //return await CreateTeamCoach(teamToUpdate.TeamCoachDTO, team);
         }
 
         public async Task<List<TeamPlayer>?> UpdateTeamPlayers(UpdateTeamDTO teamToUpdate, Team team)
         {
-            await _unitOfWork.TeamCoachRepository.DeleteAllAsync();
+            List<TeamPlayer> teamPlayers = [];
 
-            return await CreateTeamPlayer(teamToUpdate.PlayerId, team);
+            foreach (var item in teamToUpdate.TeamPlayers)
+            {
+                if (item.Id != 0)
+                {
+                    //update if exists
+                    TeamPlayer teamPlayer = await _unitOfWork.TeamPlayerRepository.GetById(item.Id);
+                    if (teamPlayer != null)
+                    {
+                        teamPlayer.SetTeamId(team.Id);
+                        teamPlayer.SetPlayerId(item.PlayerId);
+                        _unitOfWork.TeamPlayerRepository.Update(teamPlayer);
+                        teamPlayers.Add(teamPlayer);
+                    }
+                }
+                else
+                {
+                    //create a new one
+                    List<long> playerdIds = [item.PlayerId];
+                    List<TeamPlayer>? teamPlayerCreated = await CreateTeamPlayer(playerdIds, team);
+                    if (teamPlayerCreated != null && teamPlayerCreated.Any())
+                        teamPlayers.Add(teamPlayerCreated[1]);
+                }
+            }
+            return teamPlayers;
+            //await _unitOfWork.TeamCoachRepository.DeleteAllAsync();
+            //return await CreateTeamPlayer(teamToUpdate.PlayerId, team);
         }
 
     }

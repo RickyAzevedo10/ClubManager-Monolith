@@ -60,6 +60,10 @@ namespace ClubManager.Infra.Migrations
 
                     b.HasIndex("ClubMemberId");
 
+                    b.HasIndex("PlayerId")
+                        .IsUnique()
+                        .HasFilter("[PlayerId] IS NOT NULL");
+
                     b.ToTable("Entities");
                 });
 
@@ -151,105 +155,105 @@ namespace ClubManager.Infra.Migrations
                         new
                         {
                             Id = 1L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9158),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8094),
                             Description = "Despesas relacionadas com o pagamento de salários a jogadores, treinadores e funcionários.",
                             Name = "Salários"
                         },
                         new
                         {
                             Id = 2L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9162),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8106),
                             Description = "Custos associados à compra de equipamento e material desportivo necessário para a equipa.",
                             Name = "Material Desportivo"
                         },
                         new
                         {
                             Id = 3L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9163),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8107),
                             Description = "Despesas com viagens e alojamento para jogos fora de casa, incluindo transporte e estadia.",
                             Name = "Custos de Viagem"
                         },
                         new
                         {
                             Id = 4L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9164),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8109),
                             Description = "Custos associados à manutenção e reparação do estádio e outras infraestruturas do clube.",
                             Name = "Manutenção do Estádio"
                         },
                         new
                         {
                             Id = 5L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9165),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8110),
                             Description = "Despesas com campanhas de marketing e publicidade para promover o clube e atrair patrocinadores e adeptos.",
                             Name = "Marketing e Publicidade"
                         },
                         new
                         {
                             Id = 6L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9167),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8112),
                             Description = "Custos gerais de administração, incluindo despesas com escritório e administração do clube.",
                             Name = "Despesas Administrativas"
                         },
                         new
                         {
                             Id = 7L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9168),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8114),
                             Description = "Despesas com seguros para proteger o clube, jogadores e infraestruturas contra riscos e danos.",
                             Name = "Seguros"
                         },
                         new
                         {
                             Id = 8L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9169),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8115),
                             Description = "Custos com serviços de consultoria e honorários profissionais, como advogados e contabilistas.",
                             Name = "Honorários e Consultoria"
                         },
                         new
                         {
                             Id = 9L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9170),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8117),
                             Description = "Custos relacionados com a organização de eventos especiais, como receções, eventos de angariação de fundos e outros eventos promocionais.",
                             Name = "Despesas com Eventos"
                         },
                         new
                         {
                             Id = 10L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9171),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8118),
                             Description = "Custos associados com a formação e desenvolvimento contínuo de jogadores e equipa técnica.",
                             Name = "Despesas com Formação"
                         },
                         new
                         {
                             Id = 11L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9172),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8120),
                             Description = "Custos relacionados com licenças e autorizações necessárias para operar o clube e participar em competições.",
                             Name = "Despesas de Licenciamento"
                         },
                         new
                         {
                             Id = 12L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9173),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8122),
                             Description = "Custos com serviços essenciais, como eletricidade, água e gás para as instalações do clube.",
                             Name = "Despesas de Utilidades"
                         },
                         new
                         {
                             Id = 13L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9174),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8123),
                             Description = "Custos com a reparação e manutenção de equipamentos e infraestruturas do clube.",
                             Name = "Despesas de Reparação e Manutenção"
                         },
                         new
                         {
                             Id = 14L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9175),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8125),
                             Description = "Custos relacionados com empréstimos e financiamentos, incluindo juros e amortizações.",
                             Name = "Despesas de Empréstimo"
                         },
                         new
                         {
                             Id = 15L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(9176),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(8157),
                             Description = "Custos não categorizados especificamente, mas que podem incluir diversas despesas operacionais e imprevistos.",
                             Name = "Despesas Variáveis"
                         });
@@ -287,6 +291,9 @@ namespace ClubManager.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("ResponsibleUserId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("RevenueDate")
                         .HasColumnType("datetime2");
 
@@ -300,6 +307,9 @@ namespace ClubManager.Infra.Migrations
                         .IsUnique();
 
                     b.HasIndex("EntityId");
+
+                    b.HasIndex("ResponsibleUserId")
+                        .IsUnique();
 
                     b.ToTable("Revenues");
                 });
@@ -337,105 +347,105 @@ namespace ClubManager.Infra.Migrations
                         new
                         {
                             Id = 1L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8858),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7340),
                             Description = "Receitas provenientes de acordos com empresas que patrocinam o clube, como patrocínios de camisas ou nomeação do estádio.",
                             Name = "Patrocínios"
                         },
                         new
                         {
                             Id = 2L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8863),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7349),
                             Description = "Renda gerada com a venda de bilhetes, merchandising e alimentos e bebidas nos dias de jogo.",
                             Name = "Receitas de Dia de Jogo"
                         },
                         new
                         {
                             Id = 3L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8864),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7351),
                             Description = "Receitas recebidas pela venda dos direitos de transmissão dos jogos para televisão ou plataformas de streaming.",
                             Name = "Direitos de Transmissão"
                         },
                         new
                         {
                             Id = 4L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8866),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7352),
                             Description = "Receita gerada pela venda de produtos relacionados ao clube, como camisas, cachecóis e outros artigos.",
                             Name = "Merchandising"
                         },
                         new
                         {
                             Id = 5L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8867),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7354),
                             Description = "Dinheiro recebido como prémio por desempenho em competições, como torneios nacionais ou internacionais.",
                             Name = "Prémios em Dinheiro"
                         },
                         new
                         {
                             Id = 6L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8868),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7355),
                             Description = "Receitas provenientes de parcerias comerciais com marcas e empresas para eventos especiais ou produtos conjuntos.",
                             Name = "Parcerias Comerciais"
                         },
                         new
                         {
                             Id = 7L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8869),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7356),
                             Description = "Receitas das taxas pagas pelos associados do clube para acesso a benefícios exclusivos, como bilhetes preferenciais ou eventos especiais.",
                             Name = "Taxas de Associação"
                         },
                         new
                         {
                             Id = 8L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8870),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7358),
                             Description = "Receitas geradas pela venda dos direitos de nomeação do estádio do clube.",
                             Name = "Direitos de Nomeação do Estádio"
                         },
                         new
                         {
                             Id = 9L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8871),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7359),
                             Description = "Receitas provenientes da venda ou empréstimo de jogadores para outros clubes.",
                             Name = "Transferências de Jogadores"
                         },
                         new
                         {
                             Id = 10L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8872),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7361),
                             Description = "Receitas geradas pela publicidade dentro do estádio ou em outras plataformas relacionadas ao clube.",
                             Name = "Publicidade"
                         },
                         new
                         {
                             Id = 11L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8873),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7362),
                             Description = "Receitas obtidas com a venda de pacotes de hospitalidade corporativa, que incluem bilhetes para jogos e serviços adicionais.",
                             Name = "Hospedagem Corporativa"
                         },
                         new
                         {
                             Id = 12L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8874),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7364),
                             Description = "Receitas provenientes da realização de eventos especiais no estádio, como concertos ou eventos corporativos.",
                             Name = "Receitas de Eventos"
                         },
                         new
                         {
                             Id = 13L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8875),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7365),
                             Description = "Receitas geradas por taxas de inscrição ou desenvolvimento de jovens talentos e futuras transferências.",
                             Name = "Receitas da Academia de Jovens"
                         },
                         new
                         {
                             Id = 14L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8876),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7367),
                             Description = "Receitas obtidas pelo aluguel de instalações do clube, como campos de treino ou áreas do estádio para eventos externos.",
                             Name = "Renda de Aluguel"
                         },
                         new
                         {
                             Id = 15L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8877),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(7368),
                             Description = "Dinheiro recebido de subsídios governamentais, fundações ou doações privadas para apoiar o clube.",
                             Name = "Subsídios e Doações"
                         });
@@ -578,7 +588,8 @@ namespace ClubManager.Infra.Migrations
 
                     b.HasIndex("InstitutionId");
 
-                    b.HasIndex("UserPermissionId");
+                    b.HasIndex("UserPermissionId")
+                        .IsUnique();
 
                     b.HasIndex("UserRoleId");
 
@@ -649,49 +660,49 @@ namespace ClubManager.Infra.Migrations
                         new
                         {
                             Id = 1L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5057),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9487),
                             Description = "Função administrativa para gerenciamento da instituição. Acesso total a toda a informação dentro da instituição.",
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5108),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9550),
                             Description = "Supervisiona todas as operações do clube, toma decisões estratégicas e tem acesso a todos as operações e funcionalidades da aplicação.",
                             Name = "Presidente"
                         },
                         new
                         {
                             Id = 3L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5109),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9551),
                             Description = "Encarregado das operações futebolísticas, incluindo gestão de treinadores, jogadores, transferências e contratações.",
                             Name = "Diretor Desportivo"
                         },
                         new
                         {
                             Id = 4L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5111),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9552),
                             Description = "Gere a equipe técnica, planeia treinos, táticas de jogo, escolhe a equipa para os jogos e monitoriza o desempenho dos jogadores.",
                             Name = "Treinador"
                         },
                         new
                         {
                             Id = 5L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5112),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9553),
                             Description = "Gere as finanças do clube, incluindo orçamento, salários, receitas de bilheteira, patrocínios e outras fontes de receita.",
                             Name = "Diretor Financeiro"
                         },
                         new
                         {
                             Id = 6L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5113),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9554),
                             Description = "Gere as instalações do clube, incluindo estádios, campos de treino e outras infraestruturas.",
                             Name = "Gestor de Infraestruturas"
                         },
                         new
                         {
                             Id = 7L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5114),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 91, DateTimeKind.Local).AddTicks(9555),
                             Description = "Trata de toda a documentação e administração necessária para o funcionamento do clube.",
                             Name = "Secretário"
                         });
@@ -766,42 +777,42 @@ namespace ClubManager.Infra.Migrations
                         new
                         {
                             Id = 1L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8553),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(6707),
                             Description = "Outdoor or indoor areas designed for sports activities, such as soccer fields, tennis courts, etc.",
                             Name = "Sports Field"
                         },
                         new
                         {
                             Id = 2L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8556),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(6722),
                             Description = "Fitness centers equipped with exercise machines, weights, and other fitness equipment.",
                             Name = "Gym"
                         },
                         new
                         {
                             Id = 3L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8557),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(6724),
                             Description = "Rooms designated for meetings, conferences, and other business-related gatherings.",
                             Name = "Meeting Room"
                         },
                         new
                         {
                             Id = 4L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8559),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(6725),
                             Description = "Facilities providing restroom and changing areas, including showers and lockers.",
                             Name = "Restroom"
                         },
                         new
                         {
                             Id = 5L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8560),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(6727),
                             Description = "Workspaces for administrative tasks, including private offices and open office areas.",
                             Name = "Office"
                         },
                         new
                         {
                             Id = 6L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8561),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(6728),
                             Description = "Large rooms or halls designed for lectures, presentations, and performances.",
                             Name = "Auditorium"
                         });
@@ -1083,9 +1094,6 @@ namespace ClubManager.Infra.Migrations
                     b.Property<long>("PlayerCategoryId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("PlayerId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Position")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1100,9 +1108,6 @@ namespace ClubManager.Infra.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PlayerCategoryId");
-
-                    b.HasIndex("PlayerId")
-                        .IsUnique();
 
                     b.ToTable("Player");
                 });
@@ -1137,112 +1142,112 @@ namespace ClubManager.Infra.Migrations
                         new
                         {
                             Id = 1L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8226),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4640),
                             Description = "Pré-Petizes",
                             Name = "Sub-5"
                         },
                         new
                         {
                             Id = 2L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8240),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4663),
                             Description = "Petizes 1º ano",
                             Name = "Sub-6"
                         },
                         new
                         {
                             Id = 3L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8241),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4665),
                             Description = "Petizes 2º ano",
                             Name = "Sub-7"
                         },
                         new
                         {
                             Id = 4L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8242),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4667),
                             Description = "Traquinas 1º ano",
                             Name = "Sub-8"
                         },
                         new
                         {
                             Id = 5L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8244),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4668),
                             Description = "Traquinas 2º ano",
                             Name = "Sub-9"
                         },
                         new
                         {
                             Id = 6L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8245),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4670),
                             Description = "Benjamins 1º ano",
                             Name = "Sub-10"
                         },
                         new
                         {
                             Id = 7L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8246),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4671),
                             Description = "Benjamins 2º ano",
                             Name = "Sub-11"
                         },
                         new
                         {
                             Id = 8L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8247),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4673),
                             Description = "Infantis 1º ano",
                             Name = "Sub-12"
                         },
                         new
                         {
                             Id = 9L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8248),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4674),
                             Description = "Infantis 2º ano",
                             Name = "Sub-13"
                         },
                         new
                         {
                             Id = 10L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8249),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4676),
                             Description = "Iniciados 1º ano",
                             Name = "Sub-14"
                         },
                         new
                         {
                             Id = 11L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8250),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4678),
                             Description = "Iniciados 2º ano",
                             Name = "Sub-15"
                         },
                         new
                         {
                             Id = 12L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8251),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4679),
                             Description = "Juvenis 1º ano",
                             Name = "Sub-16"
                         },
                         new
                         {
                             Id = 13L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8252),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4681),
                             Description = "Juvenis 2º ano",
                             Name = "Sub-17"
                         },
                         new
                         {
                             Id = 14L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8253),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4682),
                             Description = "Juniores 1º ano",
                             Name = "Sub-18"
                         },
                         new
                         {
                             Id = 15L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8254),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4684),
                             Description = "Juniores 2º ano",
                             Name = "Sub-19"
                         },
                         new
                         {
                             Id = 16L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(8255),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(4686),
                             Description = "Seniores",
                             Name = "Seniores"
                         });
@@ -1477,63 +1482,63 @@ namespace ClubManager.Infra.Migrations
                         new
                         {
                             Id = 1L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5361),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(2),
                             Description = "Pré-Petizes",
                             Name = "Pré-Petizes"
                         },
                         new
                         {
                             Id = 2L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5363),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(10),
                             Description = "Petizes",
                             Name = "Petizes"
                         },
                         new
                         {
                             Id = 3L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5364),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(11),
                             Description = "Traquinas",
                             Name = "Traquinas"
                         },
                         new
                         {
                             Id = 4L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5365),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(12),
                             Description = "Benjamins",
                             Name = "Benjamins"
                         },
                         new
                         {
                             Id = 5L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5367),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(14),
                             Description = "Infantis",
                             Name = "Infantis"
                         },
                         new
                         {
                             Id = 6L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5368),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(15),
                             Description = "Iniciados",
                             Name = "Iniciados"
                         },
                         new
                         {
                             Id = 7L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5369),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(17),
                             Description = "Juvenis",
                             Name = "Juvenis"
                         },
                         new
                         {
                             Id = 8L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5370),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(18),
                             Description = "Juniores",
                             Name = "Juniores"
                         },
                         new
                         {
                             Id = 9L,
-                            DateOfCreation = new DateTime(2024, 9, 19, 19, 14, 59, 523, DateTimeKind.Local).AddTicks(5371),
+                            DateOfCreation = new DateTime(2024, 9, 26, 1, 33, 0, 92, DateTimeKind.Local).AddTicks(20),
                             Description = "Seniores",
                             Name = "Seniores"
                         });
@@ -1811,6 +1816,13 @@ namespace ClubManager.Infra.Migrations
                         .WithMany()
                         .HasForeignKey("ClubMemberId");
 
+                    b.HasOne("ClubManager.Domain.Entities.MembersTeams.Player", "Player")
+                        .WithOne("Entity")
+                        .HasForeignKey("ClubManager.Domain.Entities.Financial.Entity", "PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Player");
+
                     b.Navigation("UserClubMember");
                 });
 
@@ -1855,9 +1867,17 @@ namespace ClubManager.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ClubManager.Domain.Entities.Identity.User", "User")
+                        .WithOne("Revenue")
+                        .HasForeignKey("ClubManager.Domain.Entities.Financial.Revenue", "ResponsibleUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Entity");
 
                     b.Navigation("RevenueCategory");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ClubManager.Domain.Entities.Identity.User", b =>
@@ -1869,8 +1889,8 @@ namespace ClubManager.Infra.Migrations
                         .IsRequired();
 
                     b.HasOne("ClubManager.Domain.Entities.Identity.UserPermissions", "UserPermission")
-                        .WithMany("Users")
-                        .HasForeignKey("UserPermissionId")
+                        .WithOne("Users")
+                        .HasForeignKey("ClubManager.Domain.Entities.Identity.User", "UserPermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1974,15 +1994,7 @@ namespace ClubManager.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ClubManager.Domain.Entities.Financial.Entity", "Entity")
-                        .WithOne("Player")
-                        .HasForeignKey("ClubManager.Domain.Entities.MembersTeams.Player", "PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("Entity");
                 });
 
             modelBuilder.Entity("ClubManager.Domain.Entities.MembersTeams.PlayerContract", b =>
@@ -2061,7 +2073,7 @@ namespace ClubManager.Infra.Migrations
                     b.HasOne("ClubManager.Domain.Entities.MembersTeams.Team", "Team")
                         .WithMany("TeamCoaches")
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ClubManager.Domain.Entities.Identity.User", "User")
@@ -2099,7 +2111,7 @@ namespace ClubManager.Infra.Migrations
                     b.HasOne("ClubManager.Domain.Entities.MembersTeams.ClubMember", "ClubMember")
                         .WithOne("UserClubMember")
                         .HasForeignKey("ClubManager.Domain.Entities.MembersTeams.UserClubMember", "ClubMemberId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ClubManager.Domain.Entities.Identity.User", "User")
@@ -2177,9 +2189,6 @@ namespace ClubManager.Infra.Migrations
                 {
                     b.Navigation("Expenses");
 
-                    b.Navigation("Player")
-                        .IsRequired();
-
                     b.Navigation("Revenues");
                 });
 
@@ -2211,6 +2220,9 @@ namespace ClubManager.Infra.Migrations
 
                     b.Navigation("MaintenanceRequests");
 
+                    b.Navigation("Revenue")
+                        .IsRequired();
+
                     b.Navigation("TeamCoaches");
 
                     b.Navigation("UserClubMember")
@@ -2219,7 +2231,8 @@ namespace ClubManager.Infra.Migrations
 
             modelBuilder.Entity("ClubManager.Domain.Entities.Identity.UserPermissions", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("Users")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ClubManager.Domain.Entities.Identity.UserRoles", b =>
@@ -2239,6 +2252,9 @@ namespace ClubManager.Infra.Migrations
 
             modelBuilder.Entity("ClubManager.Domain.Entities.MembersTeams.Player", b =>
                 {
+                    b.Navigation("Entity")
+                        .IsRequired();
+
                     b.Navigation("MatchStatistic");
 
                     b.Navigation("PlayerContracts");

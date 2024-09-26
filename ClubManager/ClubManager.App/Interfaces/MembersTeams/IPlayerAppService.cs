@@ -5,22 +5,26 @@ namespace ClubManager.App.Interfaces.Identity
 {
     public interface IPlayerAppService
     {
-        Task<Player?> GetPlayer(long id);
-        Task<List<PlayerTransfer>?> GetPlayerTransfer(long id);
-        Task<List<PlayerContract>?> GetPlayerContract(long id);
-        Task<PlayerTransfer?> DeletePlayerTransfer(long id);
-        Task<Player?> DeletePlayer(long id);
-        Task<PlayerContract?> DeletePlayerContract(long id);
-        Task<PlayerPerformanceHistory?> DeletePlayerPerformanceHistory(long id);
-        Task<PlayerTransfer?> CreatePlayerTransfer(CreatePlayerTransferDTO playerTransferBody);
-        Task<PlayerTransfer?> UpdatePlayerTransfer(UpdatePlayerTransferDTO playerTransferToUpdate);
-        Task<PlayerContract?> CreatePlayerContract(CreatePlayerContractDTO playerContractBody);
-        Task<PlayerContract?> UpdatePlayerContract(UpdatePlayerContractDTO playerContractToUpdate);
-        Task<PlayerPerformanceHistory?> CreatePlayerPerformanceHistory(CreatePlayerPerformanceHistoryDTO playerPerformanceHistoryBody);
-        Task<PlayerPerformanceHistory?> UpdatePlayerPerformanceHistory(UpdatePlayerPerformanceHistoryDTO playerPerformanceHistoryToUpdate);
+        Task<PlayerResponseDTO?> GetPlayer(long id);
+        Task<PlayerResponseDTO?> CreatePlayer(CreatePlayerDTO playerBody);
+        Task<PlayerResponseDTO?> UpdatePlayer(UpdatePlayerDTO playerToUpdate);
+        Task<List<PlayerResponseDTO>?> SearchPlayersAsync(string? firstName, string? lastName, string? position);
+        Task<PlayerResponseDTO?> DeletePlayer(long id);
+
+        Task<List<PlayerTransferResponseDTO>?> GetPlayerTransfer(long id);
+        Task<PlayerTransferResponseDTO?> DeletePlayerTransfer(long id);
+        Task<PlayerTransferResponseDTO?> CreatePlayerTransfer(CreatePlayerTransferDTO playerTransferBody);
+        Task<PlayerTransferResponseDTO?> UpdatePlayerTransfer(UpdatePlayerTransferDTO playerTransferToUpdate);
+
+        Task<List<PlayerContractResponseDTO>?> GetPlayerContract(long id);
+        Task<PlayerContractResponseDTO?> DeletePlayerContract(long id);
+        Task<PlayerContractResponseDTO?> CreatePlayerContract(CreatePlayerContractDTO playerContractBody);
+        Task<PlayerContractResponseDTO?> UpdatePlayerContract(UpdatePlayerContractDTO playerContractToUpdate);
+        
+        Task<PlayerPerformanceHistorySimpleResponseDTO?> DeletePlayerPerformanceHistory(long id);
+        Task<PlayerPerformanceHistorySimpleResponseDTO?> CreatePlayerPerformanceHistory(CreatePlayerPerformanceHistoryDTO playerPerformanceHistoryBody);
+        Task<PlayerPerformanceHistorySimpleResponseDTO?> UpdatePlayerPerformanceHistory(UpdatePlayerPerformanceHistoryDTO playerPerformanceHistoryToUpdate);
         Task<PlayerPerformanceHistoryResponseDTO?> GetPlayerPerformanceHistory(long playerId, string season);
-        Task<Player?> CreatePlayer(CreatePlayerDTO playerBody);
-        Task<Player?> UpdatePlayer(UpdatePlayerDTO playerToUpdate);
-        Task<List<Player>?> SearchPlayersAsync(string? firstName, string? lastName, string? position);
+
     }
 }

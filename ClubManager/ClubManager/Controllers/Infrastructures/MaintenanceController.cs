@@ -2,7 +2,6 @@ using ClubManager.App.Services.Infrastructures;
 using ClubManager.Domain.DTOs.Infrastructures;
 using ClubManager.Domain.Entities.Infrastructures;
 using ClubManager.Domain.Interfaces;
-using ClubManager.Domain.Services;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,10 +31,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("MaintenanceRequest")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> PostMaintenanceRequest(CreateMaintenanceRequestDTO maintenanceRequestBody)
+        public async Task<IActionResult> PostMaintenanceRequest([FromBody] CreateMaintenanceRequestDTO maintenanceRequestBody)
         {
-            MaintenanceRequest? response = await _maintenanceAppService.CreateMaintenanceRequest(maintenanceRequestBody);
-            return DomainResult<MaintenanceRequest?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MaintenanceRequestResponseDTO? response = await _maintenanceAppService.CreateMaintenanceRequest(maintenanceRequestBody);
+            return DomainResult<MaintenanceRequestResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -45,10 +44,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("MaintenanceRequest")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> GetMaintenanceRequest(long maintenanceRequestId)
+        public async Task<IActionResult> GetMaintenanceRequest([FromQuery] long maintenanceRequestId)
         {
-            MaintenanceRequest? response = await _maintenanceAppService.GetMaintenanceRequest(maintenanceRequestId);
-            return DomainResult<MaintenanceRequest?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MaintenanceRequestResponseDTO? response = await _maintenanceAppService.GetMaintenanceRequest(maintenanceRequestId);
+            return DomainResult<MaintenanceRequestResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -58,10 +57,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("MaintenanceRequest")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> DeleteMaintenanceRequest(long id)
+        public async Task<IActionResult> DeleteMaintenanceRequest([FromQuery] long id)
         {
-            MaintenanceRequest? response = await _maintenanceAppService.DeleteMaintenanceRequest(id);
-            return DomainResult<MaintenanceRequest?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MaintenanceRequestResponseDTO? response = await _maintenanceAppService.DeleteMaintenanceRequest(id);
+            return DomainResult<MaintenanceRequestResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -71,10 +70,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("MaintenanceRequest")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> PutMaintenanceRequest(UpdateMaintenanceRequestDTO maintenanceRequestToUpdate)
+        public async Task<IActionResult> PutMaintenanceRequest([FromBody] UpdateMaintenanceRequestDTO maintenanceRequestToUpdate)
         {
-            MaintenanceRequest? response = await _maintenanceAppService.UpdateMaintenanceRequest(maintenanceRequestToUpdate);
-            return DomainResult<MaintenanceRequest?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MaintenanceRequestResponseDTO? response = await _maintenanceAppService.UpdateMaintenanceRequest(maintenanceRequestToUpdate);
+            return DomainResult<MaintenanceRequestResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         #endregion
@@ -87,7 +86,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("MaintenanceHistory")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> PostMaintenanceHistory(long maintenanceRequestId)
+        public async Task<IActionResult> PostMaintenanceHistory([FromQuery] long maintenanceRequestId)
         {
             MaintenanceHistory? response = await _maintenanceAppService.CreateMaintenanceHistory(maintenanceRequestId);
             return DomainResult<MaintenanceHistory?>.Ok(response, _notificationContext, _modelErrorsContext);
@@ -101,7 +100,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("MaintenanceHistory")]
         [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
-        public async Task<IActionResult> GetMaintenanceHistory(DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> GetMaintenanceHistory([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
             List<MaintenanceHistory>? response = await _maintenanceAppService.GetMaintenanceHistory(startDate, endDate);
             return DomainResult<List<MaintenanceHistory>?>.Ok(response, _notificationContext, _modelErrorsContext);

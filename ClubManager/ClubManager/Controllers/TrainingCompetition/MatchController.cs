@@ -1,8 +1,6 @@
 using ClubManager.App.Interfaces.Identity;
 using ClubManager.Domain.DTOs.TrainingCompetition;
-using ClubManager.Domain.Entities.TrainingCompetition;
 using ClubManager.Domain.Interfaces;
-using ClubManager.Domain.Services;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,10 +31,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("Match")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> PostMatch(CreateMatchDTO matchBody)
+        public async Task<IActionResult> PostMatch([FromBody] CreateMatchDTO matchBody)
         {
-            Match? response = await _matchAppService.CreateMatch(matchBody);
-            return DomainResult<Match?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MatchResponseDTO? response = await _matchAppService.CreateMatch(matchBody);
+            return DomainResult<MatchResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -46,10 +44,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("Match")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> PutMatch(UpdateMatchDTO matchToUpdate)
+        public async Task<IActionResult> PutMatch([FromBody] UpdateMatchDTO matchToUpdate)
         {
-            Match? response = await _matchAppService.UpdateMatch(matchToUpdate);
-            return DomainResult<Match?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MatchResponseDTO? response = await _matchAppService.UpdateMatch(matchToUpdate);
+            return DomainResult<MatchResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -59,10 +57,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("Match")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> DeleteMatch(long id)
+        public async Task<IActionResult> DeleteMatch([FromQuery] long id)
         {
-            Match? response = await _matchAppService.DeleteMatch(id);
-            return DomainResult<Match?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MatchResponseDTO? response = await _matchAppService.DeleteMatch(id);
+            return DomainResult<MatchResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -72,10 +70,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("MatchId")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> GetMatch(long matchId)
+        public async Task<IActionResult> GetMatch([FromQuery] long matchId)
         {
-            Match? response = await _matchAppService.GetMatch(matchId);
-            return DomainResult<Match?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MatchResponseDTO? response = await _matchAppService.GetMatch(matchId);
+            return DomainResult<MatchResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -85,14 +83,13 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("Match")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> GetTeamMatches(long teamId)
+        public async Task<IActionResult> GetTeamMatches([FromQuery] long teamId)
         {
-            List<Match>? response = await _matchAppService.GetTeamMatches(teamId);
-            return DomainResult<List<Match>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<MatchResponseDTO>? response = await _matchAppService.GetTeamMatches(teamId);
+            return DomainResult<List<MatchResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         #endregion
-
 
         #region MatchStatistics
         /// <summary>
@@ -102,10 +99,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("MatchStatistics")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> PostMatchStatistics(CreateMatchStatisticDTO matchStatisticBody)
+        public async Task<IActionResult> PostMatchStatistics([FromBody] CreateMatchStatisticDTO matchStatisticBody)
         {
-            MatchStatistic? response = await _matchAppService.CreateMatchStatistic(matchStatisticBody);
-            return DomainResult<MatchStatistic?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MatchStatisticResponseDTO? response = await _matchAppService.CreateMatchStatistic(matchStatisticBody);
+            return DomainResult<MatchStatisticResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -115,10 +112,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("MatchStatistics")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> DeleteMatchStatistic(long id)
+        public async Task<IActionResult> DeleteMatchStatistic([FromQuery] long id)
         {
-            MatchStatistic? response = await _matchAppService.DeleteMatchStatistic(id);
-            return DomainResult<MatchStatistic?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MatchStatisticResponseDTO? response = await _matchAppService.DeleteMatchStatistic(id);
+            return DomainResult<MatchStatisticResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -128,10 +125,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("MatchStatistics")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> PutMatchStatistic(UpdateMatchStatisticDTO matchStatisticToUpdate)
+        public async Task<IActionResult> PutMatchStatistic([FromBody] UpdateMatchStatisticDTO matchStatisticToUpdate)
         {
-            MatchStatistic? response = await _matchAppService.UpdateMatchStatistic(matchStatisticToUpdate);
-            return DomainResult<MatchStatistic?>.Ok(response, _notificationContext, _modelErrorsContext);
+            MatchStatisticResponseDTO? response = await _matchAppService.UpdateMatchStatistic(matchStatisticToUpdate);
+            return DomainResult<MatchStatisticResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -141,10 +138,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("MatchStatistics/MatchId")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> GetMatchStatisticsFromMatchID(long matchId)
+        public async Task<IActionResult> GetMatchStatisticsFromMatchID([FromQuery] long matchId)
         {
-            List<MatchStatistic>? response = await _matchAppService.GetMatchStatisticsFromMatchID(matchId);
-            return DomainResult<List<MatchStatistic>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<MatchStatisticResponseDTO>? response = await _matchAppService.GetMatchStatisticsFromMatchID(matchId);
+            return DomainResult<List<MatchStatisticResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -154,10 +151,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("MatchStatistics/PlayerId")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> GetPlayerMatchStatistics(long playerId)
+        public async Task<IActionResult> GetPlayerMatchStatistics([FromQuery] long playerId)
         {
-            List<MatchStatistic>? response = await _matchAppService.GetPlayerMatchStatistics(playerId);
-            return DomainResult<List<MatchStatistic>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<MatchStatisticResponseDTO>? response = await _matchAppService.GetPlayerMatchStatistics(playerId);
+            return DomainResult<List<MatchStatisticResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -168,13 +165,11 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("MatchStatistics")]
         [Authorize(Roles = "Admin,Presidente,Treinador")]
-        public async Task<IActionResult> GetPlayerMatchStatisticsFromMatchId(long playerId, long matchId)
+        public async Task<IActionResult> GetPlayerMatchStatisticsFromMatchId([FromQuery] long playerId, [FromQuery] long matchId)
         {
-            List<MatchStatistic>? response = await _matchAppService.GetPlayerMatchStatisticsFromMatchId(playerId, matchId);
-            return DomainResult<List<MatchStatistic>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<MatchStatisticResponseDTO>? response = await _matchAppService.GetPlayerMatchStatisticsFromMatchId(playerId, matchId);
+            return DomainResult<List<MatchStatisticResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
         #endregion
-
-
     }
 }

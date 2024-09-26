@@ -18,7 +18,6 @@ namespace ClubManager.Domain.Services.Identity
         private readonly IValidator<CreateMinorClubMemberDTO> _clubMinorMemberCreateValidator;
         private readonly IValidator<UpdateMinorClubMemberDTO> _clubMinorMemberUpdateValidator;
 
-
         public MemberService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IEntityValidationService entityValidationService, IValidator<CreateClubMemberDTO> clubMemberCreateValidator, IValidator<CreateMinorClubMemberDTO> clubMinorMemberCreateValidator, IValidator<UpdateMinorClubMemberDTO> clubMinorMemberUpdateValidator, IValidator<UpdateClubMemberDTO> clubMemberUpdateValidator)
         {
             _notificationContext = notificationContext;
@@ -148,5 +147,29 @@ namespace ClubManager.Domain.Services.Identity
             _unitOfWork.MinorClubMemberRepository.Update(minorClubMember);
             return minorClubMember;
         }
+
+        public async Task<UserClubMember?> Create(long userId, long clubMemberId)
+        {
+            UserClubMember userClubMember = new();
+            userClubMember.SetClubMemberId(clubMemberId);
+            userClubMember.SetUserId(userId);
+
+            return await _unitOfWork.UserClubMemberRepository.AddAsync(userClubMember);
+        }
+
+        public async Task<UserClubMember?> UpdateUserClubMember(long userId, long clubMemberId)
+        {
+            UserClubMember? userClubMember = await _unitOfWork.UserClubMemberRepository.GetByUserIdAsync(userId);
+            if (userClubMember != null)
+            {
+                return userClubMember;
+            }
+            UserClubMember newUserClubMember = new();
+            newUserClubMember.SetClubMemberId(clubMemberId);
+            newUserClubMember.SetUserId(userId);
+
+            return await _unitOfWork.UserClubMemberRepository.AddAsync(newUserClubMember);
+        }
+
     }
 }

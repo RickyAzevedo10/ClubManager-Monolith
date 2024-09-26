@@ -1,6 +1,5 @@
 using ClubManager.App.Services.Infrastructures;
 using ClubManager.Domain.DTOs.Financial;
-using ClubManager.Domain.Entities.Financial;
 using ClubManager.Domain.Interfaces;
 using ClubManager.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -29,10 +28,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPost("Entity")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
-        public async Task<IActionResult> PostExpense(CreateEntityDTO entityBody)
+        public async Task<IActionResult> PostExpense([FromBody] CreateEntityDTO entityBody)
         {
-            Entity? response = await _entityAppService.CreateEntity(entityBody);
-            return DomainResult<Entity?>.Ok(response, _notificationContext, _modelErrorsContext);
+            EntityResponseDTO? response = await _entityAppService.CreateEntity(entityBody);
+            return DomainResult<EntityResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -42,10 +41,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpDelete("Entity")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
-        public async Task<IActionResult> DeleteEntity(long id)
+        public async Task<IActionResult> DeleteEntity([FromQuery] long id)
         {
-            Entity? response = await _entityAppService.DeleteEntity(id);
-            return DomainResult<Entity?>.Ok(response, _notificationContext, _modelErrorsContext);
+            EntityResponseDTO? response = await _entityAppService.DeleteEntity(id);
+            return DomainResult<EntityResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -55,10 +54,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpPut("Entity")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
-        public async Task<IActionResult> PutEntity(UpdateEntityDTO entityToUpdate)
+        public async Task<IActionResult> PutEntity([FromBody] UpdateEntityDTO entityToUpdate)
         {
-            Entity? response = await _entityAppService.UpdateEntity(entityToUpdate);
-            return DomainResult<Entity?>.Ok(response, _notificationContext, _modelErrorsContext);
+            EntityResponseDTO? response = await _entityAppService.UpdateEntity(entityToUpdate);
+            return DomainResult<EntityResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -68,10 +67,10 @@ namespace ClubManager.Controllers.MembersTeams
         /// <returns></returns>
         [HttpGet("EntityId")]
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
-        public async Task<IActionResult> GetEntity(long entityId)
+        public async Task<IActionResult> GetEntity([FromQuery] long entityId)
         {
-            Entity? response = await _entityAppService.GetEntity(entityId);
-            return DomainResult<Entity?>.Ok(response, _notificationContext, _modelErrorsContext);
+            EntityResponseDTO? response = await _entityAppService.GetEntity(entityId);
+            return DomainResult<EntityResponseDTO?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
 
         /// <summary>
@@ -82,8 +81,8 @@ namespace ClubManager.Controllers.MembersTeams
         [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
         public async Task<IActionResult> GetAllEntity()
         {
-            List<Entity>? response = await _entityAppService.GetAllEntity();
-            return DomainResult<List<Entity>?>.Ok(response, _notificationContext, _modelErrorsContext);
+            List<EntityResponseDTO>? response = await _entityAppService.GetAllEntity();
+            return DomainResult<List<EntityResponseDTO>?>.Ok(response, _notificationContext, _modelErrorsContext);
         }
     }
 }

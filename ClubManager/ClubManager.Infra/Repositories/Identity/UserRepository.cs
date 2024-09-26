@@ -14,7 +14,10 @@ namespace ClubManager.Infra.Repositories.Identity
 
         public async Task<User?> GetByIdAsync(long userId)
         {
-            return await GetEntity().FirstOrDefaultAsync(u => u.Id == userId);
+            return await GetEntity()
+                .Include(x => x.UserRole)
+                .Include(x => x.UserPermission)
+                .FirstOrDefaultAsync(u => u.Id == userId);
         }
 
         public async Task<User?> GetByEmailAsync(string email)
@@ -30,6 +33,8 @@ namespace ClubManager.Infra.Repositories.Identity
         public async Task<User?> GetByRefreshTokenAsync(string refreshToken)
         {
             return await GetEntity()
+                .Include(x => x.UserRole)
+                .Include(x => x.UserPermission)
                 .FirstOrDefaultAsync(user => user.RefreshToken == refreshToken && user.RefreshTokenExpire > DateTime.UtcNow);
         }
 

@@ -29,7 +29,7 @@ namespace ClubManager.Domain.Interfaces.Repositories
         IBaseRepository<TeamCategory> TeamCategoryRepository { get; }
         IBaseRepository<TeamPlayer> TeamPlayerRepository { get; }
         IBaseRepository<TeamCoach> TeamCoachRepository { get; }
-        IBaseRepository<UserClubMember> UserClubMemberRepository { get; }
+        IUserClubMemberRepository UserClubMemberRepository { get; }
 
         //Infrastructures
         IBaseRepository<FacilityCategory> FacilityCategoryRepository { get; }

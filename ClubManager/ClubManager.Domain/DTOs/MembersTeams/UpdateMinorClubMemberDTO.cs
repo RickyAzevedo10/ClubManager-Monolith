@@ -2,8 +2,8 @@
 {
     public class UpdateMinorClubMemberDTO
     {
-        public int? MinorClubMemberId { get; set; }
-        public int? MemberId { get; set; }
+        public long? Id { get; set; }
+        public long? MemberId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public bool Partner { get; set; } // se é socio ou nao

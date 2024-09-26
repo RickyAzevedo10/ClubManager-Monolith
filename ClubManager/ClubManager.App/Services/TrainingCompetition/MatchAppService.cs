@@ -1,4 +1,5 @@
-﻿using ClubManager.App.Interfaces.Identity;
+﻿using AutoMapper;
+using ClubManager.App.Interfaces.Identity;
 using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.TrainingCompetition;
 using ClubManager.Domain.Entities.TrainingCompetition;
@@ -15,17 +16,19 @@ namespace ClubManager.App.Services.Identity
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
         private readonly IMatchService _matchService;
+        private readonly IMapper _mapper;
 
-        public MatchAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IMatchService matchAppService)
+        public MatchAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IMatchService matchAppService, IMapper mapper)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _matchService = matchAppService;
+            _mapper = mapper;
         }
 
         #region Match
-        public async Task<Match?> CreateMatch(CreateMatchDTO matchBody)
+        public async Task<MatchResponseDTO?> CreateMatch(CreateMatchDTO matchBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -43,10 +46,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return match;
+            return _mapper.Map<MatchResponseDTO>(match); 
         }
 
-        public async Task<Match?> DeleteMatch(long id)
+        public async Task<MatchResponseDTO?> DeleteMatch(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -64,10 +67,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return matchDeleted;
+            return _mapper.Map<MatchResponseDTO>(matchDeleted);
         }
 
-        public async Task<Match?> GetMatch(long matchId)
+        public async Task<MatchResponseDTO?> GetMatch(long matchId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -79,10 +82,10 @@ namespace ClubManager.App.Services.Identity
 
             Match match = await _unitOfWork.MatchRepository.GetById(matchId);
 
-            return match;
+            return _mapper.Map<MatchResponseDTO>(match); 
         }
 
-        public async Task<List<Match>?> GetTeamMatches(long teamId)
+        public async Task<List<MatchResponseDTO>?> GetTeamMatches(long teamId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -94,10 +97,10 @@ namespace ClubManager.App.Services.Identity
 
             List<Match>? match = await _unitOfWork.MatchRepository.GetMachesByTeamId(teamId);
 
-            return match;
+            return _mapper.Map<List<MatchResponseDTO>>(match);
         }
 
-        public async Task<Match?> UpdateMatch(UpdateMatchDTO matchToUpdate)
+        public async Task<MatchResponseDTO?> UpdateMatch(UpdateMatchDTO matchToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -110,7 +113,7 @@ namespace ClubManager.App.Services.Identity
             Match? match = null;
 
             if (matchToUpdate.Id != null)
-                match = await _unitOfWork.MatchRepository.GetById(matchToUpdate.Id);
+                match = await _unitOfWork.MatchRepository.GetById((long)matchToUpdate.Id);
 
             if (match == null)
             {
@@ -132,12 +135,12 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return match;
+            return _mapper.Map<MatchResponseDTO>(match);
         }
         #endregion
 
         #region MatchStatistics
-        public async Task<MatchStatistic?> CreateMatchStatistic(CreateMatchStatisticDTO matchStatisticBody)
+        public async Task<MatchStatisticResponseDTO?> CreateMatchStatistic(CreateMatchStatisticDTO matchStatisticBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -155,10 +158,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return matchStatistic;
+            return _mapper.Map<MatchStatisticResponseDTO>(matchStatistic);
         }
 
-        public async Task<MatchStatistic?> UpdateMatchStatistic(UpdateMatchStatisticDTO matchStatisticToUpdate)
+        public async Task<MatchStatisticResponseDTO?> UpdateMatchStatistic(UpdateMatchStatisticDTO matchStatisticToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -193,10 +196,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return matchStatistic;
+            return _mapper.Map<MatchStatisticResponseDTO>(matchStatistic);
         }
 
-        public async Task<MatchStatistic?> DeleteMatchStatistic(long id)
+        public async Task<MatchStatisticResponseDTO?> DeleteMatchStatistic(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -214,10 +217,10 @@ namespace ClubManager.App.Services.Identity
                 return null;
             }
 
-            return matchStatisticDeleted;
+            return _mapper.Map<MatchStatisticResponseDTO>(matchStatisticDeleted);
         }
 
-        public async Task<List<MatchStatistic>?> GetMatchStatisticsFromMatchID(long matchId)
+        public async Task<List<MatchStatisticResponseDTO>?> GetMatchStatisticsFromMatchID(long matchId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -229,10 +232,10 @@ namespace ClubManager.App.Services.Identity
 
             List<MatchStatistic>? matchStatisticsList = await _unitOfWork.MatchStatisticRepository.GetMatchStatisticsFromMatchID(matchId);
 
-            return matchStatisticsList;
+            return _mapper.Map<List<MatchStatisticResponseDTO>>(matchStatisticsList);
         }
 
-        public async Task<List<MatchStatistic>?> GetPlayerMatchStatistics(long playerId)
+        public async Task<List<MatchStatisticResponseDTO>?> GetPlayerMatchStatistics(long playerId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -244,10 +247,10 @@ namespace ClubManager.App.Services.Identity
 
             List<MatchStatistic>? matchStatisticsList = await _unitOfWork.MatchStatisticRepository.GetPlayerMatchStatistics(playerId);
 
-            return matchStatisticsList;
+            return _mapper.Map<List<MatchStatisticResponseDTO>>(matchStatisticsList); 
         }
 
-        public async Task<List<MatchStatistic>?> GetPlayerMatchStatisticsFromMatchId(long playerId, long matchId)
+        public async Task<List<MatchStatisticResponseDTO>?> GetPlayerMatchStatisticsFromMatchId(long playerId, long matchId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -259,7 +262,7 @@ namespace ClubManager.App.Services.Identity
 
             List<MatchStatistic>? matchStatisticsList = await _unitOfWork.MatchStatisticRepository.GetPlayerMatchStatisticsFromMatchId(playerId, matchId);
 
-            return matchStatisticsList;
+            return _mapper.Map<List<MatchStatisticResponseDTO>>(matchStatisticsList);
         }
         #endregion
     }

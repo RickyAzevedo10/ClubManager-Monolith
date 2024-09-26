@@ -1,5 +1,4 @@
 ﻿using ClubManager.Domain.Entities.MembersTeams;
-using System;
 
 namespace ClubManager.Domain.Entities.Financial
 {
@@ -11,9 +10,9 @@ namespace ClubManager.Domain.Entities.Financial
         public string EntityName { get; set; }
         public long? ClubMemberId { get; set; }
         public long? PlayerId { get; set; }
+        public virtual Player Player { get; set; }
 
         public virtual ClubMember UserClubMember { get; set; }
-        public virtual Player Player { get; set; }
 
         public virtual ICollection<Revenue> Revenues { get; set; }  
         public virtual ICollection<Expense> Expenses { get; set; }

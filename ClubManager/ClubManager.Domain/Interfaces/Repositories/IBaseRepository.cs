@@ -8,7 +8,7 @@ namespace ClubManager.Domain.Interfaces.Repositories
         void Delete(T entity);
         IQueryable<T> GetEntity();
         void Update(T entity);
-        public Task<T> GetById(object id);
+        public Task<T> GetById(long id);
         public Task<IEnumerable<T>> GetAllAsync();
         Task DeleteAllAsync();
         Task<T> UpdateAsync(T entity);

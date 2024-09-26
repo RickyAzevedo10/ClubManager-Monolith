@@ -15,11 +15,9 @@ namespace ClubManager.Domain.Entities.Identity.Validators
                 .NotEmpty().WithMessage("Name cannot be empty.")
                 .NotNull().WithMessage("Name cannot be null.");
             RuleFor(x => x.Male)
-                .NotEmpty().WithMessage("Male cannot be empty.")
-                .NotNull().WithMessage("Male cannot be null.");
+                .Must(x => x == true || x == false).WithMessage("Male must be a boolean value.");
             RuleFor(x => x.Female)
-                .NotEmpty().WithMessage("Female cannot be empty.")
-                .NotNull().WithMessage("Female cannot be null.");
+                .Must(x => x == true || x == false).WithMessage("Female must be a boolean value.");
             RuleFor(x => x.ClubId)
                 .NotEmpty().WithMessage("ClubId cannot be empty.")
                 .NotNull().WithMessage("ClubId cannot be null.");

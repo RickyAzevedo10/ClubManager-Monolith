@@ -2,7 +2,7 @@
 {
     public class CreateTrainingSessionDTO
     {
-        public int TeamId { get; set; } 
+        public long TeamId { get; set; } 
         public string Name { get; set; } 
         public DateTime Date { get; set; }
         public int Duration { get; set; }

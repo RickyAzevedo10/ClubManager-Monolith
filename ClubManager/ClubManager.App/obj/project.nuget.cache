@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "migkIIWw8pAMsaOLHUosvaqLGG9JaFMW1gnkkSk6I2JvguA9xv/A0gl/3ealCmyLxfMUIVf5YP7tetCKUt/kBg==",
+  "dgSpecHash": "V3zlRgGc0676xzKHLsTswsMIwdMXV+NkVkKgKWFxg1aVqv672Gd03I0O3CqbV+4SecC0yTItIcJos9bPUAScog==",
   "success": true,
   "projectFilePath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\fluentvalidation\\11.9.2\\fluentvalidation.11.9.2.nupkg.sha512",
     "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
     "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512"
   ],
   "logs": []

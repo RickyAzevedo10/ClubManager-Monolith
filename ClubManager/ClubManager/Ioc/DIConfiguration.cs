@@ -75,9 +75,10 @@ namespace ClubManager.Ioc
             // Add Domain Validators
             services.AddScoped<IValidator<CreateInstitutionDTO>, InstitutionValidator>();
             services.AddScoped<IValidator<CreateUserDTO>, CreateUserValidator>();
+            services.AddScoped<IValidator<UpdateUserDTO>, UpdateUserValidator>();
             services.AddScoped<IValidator<CreateUserPermissionsDTO>, CreateUserPermissionsValidator>();
             services.AddScoped<IValidator<UpdateUserPermissionsDTO>, UpdateUserPermissionsValidator>();
-            services.AddScoped<IValidator<ResetPassword>, PasswordValidator>();
+            services.AddScoped<IValidator<ResetPasswordDTO>, PasswordValidator>();
 
             services.AddScoped<IValidator<CreateClubMemberDTO>, CreateClubMemberValidator>();
             services.AddScoped<IValidator<UpdateClubMemberDTO>, UpdateClubMemberValidator>();

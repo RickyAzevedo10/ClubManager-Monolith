@@ -55,5 +55,10 @@ namespace ClubManager.Domain.Entities.Financial
             EntityId = entityId;
         }
 
+        public void SetResponsibleUserId(long responsibleUserId)
+        {
+            ResponsibleUserId = responsibleUserId;
+        }
+
     }
 }

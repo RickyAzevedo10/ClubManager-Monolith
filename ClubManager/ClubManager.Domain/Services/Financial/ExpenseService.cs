@@ -4,7 +4,6 @@ using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Interfaces.Identity;
 using ClubManager.Domain.Interfaces.Repositories;
 using FluentValidation;
-using Microsoft.Extensions.Configuration;
 using static ClubManager.Domain.Constants.Constants;
 
 namespace ClubManager.Domain.Services.Identity
@@ -15,13 +14,11 @@ namespace ClubManager.Domain.Services.Identity
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEntityValidationService _entityValidationService;
         private readonly IValidator<ExpenseDTO> _expenseValidator;
-        private readonly IConfiguration _configuration;
 
-        public ExpenseService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IConfiguration configuration, IEntityValidationService entityValidationService, IValidator<ExpenseDTO> expenseValidator)
+        public ExpenseService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IEntityValidationService entityValidationService, IValidator<ExpenseDTO> expenseValidator)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
-            _configuration = configuration;
             _entityValidationService = entityValidationService;
             _expenseValidator = expenseValidator;
         }
@@ -40,73 +37,62 @@ namespace ClubManager.Domain.Services.Identity
             return expense;
         }
 
-        public async Task<List<Expense>?> CreateExpense(List<ExpenseDTO> expenseBody)
-        {
-            List<Expense> expenses = [];
-            
-            foreach (var item in expenseBody)
+        public async Task<Expense> CreateExpense(ExpenseDTO expenseBody)
+        {   
+            bool validationResult = _entityValidationService.Validate(_expenseValidator, expenseBody);
+            if (!validationResult)
             {
-                bool validationResult = _entityValidationService.Validate(_expenseValidator, item);
-                if (!validationResult)
-                {
-                    _notificationContext.AddNotification(NotificationKeys.ExpenseNotifications.ERROR_EXPENSE_CREATED, string.Empty);
-                    return null;
-                }
-                Expense expense = new();
-                expense.SetAmount(item.Amount);
-                expense.SetCategoryId(item.CategoryId);
-                expense.SetDescription(item.Description);
-                expense.SetDestination(item.Destination);
-                expense.SetPaymentReference(item.PaymentReference);
-                expense.SetExpenseDate(item.ExpenseDate);
-                expense.SetResponsibleUserId(item.ResponsibleUserId);
-                expense.SetEntityId(item.EntityId);
-
-                await _unitOfWork.ExpenseRepository.AddAsync(expense);
-                expenses.Add(expense);
+                _notificationContext.AddNotification(NotificationKeys.ExpenseNotifications.ERROR_EXPENSE_CREATED, string.Empty);
+                return null;
             }
+            Expense expense = new();
+            expense.SetAmount(expenseBody.Amount);
+            expense.SetCategoryId(expenseBody.CategoryId);
+            expense.SetDescription(expenseBody.Description);
+            expense.SetDestination(expenseBody.Destination);
+            expense.SetPaymentReference(expenseBody.PaymentReference);
+            expense.SetExpenseDate(expenseBody.ExpenseDate);
+            expense.SetResponsibleUserId(expenseBody.ResponsibleUserId);
+            expense.SetEntityId(expenseBody.EntityId);
 
-            return expenses;
+            await _unitOfWork.ExpenseRepository.AddAsync(expense);
+            return expense;
         }
 
-        public async Task<List<Expense>?> UpdateExpense(List<UpdateExpenseDTO> expenseBody)
+        public async Task<Expense> UpdateExpense(UpdateExpenseDTO expenseBody)
         {
-            List<Expense>? listExpense = [];
-            foreach (var item in expenseBody)
+            Expense expense = await _unitOfWork.ExpenseRepository.GetById(expenseBody.Id);
+            ExpenseDTO expenseDTO = new()
             {
-                Expense expense = await _unitOfWork.ExpenseRepository.GetById(item.Id);
-                ExpenseDTO expenseDTO = new()
-                {
-                    ExpenseDate = item.ExpenseDate,
-                    Amount = item.Amount,
-                    Description = item.Description,
-                    CategoryId = item.CategoryId,
-                    Destination = item.Destination,
-                    PaymentReference = item.PaymentReference,
-                    EntityId = item.EntityId,
-                    ResponsibleUserId = item.ResponsibleUserId
-                };
-                bool validationResult = _entityValidationService.Validate(_expenseValidator, expenseDTO);
+                ExpenseDate = expenseBody.ExpenseDate,
+                Amount = expenseBody.Amount,
+                Description = expenseBody.Description,
+                CategoryId = expenseBody.CategoryId,
+                Destination = expenseBody.Destination,
+                PaymentReference = expenseBody.PaymentReference,
+                EntityId = expenseBody.EntityId,
+                ResponsibleUserId = expenseBody.ResponsibleUserId
+            };
+            bool validationResult = _entityValidationService.Validate(_expenseValidator, expenseDTO);
 
-                if (!validationResult && expense == null)
-                {
-                    _notificationContext.AddNotification(NotificationKeys.ExpenseNotifications.ERROR_EXPENSE_UPDATED, string.Empty);
-                    return null;
-                }
-
-                expense.SetAmount(item.Amount);
-                expense.SetCategoryId(item.CategoryId);
-                expense.SetDescription(item.Description);
-                expense.SetDestination(item.Destination);
-                expense.SetPaymentReference(item.PaymentReference);
-                expense.SetExpenseDate(item.ExpenseDate);
-                expense.SetResponsibleUserId(item.ResponsibleUserId);
-                expense.SetEntityId(item.EntityId);
-
-                _unitOfWork.ExpenseRepository.Update(expense);
-                listExpense.Add(expense);
+            if (!validationResult && expense == null)
+            {
+                _notificationContext.AddNotification(NotificationKeys.ExpenseNotifications.ERROR_EXPENSE_UPDATED, string.Empty);
+                return null;
             }
-            return listExpense;
+
+            expense.SetAmount(expenseBody.Amount);
+            expense.SetCategoryId(expenseBody.CategoryId);
+            expense.SetDescription(expenseBody.Description);
+            expense.SetDestination(expenseBody.Destination);
+            expense.SetPaymentReference(expenseBody.PaymentReference);
+            expense.SetExpenseDate(expenseBody.ExpenseDate);
+            expense.SetResponsibleUserId(expenseBody.ResponsibleUserId);
+            expense.SetEntityId(expenseBody.EntityId);
+
+            _unitOfWork.ExpenseRepository.Update(expense);
+
+            return expense;
         }
 
     }

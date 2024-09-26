@@ -1,4 +1,5 @@
-﻿using ClubManager.App.Interfaces.Infrastructure;
+﻿using AutoMapper;
+using ClubManager.App.Interfaces.Infrastructure;
 using ClubManager.Domain.DTOs.Financial;
 using ClubManager.Domain.Entities.Financial;
 using ClubManager.Domain.Interfaces;
@@ -14,16 +15,18 @@ namespace ClubManager.App.Services.Infrastructures
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthorizationService _authorizationService;
         private readonly IExpenseService _expenseService;
+        private readonly IMapper _mapper;
 
-        public ExpenseAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IExpenseService expenseService)
+        public ExpenseAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IExpenseService expenseService, IMapper mapper)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
             _authorizationService = authorizationService;
             _expenseService = expenseService;
+            _mapper = mapper;
         }
 
-        public async Task<List<Expense>?> CreateExpense(CreateExpenseDTO expenseBody)
+        public async Task<ExpenseResponseDTO?> CreateExpense(ExpenseDTO expenseBody)
         {
             bool canCreate = await _authorizationService.CanCreate();
 
@@ -33,7 +36,7 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            List<Expense>? expenseList = await _expenseService.CreateExpense(expenseBody.Expenses);
+            Expense? expense = await _expenseService.CreateExpense(expenseBody);
 
             if (!await _unitOfWork.CommitAsync())
             {
@@ -41,10 +44,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return expenseList;
+            return _mapper.Map<ExpenseResponseDTO>(expense);
         }
 
-        public async Task<Expense?> DeleteExpense(long id)
+        public async Task<ExpenseResponseDTO?> DeleteExpense(long id)
         {
             bool canDelete = await _authorizationService.CanDelete();
 
@@ -62,10 +65,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return facilityDeleted;
+            return _mapper.Map<ExpenseResponseDTO>(facilityDeleted);
         }
 
-        public async Task<List<Expense>?> UpdateExpense(UpdateEntityExpenseDTO expenseToUpdate)
+        public async Task<ExpenseResponseDTO> UpdateExpense(UpdateExpenseDTO expenseToUpdate)
         {
             bool canEdit = await _authorizationService.CanEdit();
 
@@ -77,8 +80,8 @@ namespace ClubManager.App.Services.Infrastructures
 
             Entity? entity = null;
 
-            if (expenseToUpdate.Entity.Id != null)
-                entity = await _unitOfWork.EntityRepository.GetById(expenseToUpdate.Entity.Id);
+            if (expenseToUpdate.EntityId != null)
+                entity = await _unitOfWork.EntityRepository.GetById(expenseToUpdate.EntityId);
 
             if (entity == null)
             {
@@ -86,7 +89,7 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            List<Expense>? expenseList = await _expenseService.UpdateExpense(expenseToUpdate.Expenses);
+            Expense? expenseUpdated = await _expenseService.UpdateExpense(expenseToUpdate);
 
             if (!await _unitOfWork.CommitAsync())
             {
@@ -94,10 +97,10 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            return expenseList;
+            return _mapper.Map<ExpenseResponseDTO>(expenseUpdated); 
         }
 
-        public async Task<Entity?> GetExpense(long expenseId)
+        public async Task<ExpenseResponseDTO?> GetExpense(long expenseId)
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -107,12 +110,12 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            Entity? entity = await _unitOfWork.EntityRepository.GetExpenseWithEntity(expenseId);
+            Expense? expense = await _unitOfWork.ExpenseRepository.GetById(expenseId);
 
-            return entity;
+            return _mapper.Map<ExpenseResponseDTO>(expense); 
         }
 
-        public async Task<List<Entity>?> GetAllExpense()
+        public async Task<List<ExpenseResponseDTO>?> GetAllExpense()
         {
             bool canConsult = await _authorizationService.CanConsult();
 
@@ -122,9 +125,9 @@ namespace ClubManager.App.Services.Infrastructures
                 return null;
             }
 
-            IEnumerable<Entity>? allEntity = await _unitOfWork.EntityRepository.GetAllExpenseWithEntity();
+            IEnumerable<Expense>? allExpenses = await _unitOfWork.ExpenseRepository.GetAllAsync();
 
-            return allEntity.ToList();
+            return _mapper.Map<List<ExpenseResponseDTO>>(allExpenses);
         }
 
     }
