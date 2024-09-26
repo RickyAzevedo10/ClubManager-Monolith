@@ -64,27 +64,13 @@ namespace ClubManager.Infra.Contexts
             builder.ApplyConfiguration(new TeamCategoryConfiguration());
             builder.ApplyConfiguration(new TeamCoachConfiguration());
             builder.ApplyConfiguration(new ClubMemberConfiguration());
+            builder.ApplyConfiguration(new UserClubMemberConfiguration());
             builder.ApplyConfiguration(new MinorClubMemberConfiguration());
             builder.ApplyConfiguration(new PlayerCategoryConfiguration());
-            builder.Entity<PlayerContract>()
-                .Property(p => p.Salary)
-                .HasPrecision(18, 2);
-
-            builder.Entity<TeamPlayer>()
-                .HasOne(tp => tp.Team)
-                .WithMany(t => t.TeamPlayers)
-                .HasForeignKey(tp => tp.TeamId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<PlayerTransfer>()
-                .Property(p => p.TransferFee)
-                .HasPrecision(18, 2);
-
-            builder.Entity<UserClubMember>()
-                .HasOne(ucm => ucm.ClubMember)
-                .WithOne(cm => cm.UserClubMember)
-                .HasForeignKey<UserClubMember>(ucm => ucm.ClubMemberId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.ApplyConfiguration(new TeamPlayerConfiguration());
+            builder.ApplyConfiguration(new PlayerContractConfiguration());
+            builder.ApplyConfiguration(new PlayerConfiguration());
+            builder.ApplyConfiguration(new PlayerTransferConfiguration());
 
             //Infrastructures
             builder.ApplyConfiguration(new FacilityCategoryConfiguration());
@@ -94,11 +80,7 @@ namespace ClubManager.Infra.Contexts
             builder.ApplyConfiguration(new ExpenseCategoryConfiguration());
             builder.ApplyConfiguration(new ExpenseConfiguration());
             builder.ApplyConfiguration(new RevenueConfiguration());
-            builder.Entity<Player>()
-                .HasOne(p => p.Entity)
-                .WithOne(e => e.Player)
-                .HasForeignKey<Entity>(e => e.PlayerId)
-                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }
