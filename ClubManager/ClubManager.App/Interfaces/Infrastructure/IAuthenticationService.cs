@@ -1,10 +1,11 @@
-﻿using ClubManager.Domain.Entities.Identity;
+﻿using ClubManager.Domain.DTOs.Identity;
+using ClubManager.Domain.Entities.Identity;
 
 namespace ClubManager.App.Interfaces.Infrastructure
 {
     public interface IAuthenticationService
     {
-        string GenerateToken(User user);
+        string GenerateToken(UserCacheInformationDTO user);
         string GenerateRefreshToken();
     }
 }

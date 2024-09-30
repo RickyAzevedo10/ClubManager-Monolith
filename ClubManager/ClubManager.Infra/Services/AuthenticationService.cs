@@ -1,4 +1,5 @@
 ﻿using ClubManager.App.Interfaces.Infrastructure;
+using ClubManager.Domain.DTOs.Identity;
 using ClubManager.Domain.Entities.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -17,12 +18,12 @@ namespace ClubManager.Infra.Services
             _configuration = configuration;
         }
 
-        public string GenerateToken(User user)
+        public string GenerateToken(UserCacheInformationDTO user)
         {
             IEnumerable<Claim> claims =
             [
                 new(ClaimTypes.Email, user.Email!),
-                new(ClaimTypes.Role, user.UserRole.Name)
+                new(ClaimTypes.Role, user.Role)
             ];
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Key").Value!));

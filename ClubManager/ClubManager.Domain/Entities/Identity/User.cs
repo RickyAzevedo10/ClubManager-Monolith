@@ -95,5 +95,10 @@ namespace ClubManager.Domain.Entities.Identity
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             return StructuralComparisons.StructuralEqualityComparer.Equals(computedHash, PasswordHash);
         }
+
+        public void UpdateLastAccessDate()
+        {
+            DateOfLastAccess = DateTime.UtcNow;
+        }
     }
 }

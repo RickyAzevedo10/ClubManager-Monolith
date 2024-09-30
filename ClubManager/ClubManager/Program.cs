@@ -1,5 +1,7 @@
 using ClubManager.API.Configuration;
 using ClubManager.API.Midlewares;
+using ClubManager.Domain.Interfaces.Persistence.CachedRepositories;
+using ClubManager.Infrastructure.Persistence.CachedRepositories;
 using ClubManager.Ioc;
 using ClubManager.Middlewares;
 
@@ -24,6 +26,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationDependencies(builder.Configuration);
 
 builder.Services.AddSwaggerConfiguration();
+
+// Add Redis Cache
+builder.Services.AddStackExchangeRedisCache(redisOptions =>
+{
+    string connection = builder.Configuration.GetConnectionString("Redis")!;
+    redisOptions.Configuration = connection;
+});
+
+// Add Caching Repositories
+builder.Services.AddScoped<IRefreshTokenCachedRepository, RefreshTokenCachedRepository>();
 
 // Builders
 WebApplication? app = builder.Build();

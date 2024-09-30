@@ -5,7 +5,9 @@ using ClubManager.Domain.DTOs.Identity;
 using ClubManager.Domain.Entities.Identity;
 using ClubManager.Domain.Interfaces;
 using ClubManager.Domain.Interfaces.Identity;
+using ClubManager.Domain.Interfaces.Persistence.CachedRepositories;
 using ClubManager.Domain.Interfaces.Repositories;
+using Microsoft.Extensions.Configuration;
 using static ClubManager.Domain.Constants.Constants;
 
 namespace ClubManager.App.Services.Identity
@@ -17,9 +19,12 @@ namespace ClubManager.App.Services.Identity
         private readonly IAuthorizationService _authorizationService;
         private readonly IUserService _userService;
         private readonly IAuthenticationService _authenticationService;
+        private readonly IRefreshTokenCachedRepository _refreshTokenCachedRepository;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
-        public UserAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, IUserService userService, IAuthenticationService authenticationService, IMapper mapper)
+        public UserAppService(INotificationContext notificationContext, IUnitOfWork unitOfWork, IAuthorizationService authorizationService, 
+            IUserService userService, IAuthenticationService authenticationService, IMapper mapper, IConfiguration configuration, IRefreshTokenCachedRepository refreshTokenCachedRepository)
         {
             _notificationContext = notificationContext;
             _unitOfWork = unitOfWork;
@@ -27,6 +32,8 @@ namespace ClubManager.App.Services.Identity
             _userService = userService;
             _authenticationService = authenticationService;
             _mapper = mapper;
+            _configuration = configuration;
+            _refreshTokenCachedRepository = refreshTokenCachedRepository;
         }
 
         public async Task<UserResponseDTO?> Get(long id)
@@ -183,7 +190,7 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<UserLoginResponseDTO?> Login(UserLoginDTO user)
         {
-            var existentUser = await _unitOfWork.UserRepository.GetByEmailAsync(user.Email);
+            User? existentUser = await _unitOfWork.UserRepository.GetByEmailAsync(user.Email);
 
             if (existentUser == null)
             {
@@ -196,11 +203,15 @@ namespace ClubManager.App.Services.Identity
                 _notificationContext.AddNotification(NotificationKeys.UserNotifications.INVALID_USER_CREDENTIALS, string.Empty);
                 return null;
             }
+            UserCacheInformationDTO userInformation = new(existentUser.Id, existentUser.Email, existentUser.UserRole.Name);
 
             var refreshToken = _authenticationService.GenerateRefreshToken();
-            var token = _authenticationService.GenerateToken(existentUser);
+            var token = _authenticationService.GenerateToken(userInformation);
+            int expiresHoursRefreshToken = int.Parse(_configuration.GetSection("RefreshToken:ExpiresHours").Value!);
 
-            _userService.UpdateRefreshToken(existentUser, refreshToken);
+            await _refreshTokenCachedRepository.SetAsync(refreshToken, userInformation, expiresHoursRefreshToken);
+
+            existentUser.UpdateLastAccessDate();
 
             if (!await _unitOfWork.CommitAsync())
             {
@@ -217,25 +228,19 @@ namespace ClubManager.App.Services.Identity
 
         public async Task<UserLoginResponseDTO?> Refresh(string refreshToken)
         {
-            // TODO: Implement caching?
-
-            var existentUser = await _unitOfWork.UserRepository.GetByRefreshTokenAsync(refreshToken);
-            if (existentUser == null)
+            var user = await _refreshTokenCachedRepository.GetUserClaimsByRefreshTokenAsync(refreshToken);
+            if (user == null)
             {
                 _notificationContext.AddNotification(NotificationKeys.UserNotifications.INVALID_REFRESH_TOKEN, string.Empty);
                 return null;
             }
 
             var newRefreshToken = _authenticationService.GenerateRefreshToken();
-            var newToken = _authenticationService.GenerateToken(existentUser);
+            var newToken = _authenticationService.GenerateToken(user);
+            int expiresHoursRefreshToken = int.Parse(_configuration.GetSection("RefreshToken:ExpiresHours").Value!);
 
-            _userService.UpdateRefreshToken(existentUser, newRefreshToken);
-
-            if (!await _unitOfWork.CommitAsync())
-            {
-                _notificationContext.AddNotification(NotificationKeys.DATABASE_COMMIT_ERROR, string.Empty);
-                return null;
-            }
+            await _refreshTokenCachedRepository.RemoveAsync(refreshToken); 
+            await _refreshTokenCachedRepository.SetAsync(newRefreshToken, user, expiresHoursRefreshToken);
 
             return new()
             {
@@ -328,8 +333,9 @@ namespace ClubManager.App.Services.Identity
                 _notificationContext.AddNotification(NotificationKeys.UserNotifications.USER_DONT_EXITS, string.Empty);
                 return null;
             }
+            UserCacheInformationDTO userInformation = new(user.Id, user.Email, user.UserRole.Name);
 
-            var resetToken = _authenticationService.GenerateToken(user);
+            var resetToken = _authenticationService.GenerateToken(userInformation);
             _userService.UpdatePasswordResetToken(user, resetToken);
 
             if (!await _unitOfWork.CommitAsync())
