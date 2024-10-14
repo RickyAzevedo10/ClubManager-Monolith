@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "V3zlRgGc0676xzKHLsTswsMIwdMXV+NkVkKgKWFxg1aVqv672Gd03I0O3CqbV+4SecC0yTItIcJos9bPUAScog==",
+  "dgSpecHash": "CeyzITi8HbkM+ynnaEShQ+OSdbts12BoFiF2cZ26UomA3RkcU3pSqcqZ8GKrLaHzzwsFOzWk91KxjWbsJnKClQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj",
+  "projectFilePath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\fluentvalidation\\11.9.2\\fluentvalidation.11.9.2.nupkg.sha512",

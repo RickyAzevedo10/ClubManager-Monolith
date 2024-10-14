@@ -28,7 +28,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="revenueBody"></param>
         /// <returns></returns>
         [HttpPost("Revenue")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro")]
         public async Task<IActionResult> PostRevenue([FromBody] RevenueDTO revenueBody)
         {
             RevenueResponseDTO? response = await _revenueAppService.CreateRevenue(revenueBody);
@@ -41,7 +41,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="revenueToUpdate"></param>
         /// <returns></returns>
         [HttpPut("Revenue")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro")]
         public async Task<IActionResult> PutRevenue([FromBody] UpdateRevenueDTO revenueToUpdate)
         {
             RevenueResponseDTO? response = await _revenueAppService.UpdateRevenue(revenueToUpdate);
@@ -54,7 +54,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("Revenue")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro")]
         public async Task<IActionResult> DeleteRevenue([FromQuery] long id)
         {
             RevenueResponseDTO? response = await _revenueAppService.DeleteRevenue(id);

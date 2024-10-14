@@ -4,12 +4,12 @@
     "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager\\ClubManager.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj": {
+    "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj",
-        "projectName": "ClubManager.App",
-        "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj",
+        "projectUniqueName": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj",
+        "projectName": "ClubManager.Application",
+        "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj",
         "packagesPath": "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\obj\\",
         "projectStyle": "PackageReference",
@@ -154,12 +154,12 @@
         }
       }
     },
-    "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj": {
+    "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj",
-        "projectName": "ClubManager.Infra",
-        "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj",
+        "projectUniqueName": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj",
+        "projectName": "ClubManager.Infrastructure",
+        "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\obj\\",
         "projectStyle": "PackageReference",
@@ -183,8 +183,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj": {
-                "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj"
+              "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj": {
+                "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj"
               },
               "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Domain\\ClubManager.Domain.csproj": {
                 "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Domain\\ClubManager.Domain.csproj"
@@ -285,11 +285,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj": {
-                "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj"
+              "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj": {
+                "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj"
               },
-              "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj": {
-                "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj"
+              "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj"
               }
             }
           }

@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj": {}
+    "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj": {}
   },
   "projects": {
     "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj": {
@@ -154,12 +154,12 @@
         }
       }
     },
-    "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj": {
+    "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj",
-        "projectName": "ClubManager.Infra",
-        "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj",
+        "projectUniqueName": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj",
+        "projectName": "ClubManager.Infrastructure",
+        "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\obj\\",
         "projectStyle": "PackageReference",

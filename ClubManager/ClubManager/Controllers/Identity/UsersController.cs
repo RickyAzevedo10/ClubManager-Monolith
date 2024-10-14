@@ -28,7 +28,7 @@ namespace ClubManager.Controllers.Identity
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("User")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get([FromQuery] long id)
         {
             UserResponseDTO? response = await _userAppService.Get(id);
@@ -41,7 +41,7 @@ namespace ClubManager.Controllers.Identity
         /// <param name="idInstitution"></param>
         /// <returns></returns>
         [HttpGet("User/Institution")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllFromInstitution([FromQuery] long idInstitution)
         {
             List<UserResponseDTO>? response = await _userAppService.GetAllFromInstitution(idInstitution);
@@ -54,7 +54,7 @@ namespace ClubManager.Controllers.Identity
         /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpGet("UserPermissions")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUserPermissions([FromQuery] long idUser)
         {
             List<UserPermissionResponseDTO>? response = await _userAppService.GetUserPermissions(idUser);
@@ -66,7 +66,7 @@ namespace ClubManager.Controllers.Identity
         /// </summary>
         /// <returns></returns>
         [HttpGet("UserRoles")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUserRoles()
         {
             List<UserRoleResponseDTO>? response = await _userAppService.GetAllUserRoles();
@@ -79,7 +79,7 @@ namespace ClubManager.Controllers.Identity
         /// <param name="userBody"></param>
         /// <returns></returns>
         [HttpPost("User")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post([FromBody] CreateUserDTO userBody)
         {
             UserResponseDTO? response = await _userAppService.Create(userBody);
@@ -92,7 +92,7 @@ namespace ClubManager.Controllers.Identity
         /// <param name="userToUpdate"></param>
         /// <returns></returns>
         [HttpPut("User")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put([FromBody] UpdateUserDTO userToUpdate)
         {
             UserResponseDTO? response = await _userAppService.Update(userToUpdate);
@@ -105,7 +105,7 @@ namespace ClubManager.Controllers.Identity
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("User")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete([FromQuery] long id)
         {
             UserResponseDTO? response = await _userAppService.Delete(id);
@@ -144,7 +144,7 @@ namespace ClubManager.Controllers.Identity
         /// <param name="userPermissionsBody"></param>
         /// <returns></returns>
         [HttpPut("UserPermissions")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutUserPermissions([FromBody] UpdateUserPermissionsDTO userPermissionsBody)
         {
             UserPermissionResponseDTO? response = await _userAppService.PutUserPermissions(userPermissionsBody);
@@ -157,7 +157,7 @@ namespace ClubManager.Controllers.Identity
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("UserPermissions")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUserPermissions([FromQuery] long id)
         {
             UserPermissionResponseDTO? response = await _userAppService.DeleteUserPermissions(id);

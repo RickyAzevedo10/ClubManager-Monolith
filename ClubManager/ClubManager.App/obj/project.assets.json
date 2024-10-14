@@ -281,9 +281,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj",
-      "projectName": "ClubManager.App",
-      "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj",
+      "projectUniqueName": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj",
+      "projectName": "ClubManager.Application",
+      "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj",
       "packagesPath": "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\obj\\",
       "projectStyle": "PackageReference",

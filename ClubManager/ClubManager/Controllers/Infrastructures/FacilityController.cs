@@ -31,7 +31,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="facilityBody"></param>
         /// <returns></returns>
         [HttpPost("Facility")]
-        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas")]
         public async Task<IActionResult> PostFacility([FromBody] CreateFacilityDTO facilityBody)
         {
             FacilityResponseDTO? response = await _facilityAppService.CreateFacility(facilityBody);
@@ -69,7 +69,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("Facility")]
-        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas")]
         public async Task<IActionResult> DeleteFacility([FromQuery] long id)
         {
             FacilityResponseDTO? response = await _facilityAppService.DeleteFacility(id);
@@ -82,7 +82,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="facilityToUpdate"></param>
         /// <returns></returns>
         [HttpPut("Facility")]
-        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas")]
         public async Task<IActionResult> PutFacility([FromBody] UpdateFacilityDTO facilityToUpdate)
         {
             FacilityResponseDTO? response = await _facilityAppService.UpdateFacility(facilityToUpdate);
@@ -98,7 +98,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="facilityReservationBody"></param>
         /// <returns></returns>
         [HttpPost("FacilityReservation")]
-        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas")]
         public async Task<IActionResult> PostFacilityReservation([FromBody] CreateFacilityReservationDTO facilityReservationBody)
         {
             FacilityReservationResponseDTO? response = await _facilityAppService.CreateFacilityReservation(facilityReservationBody);
@@ -124,7 +124,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("FacilityReservation")]
-        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas")]
         public async Task<IActionResult> DeleteFacilityReservation([FromQuery] long id)
         {
             FacilityReservationResponseDTO? response = await _facilityAppService.DeleteFacilityReservation(id);
@@ -137,7 +137,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="facilityReservationToUpdate"></param>
         /// <returns></returns>
         [HttpPut("FacilityReservation")]
-        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas")]
         public async Task<IActionResult> PutFacilityReservation([FromBody] UpdateFacilityReservationDTO facilityReservationToUpdate)
         {
             FacilityReservationResponseDTO? response = await _facilityAppService.UpdateFacilityReservation(facilityReservationToUpdate);

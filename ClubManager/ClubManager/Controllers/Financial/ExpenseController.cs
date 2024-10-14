@@ -28,7 +28,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="expenseBody"></param>
         /// <returns></returns>
         [HttpPost("Expense")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro")]
         public async Task<IActionResult> PostExpense([FromBody] ExpenseDTO expenseBody)
         {
             ExpenseResponseDTO? response = await _expenseAppService.CreateExpense(expenseBody);
@@ -41,7 +41,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("Expense")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro")]
         public async Task<IActionResult> DeleteExpense([FromQuery] long id)
         {
             ExpenseResponseDTO? response = await _expenseAppService.DeleteExpense(id);
@@ -54,7 +54,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="expenseToUpdate"></param>
         /// <returns></returns>
         [HttpPut("Expense")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro")]
         public async Task<IActionResult> PutExpense([FromBody] UpdateExpenseDTO expenseToUpdate)
         {
             ExpenseResponseDTO? response = await _expenseAppService.UpdateExpense(expenseToUpdate);

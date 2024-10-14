@@ -40,7 +40,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="teamId"></param>
         /// <returns></returns>
         [HttpGet("Team")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário,Treinador")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Treinador, Secretário")]
         public async Task<IActionResult> GetAllPlayersFromTeam([FromQuery] long teamId)
         {
             List<TeamResponseDTO>? response = await _teamAppService.GetAllPlayersFromTeam(teamId);
@@ -53,7 +53,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="teamToUpdate"></param>
         /// <returns></returns>
         [HttpPut("Team")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário,Treinador")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Treinador")]
         public async Task<IActionResult> PutTeam([FromBody] UpdateTeamDTO teamToUpdate)
         {
             TeamResponseDTO? response = await _teamAppService.UpdateTeam(teamToUpdate);
@@ -66,7 +66,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("Team")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário,Treinador")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Treinador")]
         public async Task<IActionResult> DeleteTeam([FromQuery] long id)
         {
             TeamResponseDTO? response = await _teamAppService.DeleteTeam(id);
@@ -79,7 +79,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="teamBody"></param>
         /// <returns></returns>
         [HttpPost("Team")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário,Treinador")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Treinador")]
         public async Task<IActionResult> PostTeam([FromBody] CreateTeamDTO teamBody)
         {
             TeamResponseDTO? response = await _teamAppService.CreateTeam(teamBody);

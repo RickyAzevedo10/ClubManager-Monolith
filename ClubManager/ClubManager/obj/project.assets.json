@@ -1749,7 +1749,7 @@
           }
         }
       },
-      "ClubManager.App/1.0.0": {
+      "ClubManager.Application/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
@@ -1757,10 +1757,10 @@
           "ClubManager.Domain": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/ClubManager.App.dll": {}
+          "bin/placeholder/ClubManager.Application.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ClubManager.App.dll": {}
+          "bin/placeholder/ClubManager.Application.dll": {}
         }
       },
       "ClubManager.Domain/1.0.0": {
@@ -1777,11 +1777,11 @@
           "bin/placeholder/ClubManager.Domain.dll": {}
         }
       },
-      "ClubManager.Infra/1.0.0": {
+      "ClubManager.Infrastructure/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "ClubManager.App": "1.0.0",
+          "ClubManager.Application": "1.0.0",
           "ClubManager.Domain": "1.0.0",
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
           "Microsoft.EntityFrameworkCore": "8.0.7",
@@ -1789,10 +1789,10 @@
           "Newtonsoft.Json": "13.0.3"
         },
         "compile": {
-          "bin/placeholder/ClubManager.Infra.dll": {}
+          "bin/placeholder/ClubManager.Infrastructure.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ClubManager.Infra.dll": {}
+          "bin/placeholder/ClubManager.Infrastructure.dll": {}
         }
       }
     }
@@ -4839,27 +4839,27 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "ClubManager.App/1.0.0": {
+    "ClubManager.Application/1.0.0": {
       "type": "project",
-      "path": "../ClubManager.App/ClubManager.App.csproj",
-      "msbuildProject": "../ClubManager.App/ClubManager.App.csproj"
+      "path": "../ClubManager.App/ClubManager.Application.csproj",
+      "msbuildProject": "../ClubManager.App/ClubManager.Application.csproj"
     },
     "ClubManager.Domain/1.0.0": {
       "type": "project",
       "path": "../ClubManager.Domain/ClubManager.Domain.csproj",
       "msbuildProject": "../ClubManager.Domain/ClubManager.Domain.csproj"
     },
-    "ClubManager.Infra/1.0.0": {
+    "ClubManager.Infrastructure/1.0.0": {
       "type": "project",
-      "path": "../ClubManager.Infra/ClubManager.Infra.csproj",
-      "msbuildProject": "../ClubManager.Infra/ClubManager.Infra.csproj"
+      "path": "../ClubManager.Infra/ClubManager.Infrastructure.csproj",
+      "msbuildProject": "../ClubManager.Infra/ClubManager.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "AutoMapper >= 13.0.1",
-      "ClubManager.App >= 1.0.0",
-      "ClubManager.Infra >= 1.0.0",
+      "ClubManager.Application >= 1.0.0",
+      "ClubManager.Infrastructure >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.8",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 8.0.8",
       "Microsoft.EntityFrameworkCore >= 8.0.7",
@@ -4904,11 +4904,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj": {
-              "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj"
+            "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj": {
+              "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj"
             },
-            "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj": {
-              "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj"
+            "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj"
             }
           }
         }

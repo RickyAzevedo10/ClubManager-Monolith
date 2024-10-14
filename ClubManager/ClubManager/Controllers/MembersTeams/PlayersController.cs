@@ -29,7 +29,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="playerBody"></param>
         /// <returns></returns>
         [HttpPost("Player")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> PostPlayer([FromBody] CreatePlayerDTO playerBody)
         {
             PlayerResponseDTO? response = await _playerAppService.CreatePlayer(playerBody);
@@ -42,7 +42,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("Player")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> DeletePlayer([FromQuery] long id)
         {
             PlayerResponseDTO? response = await _playerAppService.DeletePlayer(id);
@@ -83,7 +83,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="playerToUpdate"></param>
         /// <returns></returns>
         [HttpPut("Players")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> PutPlayers([FromBody] UpdatePlayerDTO playerToUpdate)
         {
             PlayerResponseDTO? response = await _playerAppService.UpdatePlayer(playerToUpdate);
@@ -99,7 +99,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="playerTransferBody"></param>
         /// <returns></returns>
         [HttpPost("PlayerTransfer")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> PostPlayerTransfer([FromBody] CreatePlayerTransferDTO playerTransferBody)
         {
             PlayerTransferResponseDTO? response = await _playerAppService.CreatePlayerTransfer(playerTransferBody);
@@ -112,7 +112,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("PlayerTransfer")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> DeletePlayerTransfer([FromQuery] long id)
         {
             PlayerTransferResponseDTO? response = await _playerAppService.DeletePlayerTransfer(id);
@@ -138,7 +138,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="playerTransferToUpdate"></param>
         /// <returns></returns>
         [HttpPut("PlayerTransfer")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> PutPlayerTransfer([FromBody] UpdatePlayerTransferDTO playerTransferToUpdate)
         {
             PlayerTransferResponseDTO? response = await _playerAppService.UpdatePlayerTransfer(playerTransferToUpdate);
@@ -153,7 +153,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="playerContractBody"></param>
         /// <returns></returns>
         [HttpPost("PlayerContract")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> PostPlayerContract([FromBody] CreatePlayerContractDTO playerContractBody)
         {
             PlayerContractResponseDTO? response = await _playerAppService.CreatePlayerContract(playerContractBody);
@@ -166,7 +166,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("PlayerContract")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> DeletePlayerContract([FromQuery] long id)
         {
             PlayerContractResponseDTO? response = await _playerAppService.DeletePlayerContract(id);
@@ -192,7 +192,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="playerContractToUpdate"></param>
         /// <returns></returns>
         [HttpPut("PlayerContract")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> PutPlayerContract([FromBody] UpdatePlayerContractDTO playerContractToUpdate)
         {
             PlayerContractResponseDTO? response = await _playerAppService.UpdatePlayerContract(playerContractToUpdate);
@@ -207,7 +207,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="playerPerformanceHistory"></param>
         /// <returns></returns>
         [HttpPost("PlayerPerformanceHistory")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> PostPlayerPerformanceHistory([FromBody] CreatePlayerPerformanceHistoryDTO playerPerformanceHistory)
         {
             PlayerPerformanceHistorySimpleResponseDTO? response = await _playerAppService.CreatePlayerPerformanceHistory(playerPerformanceHistory);
@@ -220,7 +220,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("PlayerPerformanceHistory")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> DeletePlayerPerformanceHistory([FromQuery] long id)
         {
             PlayerPerformanceHistorySimpleResponseDTO? response = await _playerAppService.DeletePlayerPerformanceHistory(id);
@@ -247,7 +247,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="playerPerformanceHistoryToUpdate"></param>
         /// <returns></returns>
         [HttpPut("PlayerPerformanceHistory")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> PutPlayerPerformanceHistory([FromBody] UpdatePlayerPerformanceHistoryDTO playerPerformanceHistoryToUpdate)
         {
             PlayerPerformanceHistorySimpleResponseDTO? response = await _playerAppService.UpdatePlayerPerformanceHistory(playerPerformanceHistoryToUpdate);

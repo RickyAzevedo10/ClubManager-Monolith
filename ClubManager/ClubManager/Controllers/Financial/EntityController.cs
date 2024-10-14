@@ -27,7 +27,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="entityBody"></param>
         /// <returns></returns>
         [HttpPost("Entity")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro")]
         public async Task<IActionResult> PostExpense([FromBody] CreateEntityDTO entityBody)
         {
             EntityResponseDTO? response = await _entityAppService.CreateEntity(entityBody);
@@ -40,7 +40,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("Entity")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro")]
         public async Task<IActionResult> DeleteEntity([FromQuery] long id)
         {
             EntityResponseDTO? response = await _entityAppService.DeleteEntity(id);
@@ -53,7 +53,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="entityToUpdate"></param>
         /// <returns></returns>
         [HttpPut("Entity")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Financeiro")]
         public async Task<IActionResult> PutEntity([FromBody] UpdateEntityDTO entityToUpdate)
         {
             EntityResponseDTO? response = await _entityAppService.UpdateEntity(entityToUpdate);

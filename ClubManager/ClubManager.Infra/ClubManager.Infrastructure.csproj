@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClubManager.App\ClubManager.App.csproj" />
+    <ProjectReference Include="..\ClubManager.App\ClubManager.Application.csproj" />
     <ProjectReference Include="..\ClubManager.Domain\ClubManager.Domain.csproj" />
   </ItemGroup>
 

@@ -30,7 +30,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="maintenanceRequestBody"></param>
         /// <returns></returns>
         [HttpPost("MaintenanceRequest")]
-        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas")]
         public async Task<IActionResult> PostMaintenanceRequest([FromBody] CreateMaintenanceRequestDTO maintenanceRequestBody)
         {
             MaintenanceRequestResponseDTO? response = await _maintenanceAppService.CreateMaintenanceRequest(maintenanceRequestBody);
@@ -56,7 +56,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("MaintenanceRequest")]
-        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas")]
         public async Task<IActionResult> DeleteMaintenanceRequest([FromQuery] long id)
         {
             MaintenanceRequestResponseDTO? response = await _maintenanceAppService.DeleteMaintenanceRequest(id);
@@ -69,7 +69,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="maintenanceRequestToUpdate"></param>
         /// <returns></returns>
         [HttpPut("MaintenanceRequest")]
-        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Gestor de Infraestruturas")]
         public async Task<IActionResult> PutMaintenanceRequest([FromBody] UpdateMaintenanceRequestDTO maintenanceRequestToUpdate)
         {
             MaintenanceRequestResponseDTO? response = await _maintenanceAppService.UpdateMaintenanceRequest(maintenanceRequestToUpdate);

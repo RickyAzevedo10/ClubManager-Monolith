@@ -9,12 +9,12 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClubManager.Domain", "ClubManager.Domain\ClubManager.Domain.csproj", "{78C97EF7-E820-456B-A5E7-751E72F2045B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClubManager.Infra", "ClubManager.Infra\ClubManager.Infra.csproj", "{2DC52742-FAF7-416B-924F-E5A7CF013226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClubManager.Infrastructure", "ClubManager.Infra\ClubManager.Infrastructure.csproj", "{2DC52742-FAF7-416B-924F-E5A7CF013226}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1E730B95-91A0-4D4E-B39D-C1C80A98A7E3} = {1E730B95-91A0-4D4E-B39D-C1C80A98A7E3}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClubManager.App", "ClubManager.App\ClubManager.App.csproj", "{1E730B95-91A0-4D4E-B39D-C1C80A98A7E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClubManager.Application", "ClubManager.App\ClubManager.Application.csproj", "{1E730B95-91A0-4D4E-B39D-C1C80A98A7E3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{78C97EF7-E820-456B-A5E7-751E72F2045B} = {78C97EF7-E820-456B-A5E7-751E72F2045B}
 	EndProjectSection
@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{6C3F59A9-267
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{A6640633-4BCE-42CE-A99F-2499F9592C6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yarp.LoadBalancer", "..\Yarp.LoadBalancer\Yarp.LoadBalancer.csproj", "{2848E33E-EA33-4355-800F-FAE3E16DB813}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yarp.LoadBalancer", "..\Yarp.LoadBalancer\Yarp.LoadBalancer.csproj", "{2848E33E-EA33-4355-800F-FAE3E16DB813}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

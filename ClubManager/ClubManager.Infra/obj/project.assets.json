@@ -1578,7 +1578,7 @@
           }
         }
       },
-      "ClubManager.App/1.0.0": {
+      "ClubManager.Application/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
@@ -1586,10 +1586,10 @@
           "ClubManager.Domain": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/ClubManager.App.dll": {}
+          "bin/placeholder/ClubManager.Application.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ClubManager.App.dll": {}
+          "bin/placeholder/ClubManager.Application.dll": {}
         }
       },
       "ClubManager.Domain/1.0.0": {
@@ -4296,10 +4296,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "ClubManager.App/1.0.0": {
+    "ClubManager.Application/1.0.0": {
       "type": "project",
-      "path": "../ClubManager.App/ClubManager.App.csproj",
-      "msbuildProject": "../ClubManager.App/ClubManager.App.csproj"
+      "path": "../ClubManager.App/ClubManager.Application.csproj",
+      "msbuildProject": "../ClubManager.App/ClubManager.Application.csproj"
     },
     "ClubManager.Domain/1.0.0": {
       "type": "project",
@@ -4309,7 +4309,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "ClubManager.App >= 1.0.0",
+      "ClubManager.Application >= 1.0.0",
       "ClubManager.Domain >= 1.0.0",
       "Microsoft.AspNetCore.Http.Abstractions >= 2.2.0",
       "Microsoft.EntityFrameworkCore >= 8.0.7",
@@ -4326,9 +4326,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj",
-      "projectName": "ClubManager.Infra",
-      "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj",
+      "projectUniqueName": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj",
+      "projectName": "ClubManager.Infrastructure",
+      "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\obj\\",
       "projectStyle": "PackageReference",
@@ -4352,8 +4352,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj": {
-              "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.App.csproj"
+            "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj": {
+              "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.App\\ClubManager.Application.csproj"
             },
             "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Domain\\ClubManager.Domain.csproj": {
               "projectPath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Domain\\ClubManager.Domain.csproj"

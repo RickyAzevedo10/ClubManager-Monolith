@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WcyZdEtgzIkjYOTeGm8t2b/AR8aRCCmapQXOfEFP5gfw6OKBKlO8w5nK+jNZK2YlOzbiH/DefCWuSkViajAK+A==",
+  "dgSpecHash": "b/32iXpqOnXsuprNDEPf3QMEE+3SQ4xhJq2WuKmxiw05nTFeFFoV/v7NyLnV6Qa4t0/Bh50JDhe49PqdFAgMCw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infra.csproj",
+  "projectFilePath": "C:\\Users\\Ricardo Azevedo\\Desktop\\Tese\\ClubManagerMonolith\\ClubManager\\ClubManager.Infra\\ClubManager.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Ricardo Azevedo\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",

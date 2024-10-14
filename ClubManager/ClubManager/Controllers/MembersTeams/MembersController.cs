@@ -29,7 +29,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="memberBody"></param>
         /// <returns></returns>
         [HttpPost("Members")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> Post([FromBody] CreateClubMemberDTO memberBody)
         {
             ClubMemberResponseDTO? response = await _membersAppService.Create(memberBody);
@@ -42,7 +42,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("Members")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> Delete([FromQuery] long id)
         {
             ClubMemberResponseDTO? response = await _membersAppService.Delete(id);
@@ -81,7 +81,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="memberToUpdate"></param>
         /// <returns></returns>
         [HttpPut("Members")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> Put([FromBody] UpdateClubMemberDTO memberToUpdate)
         {
             ClubMemberResponseDTO? response = await _membersAppService.Update(memberToUpdate);
@@ -96,7 +96,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="memberBody"></param>
         /// <returns></returns>
         [HttpPost("MinorMembers")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> PostMinorMembers([FromBody] CreateMinorClubMemberDTO memberBody)
         {
             MinorClubMemberResponseDTO? response = await _membersAppService.CreateMinorClubMembers(memberBody);
@@ -109,7 +109,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="minorMemberToUpdate"></param>
         /// <returns></returns>
         [HttpPut("MinorMembers")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> PutMinorMembers([FromBody] UpdateMinorClubMemberDTO minorMemberToUpdate)
         {
             MinorClubMemberResponseDTO? response = await _membersAppService.UpdateMinorMembers(minorMemberToUpdate);
@@ -148,7 +148,7 @@ namespace ClubManager.Controllers.MembersTeams
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("MinorMembers")]
-        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo,Secretário")]
+        [Authorize(Roles = "Admin,Presidente,Diretor Desportivo")]
         public async Task<IActionResult> DeleteMinorClubMembers([FromQuery] long id)
         {
             MinorClubMemberResponseDTO? response = await _membersAppService.DeleteMinorClubMember(id);
