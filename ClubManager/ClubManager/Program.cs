@@ -1,9 +1,11 @@
 using ClubManager.API.Configuration;
 using ClubManager.API.Midlewares;
 using ClubManager.Domain.Interfaces.Persistence.CachedRepositories;
+using ClubManager.Infra.Contexts;
 using ClubManager.Infrastructure.Persistence.CachedRepositories;
 using ClubManager.Ioc;
 using ClubManager.Middlewares;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +41,13 @@ builder.Services.AddScoped<IRefreshTokenCachedRepository, RefreshTokenCachedRepo
 
 // Builders
 WebApplication? app = builder.Build();
+
+// Garantir que a base de dados seja criada e as migrations aplicadas
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+    dbContext.Database.Migrate(); // Cria a base de dados e aplica as migrations
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

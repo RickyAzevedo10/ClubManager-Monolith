@@ -138,7 +138,7 @@ namespace ClubManager.Ioc
             #endregion
 
             // Add data access dependencies
-            var sql_conn = configuration.GetConnectionString("DefaultConnection");
+            var sql_conn = configuration.GetConnectionString("DefaultDockerConnection");
             services.AddDbContext<DataContext>(options => options.UseSqlServer(sql_conn));
 
             // Add services to the container.
