@@ -1,6 +1,5 @@
 ﻿using ClubManager.Domain.Entities.Financial;
 using ClubManager.Domain.Entities.TrainingCompetition;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClubManager.Domain.Entities.MembersTeams
 {

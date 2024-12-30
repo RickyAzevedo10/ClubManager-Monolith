@@ -1,0 +1,2 @@
+Add-Migration InitialCreate -Project ClubManager.Infrastructure -StartupProject ClubManager
+Update-Database InitialCreate -Project ClubManager.Infrastructure -StartupProject ClubManager

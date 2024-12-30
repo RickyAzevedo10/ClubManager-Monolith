@@ -39,7 +39,7 @@ namespace ClubManager.Domain.Entities.Identity
         public virtual Expense Expense { get; set; }
         public virtual Revenue Revenue { get; set; }
 
-        private User(){}
+        public User(){}
 
         public User(CreateUserDTO user)
         {

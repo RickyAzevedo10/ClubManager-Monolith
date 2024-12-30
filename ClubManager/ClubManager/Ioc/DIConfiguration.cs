@@ -20,6 +20,7 @@ using ClubManager.Domain.Services.Infrastructures;
 using ClubManager.Infra.Contexts;
 using ClubManager.Infra.Persistence;
 using ClubManager.Infra.Services;
+using ClubManager.Infrastructure.Services;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,7 +45,8 @@ namespace ClubManager.Ioc
             services.AddScoped<IUserClaimsService, UserClaimsService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IAuthorizationService, AuthorizationService>();
-            
+            services.AddScoped<FakerService>();
+
 
             #region Add App Services dependencies 
             //Identity

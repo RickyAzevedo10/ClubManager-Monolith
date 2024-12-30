@@ -8,6 +8,10 @@
         public bool Consult { get; set; }
         public User Users { get; set; }
 
+        public UserPermissions()
+        {
+        }
+
         public UserPermissions(bool edit, bool create, bool delete, bool consult)
         {
             Edit = edit;

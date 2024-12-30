@@ -12,6 +12,8 @@ services:
         - 8081:8081
     depends_on: 
         - "database"
+    networks:
+      - clubmanager-network
 
   clubmanager1:
     image: ${DOCKER_REGISTRY-}clubmanager
@@ -24,6 +26,8 @@ services:
         - "9081:9081"
     depends_on: 
         - "database"
+    networks:
+      - clubmanager-network
 
   clubmanager2:
     image: ${DOCKER_REGISTRY-}clubmanager
@@ -36,12 +40,16 @@ services:
         - "7081:7081"
     depends_on: 
         - "database"
+    networks:
+      - clubmanager-network
   
   redis:
     image: redis:latest
     container_name: redis
     ports:
       - 6379:6379
+    networks:
+      - clubmanager-network
 
   database:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -51,9 +59,15 @@ services:
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
-    volumes:
-      - dbDataMonolith:/var/opt/mssql
+    # volumes:
+    #   - dbDataMonolith:/var/opt/mssql
+    networks:
+      - clubmanager-network
 
-volumes:
-    dbDataMonolith:
+# volumes:
+#     dbDataMonolith:
+
+networks:
+  clubmanager-network:
+    driver: bridge
 
