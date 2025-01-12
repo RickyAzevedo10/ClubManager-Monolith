@@ -13,8 +13,11 @@
         public int Weight { get; set; }
         public string PreferredFoot { get; set; }
         public List<ResponsiblePlayerResponseDTO> PlayerResponsibles { get; set; }
+        public List<PlayerTransferResponseDTO> PlayerTransfers { get; set; }
+        public List<PlayerContractResponseDTO> PlayerContracts { get; set; }
+        public List<PlayerPerformanceHistorySimpleResponseDTO> PlayerPerformanceHistories { get; set; }
     }
-
+    
     public class ResponsiblePlayerResponseDTO
     {
         public long Id { get; set; }

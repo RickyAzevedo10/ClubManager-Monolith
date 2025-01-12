@@ -50,7 +50,7 @@ namespace ClubManager.Controllers.MembersTeams
         }
 
         /// <summary>
-        /// get player with search
+        /// get player with search and bring all the information of that player
         /// </summary>
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>

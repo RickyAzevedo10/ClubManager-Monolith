@@ -38,9 +38,9 @@ namespace ClubManager.Infrastructure.Services
             int _userId = 1;
 
             var users = new Faker<User>()
-                .RuleFor(u => u.Id, f => _userId++)  // Incrementa o ID de cada usuário
+                //.RuleFor(u => u.Id, f => _userId++)  // Incrementa o ID de cada usuário
                 .RuleFor(u => u.InstitutionId, institution.Id)
-                .RuleFor(u => u.Email, f => f.Internet.Email())
+                .RuleFor(u => u.Email, f => $"user-{Guid.NewGuid()}@example.com")
                 .RuleFor(u => u.Username, f => f.Internet.UserName())
                 .RuleFor(u => u.PasswordHash, f => f.Random.Bytes(20))
                 .RuleFor(u => u.PasswordSalt, f => f.Random.Bytes(20))
@@ -57,9 +57,15 @@ namespace ClubManager.Infrastructure.Services
                 .RuleFor(u => u.UserRoleId, f => f.Random.Int(1, 7))
                 .RuleFor(u => u.UserPermissionId, f =>
                 {
-                    // Atribui o ID atual e avança para o próximo da lista
-                    var id = userPermissionIds[currentIndex];
-                    currentIndex = (currentIndex + 1) % userPermissionIds.Count; // Volta ao início se atingir o fim
+                    //// Atribui o ID atual e avança para o próximo da lista
+                    //var id = userPermissionIds[currentIndex];
+                    //currentIndex = (currentIndex + 1) % userPermissionIds.Count; // Volta ao início se atingir o fim
+                    //return id;
+
+                    // Atribui o primeiro ID da lista
+                    var id = userPermissionIds[0];
+                    // Remove o ID atribuído da lista
+                    userPermissionIds.RemoveAt(0);
                     return id;
                 })
                 .Generate(userCount);
@@ -71,7 +77,7 @@ namespace ClubManager.Infrastructure.Services
         {
             int _userPermissionId = 1;
             return new Faker<UserPermissions>()
-                .RuleFor(up => up.Id, f => _userPermissionId++)
+                //.RuleFor(up => up.Id, f => _userPermissionId++)
                 .RuleFor(up => up.Edit, f => f.Random.Bool())
                 .RuleFor(up => up.Create, f => f.Random.Bool())
                 .RuleFor(up => up.Delete, f => f.Random.Bool())
@@ -85,7 +91,7 @@ namespace ClubManager.Infrastructure.Services
         {
             int _facilityId = 1;
             var facilities = new Faker<Facility>()
-                .RuleFor(f => f.Id, f => _facilityId++)
+                //.RuleFor(f => f.Id, f => _facilityId++)
                 .RuleFor(f => f.Name, f => f.Commerce.ProductName())
                 .RuleFor(f => f.FacilityCategoryId, f => categoryId ?? f.Random.Int(1, 6))
                 .RuleFor(f => f.Location, f => f.Address.FullAddress())
@@ -100,7 +106,7 @@ namespace ClubManager.Infrastructure.Services
         {
             int _facilityReservationId = 1;
             var reservations = new Faker<FacilityReservation>()
-                .RuleFor(r => r.Id, f => _facilityReservationId++)
+                //.RuleFor(r => r.Id, f => _facilityReservationId++)
                 .RuleFor(r => r.FacilityId, f => f.PickRandom(facilities).Id)
                 .RuleFor(r => r.StartTime, f => f.Date.Future())
                 .RuleFor(r => r.EndTime, (f, r) => r.StartTime.AddHours(f.Random.Int(1, 4)))
@@ -116,7 +122,7 @@ namespace ClubManager.Infrastructure.Services
         {
             int _maintenanceHistoryId = 1;
             var histories = new Faker<MaintenanceHistory>()
-                .RuleFor(h => h.Id, f => _maintenanceHistoryId++)
+                //.RuleFor(h => h.Id, f => _maintenanceHistoryId++)
                 .RuleFor(h => h.FacilityId, f => f.PickRandom(facilities).Id)
                 .RuleFor(h => h.MaintenanceType, f => f.PickRandom("Preventiva", "Corretiva", "Urgente"))
                 .RuleFor(h => h.Description, f => f.Lorem.Sentence())
@@ -131,7 +137,7 @@ namespace ClubManager.Infrastructure.Services
         {
             int _maintenanceRequestId = 1;
             var requests = new Faker<MaintenanceRequest>()
-                .RuleFor(r => r.Id, f => _maintenanceRequestId++)
+                //.RuleFor(r => r.Id, f => _maintenanceRequestId++)
                 .RuleFor(r => r.FacilityId, f => f.PickRandom(facilities).Id)
                 .RuleFor(r => r.MaintenanceType, f => f.PickRandom("Elétrica", "Hidráulica", "Estrutural"))
                 .RuleFor(r => r.ProblemDescription, f => f.Lorem.Paragraph())
@@ -149,7 +155,7 @@ namespace ClubManager.Infrastructure.Services
         public List<Player> GenerateFakePlayers(int count)
         {
             var faker = new Faker<Player>()
-                .RuleFor(p => p.Id, f => f.IndexFaker + 1) // IDs sequenciais
+                //.RuleFor(p => p.Id, f => f.IndexFaker + 1) // IDs sequenciais
                 .RuleFor(p => p.FirstName, f => f.Name.FirstName())
                 .RuleFor(p => p.LastName, f => f.Name.LastName())
                 .RuleFor(p => p.DateOfBirth, f => f.Date.Past(20, DateTime.Now.AddYears(-16)))
@@ -166,7 +172,7 @@ namespace ClubManager.Infrastructure.Services
         public List<PlayerContract> GenerateFakePlayerContracts(List<Player> players, int count)
         {
             var faker = new Faker<PlayerContract>()
-                .RuleFor(pc => pc.Id, f => f.IndexFaker + 1)
+                //.RuleFor(pc => pc.Id, f => f.IndexFaker + 1)
                 .RuleFor(pc => pc.PlayerId, f => f.PickRandom(players).Id) // Escolhe IDs dos jogadores
                 .RuleFor(pc => pc.StartDate, f => f.Date.Past(2))
                 .RuleFor(pc => pc.EndDate, (f, pc) => pc.StartDate.AddYears(f.Random.Int(1, 5)))
@@ -179,7 +185,7 @@ namespace ClubManager.Infrastructure.Services
         public List<PlayerPerformanceHistory> GenerateFakePlayerPerformanceHistories(List<Player> players, int count)
         {
             var faker = new Faker<PlayerPerformanceHistory>()
-                .RuleFor(pph => pph.Id, f => f.IndexFaker + 1)
+                //.RuleFor(pph => pph.Id, f => f.IndexFaker + 1)
                 .RuleFor(pph => pph.PlayerId, f => f.PickRandom(players).Id) // Relaciona com PlayerId
                 .RuleFor(pph => pph.Season, f => $"{f.Date.Past(1).Year}/{f.Date.Past(1).Year + 1}")
                 .RuleFor(pph => pph.ClubOpponent, f => f.Company.CompanyName())
@@ -195,7 +201,7 @@ namespace ClubManager.Infrastructure.Services
         public List<PlayerTransfer> GenerateFakePlayerTransfers(List<Player> players, int count)
         {
             var faker = new Faker<PlayerTransfer>()
-                .RuleFor(pt => pt.Id, f => f.IndexFaker + 1)
+                //.RuleFor(pt => pt.Id, f => f.IndexFaker + 1)
                 .RuleFor(pt => pt.PlayerId, f => f.PickRandom(players).Id) // Relaciona com PlayerId
                 .RuleFor(pt => pt.FromClub, f => f.Company.CompanyName())
                 .RuleFor(pt => pt.ToClub, f => f.Company.CompanyName())
@@ -208,14 +214,14 @@ namespace ClubManager.Infrastructure.Services
         public List<ClubMember> GenerateFakeClubMembers(int count)
         {
             var faker = new Faker<ClubMember>()
-                .RuleFor(cm => cm.Id, f => f.IndexFaker + 1)
+                //.RuleFor(cm => cm.Id, f => f.IndexFaker + 1)
                 .RuleFor(cm => cm.FirstName, f => f.Name.FirstName())
                 .RuleFor(cm => cm.LastName, f => f.Name.LastName())
                 .RuleFor(cm => cm.Partner, f => f.Random.Bool())
                 .RuleFor(cm => cm.EducationOfficer, f => f.Random.Bool())
                 .RuleFor(cm => cm.DateOfJoining, f => f.Date.Past(5))
                 .RuleFor(cm => cm.DateOfBirth, f => f.Date.Past(30, DateTime.Now.AddYears(-18)))
-                .RuleFor(cm => cm.Email, f => f.Internet.Email())
+                .RuleFor(u => u.Email, f => $"user-{Guid.NewGuid()}@example.com")
                 .RuleFor(cm => cm.PhoneNumber, f => f.Phone.PhoneNumber())
                 .RuleFor(cm => cm.Address, f => f.Address.FullAddress());
 
@@ -225,7 +231,7 @@ namespace ClubManager.Infrastructure.Services
         public List<MinorClubMember> GenerateFakeMinorClubMembers(List<ClubMember> guardians, int count)
         {
             var faker = new Faker<MinorClubMember>()
-                .RuleFor(mcm => mcm.Id, f => f.IndexFaker + 1)
+                //.RuleFor(mcm => mcm.Id, f => f.IndexFaker + 1)
                 .RuleFor(mcm => mcm.FirstName, f => f.Name.FirstName())
                 .RuleFor(mcm => mcm.LastName, f => f.Name.LastName())
                 .RuleFor(mcm => mcm.DateOfBirth, f => f.Date.Past(12, DateTime.Now.AddYears(-5)))
@@ -252,7 +258,7 @@ namespace ClubManager.Infrastructure.Services
                 foreach (var member in selectedMembers)
                 {
                     var responsible = new Faker<PlayerResponsible>()
-                        .RuleFor(r => r.Id, _ => responsibleId++)
+                        //.RuleFor(r => r.Id, _ => responsibleId++)
                         .RuleFor(r => r.PlayerId, _ => player.Id)
                         .RuleFor(r => r.MemberId, _ => member.Id)
                         .RuleFor(r => r.Relationship, f => f.PickRandom("Parent", "Guardian", "Coach", "Relative"))
@@ -277,7 +283,7 @@ namespace ClubManager.Infrastructure.Services
             foreach (var pair in userClubPairs)
             {
                 var userClubMember = new Faker<UserClubMember>()
-                    .RuleFor(ucm => ucm.Id, _ => userClubMemberId++)
+                    //.RuleFor(ucm => ucm.Id, _ => userClubMemberId++)
                     .RuleFor(ucm => ucm.UserId, _ => pair.user.Id)
                     .RuleFor(ucm => ucm.ClubMemberId, _ => pair.clubMember.Id)
                     .Generate();
@@ -288,7 +294,7 @@ namespace ClubManager.Infrastructure.Services
             return userClubMembers;
         }
 
-        public List<Team> GenerateFakeTeams(List<Institution> clubs, int count)
+        public List<Team> GenerateFakeTeams(Institution clubs, int count)
         {
             var teams = new List<Team>();
             var teamId = 1;
@@ -296,7 +302,7 @@ namespace ClubManager.Infrastructure.Services
             for (int i = 0; i < count; i++)
             {
                 var team = new Faker<Team>()
-                    .RuleFor(t => t.Id, _ => teamId++)
+                    //.RuleFor(t => t.Id, _ => teamId++)
                     .RuleFor(t => t.Name, f => $"{f.Commerce.Department()} {f.Random.Word()}")
                     .RuleFor(t => t.Female, f => f.Random.Bool())
                     .RuleFor(t => t.Male, (f, t) => !t.Female) // Exclusividade entre Female e Male
@@ -322,7 +328,7 @@ namespace ClubManager.Infrastructure.Services
                 foreach (var coach in selectedCoaches)
                 {
                     var teamCoach = new Faker<TeamCoach>()
-                        .RuleFor(tc => tc.Id, _ => teamCoachId++)
+                        //.RuleFor(tc => tc.Id, _ => teamCoachId++)
                         .RuleFor(tc => tc.TeamId, _ => team.Id)
                         .RuleFor(tc => tc.UserId, _ => coach.Id)
                         .RuleFor(tc => tc.IsHeadCoach, f => f.Random.Bool(0.3f)) // 30% de chance de ser Head Coach
@@ -347,7 +353,7 @@ namespace ClubManager.Infrastructure.Services
                 foreach (var player in selectedPlayers)
                 {
                     var teamPlayer = new Faker<TeamPlayer>()
-                        .RuleFor(tp => tp.Id, _ => teamPlayerId++)
+                        //.RuleFor(tp => tp.Id, _ => teamPlayerId++)
                         .RuleFor(tp => tp.TeamId, _ => team.Id)
                         .RuleFor(tp => tp.PlayerId, _ => player.Id)
                         .Generate();
@@ -367,7 +373,7 @@ namespace ClubManager.Infrastructure.Services
             var availablePlayers = new List<Player>(players);
 
             var entity = new Faker<Entity>()
-                    .RuleFor(e => e.Id, _ => entityId++)
+                    //.RuleFor(e => e.Id, _ => entityId++)
                     .RuleFor(e => e.Internal, f => f.Random.Bool())
                     .RuleFor(e => e.External, f => f.Random.Bool())
                     .RuleFor(e => e.EntityType, f => f.PickRandom("Club", "Player", "Manager", "Sponsor"))
@@ -391,7 +397,7 @@ namespace ClubManager.Infrastructure.Services
             var availableUser = new List<User>(users);
 
             var expense = new Faker<Expense>()
-                    .RuleFor(e => e.Id, _ => expenseId++)
+                    //.RuleFor(e => e.Id, _ => expenseId++)
                     .RuleFor(e => e.ExpenseDate, f => f.Date.Past(1))
                     .RuleFor(e => e.Amount, f => f.Finance.Amount(100, 1000))
                     .RuleFor(e => e.Destination, f => f.Company.CompanyName())
@@ -416,7 +422,7 @@ namespace ClubManager.Infrastructure.Services
             var availableUser = new List<User>(users);
 
             var revenue = new Faker<Revenue>()
-                .RuleFor(r => r.Id, _ => revenueId++)
+                //.RuleFor(r => r.Id, _ => revenueId++)
                 .RuleFor(r => r.RevenueDate, f => f.Date.Past(1))
                 .RuleFor(r => r.Amount, f => f.Finance.Amount(500, 5000))
                 .RuleFor(r => r.Source, f => f.Company.CompanyName())
@@ -443,7 +449,7 @@ namespace ClubManager.Infrastructure.Services
             int _matchId = 1;
 
             var match = new Faker<Match>()
-                .RuleFor(m => m.Id, _ => _matchId++)
+                //.RuleFor(m => m.Id, _ => _matchId++)
                 .RuleFor(m => m.Date, f => f.Date.Future(1))
                 .RuleFor(m => m.Opponent, f => f.PickRandom(teams).Name)
                 .RuleFor(m => m.Location, f => f.Address.City())
@@ -459,7 +465,7 @@ namespace ClubManager.Infrastructure.Services
         {
             int _matchStatisticId = 1;
             var matchStatistic = new Faker<MatchStatistic>()
-                .RuleFor(ms => ms.Id, _ => _matchStatisticId++)
+                //.RuleFor(ms => ms.Id, _ => _matchStatisticId++)
                 .RuleFor(ms => ms.MatchId, f => f.PickRandom(matches).Id)
                 .RuleFor(ms => ms.PlayerId, f => f.PickRandom(players).Id)  
                 .RuleFor(ms => ms.Goals, f => f.Random.Int(0, 3))
@@ -477,7 +483,7 @@ namespace ClubManager.Infrastructure.Services
         {
             int _trainingSessionId = 1;
             var trainingSession = new Faker<TrainingSession>()
-                    .RuleFor(ts => ts.Id, _ => _trainingSessionId++)
+                    //.RuleFor(ts => ts.Id, _ => _trainingSessionId++)
                     .RuleFor(ts => ts.TeamId, f => f.PickRandom(teams).Id)
                     .RuleFor(ts => ts.Name, f => f.Hacker.Noun())
                     .RuleFor(ts => ts.Date, f => f.Date.Future(1))
@@ -495,7 +501,7 @@ namespace ClubManager.Infrastructure.Services
         {
             int _trainingAttendanceId = 1;
             var trainingAttendance = new Faker<TrainingAttendance>()
-                    .RuleFor(ta => ta.Id, _ => _trainingAttendanceId++)
+                    //.RuleFor(ta => ta.Id, _ => _trainingAttendanceId++)
                     .RuleFor(ta => ta.TrainingSessionId, f => f.PickRandom(sessions).Id)
                     .RuleFor(ta => ta.PlayerId, f => f.PickRandom(players).Id)  
                     .RuleFor(ta => ta.IsPresent, f => f.Random.Bool())

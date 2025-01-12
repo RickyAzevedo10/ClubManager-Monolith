@@ -19,7 +19,12 @@ namespace ClubManager.Infra.Repositories.Identity
 
         public async Task<IEnumerable<Player>> SearchPlayersAsync(string? firstName, string? lastName, string? position)
         {
-            var query = GetEntity();
+            IQueryable<Player> query = GetEntity();
+
+            query = query.Include(x => x.PlayerResponsibles)
+                .Include(x => x.PlayerTransfers)
+                .Include(x => x.PlayerContracts)
+                .Include(x => x.PlayerPerformanceHistories);
 
             if (!string.IsNullOrEmpty(firstName))
             {
@@ -36,8 +41,7 @@ namespace ClubManager.Infra.Repositories.Identity
                 query = query.Where(p => p.Position.Contains(position));
             }
 
-            return await query.ToListAsync();
+            return await query.Take(15).ToListAsync();
         }
-
     }
 }

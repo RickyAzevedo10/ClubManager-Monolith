@@ -3,6 +3,7 @@ using ClubManager.API.Midlewares;
 using ClubManager.Domain.Interfaces.Persistence.CachedRepositories;
 using ClubManager.Infra.Contexts;
 using ClubManager.Infrastructure.Persistence.CachedRepositories;
+using ClubManager.Infrastructure.Services;
 using ClubManager.Ioc;
 using ClubManager.Middlewares;
 using Microsoft.EntityFrameworkCore;
@@ -46,7 +47,12 @@ WebApplication? app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+    var fakeService = scope.ServiceProvider.GetRequiredService<FakerService>();
+
     dbContext.Database.Migrate(); // Cria a base de dados e aplica as migrations
+
+    // Realiza o seed dos dados
+    //await SeedData.SeedAsync(dbContext, fakeService);
 }
 
 // Configure the HTTP request pipeline.
